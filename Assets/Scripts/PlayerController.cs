@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
@@ -7,118 +8,176 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce = 10f;
 
     [Header("Ground Check")]
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float groundCheckDistance = 0.1f;
+
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem movementDust;
+    [SerializeField] private ParticleSystem landingDust;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
+    [Header("Camera Follow")]
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private float cameraFollowSpeed = 5f;
+    [SerializeField] private float cameraFollowOffset;
 
     private Rigidbody2D rb;
+    private Collider2D col;
     private PlayerInputActions inputActions;
 
-    private Vector2 moveInput;
+    private float moveInput;
+    private bool isFacingRight = true;
     private bool isGrounded;
-    private Animator animator;
+    private bool wasGrounded;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        col = GetComponent<Collider2D>();
+        animator = animator != null ? animator : GetComponent<Animator>();
+        playerCamera = playerCamera != null ? playerCamera : Camera.main;
         inputActions = new PlayerInputActions();
+        UpdateGroundedState();
+        wasGrounded = isGrounded;
     }
 
-    private void OnEnable()
-    {
-        inputActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
+    private void OnEnable() => inputActions.Enable();
+    private void OnDisable() => inputActions.Disable();
+    private void OnDestroy() => inputActions.Dispose();
 
     private void Update()
     {
-        moveInput = inputActions.Player.Move.ReadValue<Vector2>();
-
-        CheckGround();
+        HandleInput();
+        HandleRotation();
+        UpdateGroundedState();
         HandleJump();
-
-        animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
-        animator.SetBool("Grounded", isGrounded);
+        HandleAnimation();
+        HandleParticles();
     }
 
     private void FixedUpdate()
     {
         HandleMovement();
+        HandleCameraFollow();
     }
 
-    private void LateUpdate()
+    private void HandleInput()
     {
-        KeepPlayerOnScreen();
+        moveInput = inputActions.Player.Move.ReadValue<Vector2>().x;
     }
 
     private void HandleMovement()
     {
-        rb.linearVelocity = new Vector2(
-            moveInput.x * moveSpeed,
-            rb.linearVelocity.y
-        );
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+    }
 
-        if (moveInput.x != 0)
+    private void HandleCameraFollow()
+    {
+        if (playerCamera == null)
         {
-            transform.localScale = new Vector3(
-                Mathf.Sign(moveInput.x),
-                1f,
-                1f
-            );
+            return;
         }
+
+        Vector3 targetPosition = playerCamera.transform.position;
+        targetPosition.x = transform.position.x + cameraFollowOffset;
+        targetPosition.y = playerCamera.transform.position.y;
+        targetPosition.z = playerCamera.transform.position.z;
+
+        playerCamera.transform.position = Vector3.Lerp(
+            playerCamera.transform.position,
+            targetPosition,
+            cameraFollowSpeed * Time.deltaTime
+        );
+    }
+
+    private void HandleRotation()
+    {
+        if (Mathf.Approximately(moveInput, 0f))
+        {
+            return;
+        }
+
+        if ((moveInput > 0f && isFacingRight) || (moveInput < 0f && !isFacingRight))
+        {
+            return;
+        }
+
+        transform.Rotate(0f, 180f, 0f);
+        isFacingRight = moveInput > 0f;
     }
 
     private void HandleJump()
     {
-        if (inputActions.Player.Jump.WasPressedThisFrame() && isGrounded)
+        if (!inputActions.Player.Jump.WasPressedThisFrame() || !isGrounded)
         {
-            rb.linearVelocity = new Vector2(
-                rb.linearVelocity.x,
-                jumpForce
+            return;
+        }
+
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+    }
+
+    private void HandleAnimation()
+    {
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
+        animator.SetBool("Grounded", isGrounded);
+    }
+
+    private void HandleParticles()
+    {
+        HandleMovementDust();
+        HandleLandingDust();
+
+        wasGrounded = isGrounded;
+    }
+
+    private void HandleMovementDust()
+    {
+        bool isMoving = !Mathf.Approximately(moveInput, 0f);
+
+        if (movementDust == null)
+        {
+            return;
+        }
+
+        if (isGrounded && isMoving)
+        {
+            if (!movementDust.isPlaying)
+            {
+                movementDust.Play();
+            }
+
+            return;
+        }
+
+        if (movementDust.isPlaying)
+        {
+            movementDust.Stop(
+                withChildren: true,
+                stopBehavior: ParticleSystemStopBehavior.StopEmitting
             );
         }
     }
 
-    private void CheckGround()
+    private void HandleLandingDust()
     {
-        isGrounded = Physics2D.OverlapCircle(
-            groundCheck.position,
-            groundCheckRadius,
-            groundLayer
-        );
+        if (landingDust != null && !wasGrounded && isGrounded)
+        {
+            landingDust.Play();
+        }
     }
 
-    private void KeepPlayerOnScreen()
+    private void UpdateGroundedState()
     {
-    Vector3 position = transform.position;
-
-    float screenLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
-    float screenRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
-
-    float playerHalfWidth = GetComponent<Collider2D>().bounds.extents.x;
-
-    position.x = Mathf.Clamp(
-        position.x,
-        screenLeft + playerHalfWidth,
-        screenRight - playerHalfWidth
-    );
-
-    transform.position = position;
+        isGrounded = IsGrounded();
     }
 
-    private void OnDrawGizmosSelected()
+    private bool IsGrounded()
     {
-        if (groundCheck == null)
-            return;
+        Bounds bounds = col.bounds;
+        Vector2 origin = new Vector2(bounds.center.x, bounds.min.y);
 
-        Gizmos.DrawWireSphere(
-            groundCheck.position,
-            groundCheckRadius
-        );
+        return Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundLayer);
     }
 }

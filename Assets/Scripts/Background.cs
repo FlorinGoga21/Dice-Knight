@@ -1,52 +1,68 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MyGame.Environment 
 {
     public class Background : MonoBehaviour 
     {
         [Header("Movement Settings")]
-        public float speed = -2f; // Negative speed moves left, positive moves right
-		public bool isMoving = false; // Flag to control movement
+        [SerializeField] private Transform playerCamera;
+        [SerializeField] private float chunkWidth = 20f;
 
-        [Header("Loop Boundaries")]
-        [Tooltip("The X position where the background resets.")]
-        public float destinationPoint = -19.2f;
+        private bool isClone;
 
-        [Tooltip("The X position where the background moves back to after reaching the destination point.")]
-        public float originalPoint = 19.2f;
-
-        private float currentX;
-
-        void Update() 
+        private void Start()
         {
-            // Move along the X axis
-            if (!isMoving) return;
-            currentX = transform.position.x + (speed * Time.deltaTime);
-            transform.position = new Vector3(currentX, transform.position.y, transform.position.z);
-
-            // Check if boundary destination has been reached
-            if (destinationPoint < 0f) 
+            if (!isClone)
             {
-                if (currentX <= destinationPoint) 
-                {
-                    ResetPosition();
-                }
-            } 
-            else 
-            {
-                if (currentX >= destinationPoint) 
-                {
-                    ResetPosition();
-                }
+                CreateAdjacentChunks();
             }
+
+            if (playerCamera == null)
+            {
+                playerCamera = Camera.main != null ? Camera.main.transform : null;
+            }
+
         }
 
-        private void ResetPosition() 
+        private void LateUpdate()
         {
-            currentX = originalPoint;
-            transform.position = new Vector3(currentX, transform.position.y, transform.position.z);
+            if (playerCamera == null)
+            {
+                return;
+            }
+
+            RecycleChunk();
+        }
+
+        private void CreateAdjacentChunks()
+        {
+            CreateChunk(-chunkWidth);
+            CreateChunk(chunkWidth);
+        }
+
+        private void CreateChunk(float offset)
+        {
+            GameObject chunk = Instantiate(gameObject, transform.position, transform.rotation);
+            chunk.name = $"{gameObject.name} (Infinite Chunk)";
+            chunk.transform.position += Vector3.right * offset;
+            chunk.GetComponent<Background>().isClone = true;
+        }
+
+        private void RecycleChunk()
+        {
+            float cameraHalfWidth = playerCamera.GetComponent<Camera>().orthographicSize
+                * playerCamera.GetComponent<Camera>().aspect;
+            float leftEdge = playerCamera.position.x - cameraHalfWidth;
+            float rightEdge = playerCamera.position.x + cameraHalfWidth;
+
+            if (transform.position.x + chunkWidth < leftEdge)
+            {
+                transform.position += Vector3.right * (chunkWidth * 2f);
+            }
+            else if (transform.position.x - chunkWidth > rightEdge)
+            {
+                transform.position -= Vector3.right * (chunkWidth * 2f);
+            }
         }
     }
 }
