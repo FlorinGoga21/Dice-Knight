@@ -1,0 +1,6 @@
+{
+    "name": "HeyHeyThere.SpriteFXFree",
+    "rootNamespace": "HeyHeyThere.SpriteFXFree",
+    "references": ["UnityEngine.UI"],
+    "autoReferenced": true
+}

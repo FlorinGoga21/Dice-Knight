@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Animator))]
@@ -18,6 +19,10 @@ public class PlayerController : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private Animator animator;
 
+    [Header("Damage Flash")]
+    [SerializeField] private Material damageFlashMaterial;
+    [SerializeField] private float damageFlashDuration = 0.1f;
+
     [Header("Camera Follow")]
     [SerializeField] private Camera playerCamera;
     [SerializeField] private float cameraFollowSpeed = 5f;
@@ -31,12 +36,19 @@ public class PlayerController : MonoBehaviour
     private bool isFacingRight = true;
     private bool isGrounded;
     private bool wasGrounded;
+    private bool hasDied;
+    private SpriteRenderer[] spriteRenderers;
+    private Material[] damageFlashMaterials;
+    private Coroutine damageFlashCoroutine;
+    private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         animator = animator != null ? animator : GetComponent<Animator>();
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+        SetupDamageFlashMaterials();
         playerCamera = playerCamera != null ? playerCamera : Camera.main;
         inputActions = new PlayerInputActions();
         UpdateGroundedState();
@@ -45,10 +57,31 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable() => inputActions.Enable();
     private void OnDisable() => inputActions.Disable();
-    private void OnDestroy() => inputActions.Dispose();
+    private void OnDestroy()
+    {
+        inputActions.Dispose();
+
+        if (damageFlashMaterials == null)
+        {
+            return;
+        }
+
+        foreach (Material material in damageFlashMaterials)
+        {
+            if (material != null)
+            {
+                Destroy(material);
+            }
+        }
+    }
 
     private void Update()
     {
+        if (hasDied)
+        {
+            return;
+        }
+
         HandleInput();
         HandleRotation();
         UpdateGroundedState();
@@ -59,8 +92,94 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (hasDied)
+        {
+            return;
+        }
+
         HandleMovement();
         HandleCameraFollow();
+    }
+
+    public void Die()
+    {
+        if (hasDied)
+        {
+            return;
+        }
+
+        hasDied = true;
+        moveInput = 0f;
+        rb.linearVelocity = Vector2.zero;
+        movementDust?.Stop(
+            withChildren: true,
+            stopBehavior: ParticleSystemStopBehavior.StopEmitting
+        );
+        animator.SetBool("hasDied", true);
+        StartCoroutine(QuitGame());
+    }
+
+    public void FlashWhenDamaged()
+    {
+        if (hasDied)
+        {
+            return;
+        }
+
+        if (damageFlashCoroutine != null)
+        {
+            StopCoroutine(damageFlashCoroutine);
+        }
+
+        damageFlashCoroutine = StartCoroutine(DamageFlash());
+    }
+
+    public void PlayDamageAnimation()
+    {
+        if (hasDied)
+        {
+            return;
+        }
+
+        animator.ResetTrigger("TakeDamage");
+        animator.SetTrigger("TakeDamage");
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        SetFlashAmount(1f);
+        yield return new WaitForSeconds(damageFlashDuration);
+        SetFlashAmount(0f);
+        damageFlashCoroutine = null;
+    }
+
+    private void SetFlashAmount(float amount)
+    {
+        if (damageFlashMaterials == null)
+        {
+            return;
+        }
+
+        foreach (Material material in damageFlashMaterials)
+        {
+            material.SetFloat(FlashAmount, amount);
+        }
+    }
+
+    private void SetupDamageFlashMaterials()
+    {
+        if (damageFlashMaterial == null)
+        {
+            return;
+        }
+
+        damageFlashMaterials = new Material[spriteRenderers.Length];
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            Material material = new Material(damageFlashMaterial);
+            spriteRenderers[i].material = material;
+            damageFlashMaterials[i] = material;
+        }
     }
 
     private void HandleInput()
@@ -179,5 +298,18 @@ public class PlayerController : MonoBehaviour
         Vector2 origin = new Vector2(bounds.center.x, bounds.min.y);
 
         return Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundLayer);
+    }
+    private IEnumerator QuitGame()
+    {
+        Debug.Log("Quitting game...");
+        yield return new WaitForSeconds(3f); // Optional: Wait for a moment before quitting
+        if (Application.isEditor)
+        {
+            UnityEditor.EditorApplication.isPlaying = false; // Stop play mode in the editor
+        }
+        else
+        {
+            Application.Quit(); // Quit the application
+        }
     }
 }

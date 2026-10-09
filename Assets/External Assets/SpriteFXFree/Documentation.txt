@@ -1,0 +1,33 @@
+Sprite FX Free
+
+Documentation. 6 2D sprite shaders, ported from the Godot pack: the same effects, settings
+and defaults, for SpriteRenderers.
+
+  Resources/Sprite FX Free/   the shaders, one per effect
+  Scripts/SpriteFX.cs   Apply, Clear, Set, Animate; Flash, Blink, DissolveOut/In
+  Demo/SpriteFXFreeDemo.unity   every effect on the Godot demo's sprites; click one to hit it. Its code
+                         is in Scripts/Demo/, its sprites in DemoArt/
+
+Use:
+  SpriteFX.Flash(sprite);                              // hit flash, then the own material is back
+  yield return SpriteFX.DissolveOut(enemy).Wait();     // then Destroy(enemy.gameObject)
+  SpriteFX.Apply(coin, "shine");
+  SpriteFX.Apply(slime, "outline").Set("outline_color", Color.yellow).Set("width", 2f);
+  SpriteFX.Clear(coin);                                // the own material back
+
+Apply puts an effect on a renderer, on a material of its own, keeping the renderer's material for
+Clear; one effect at a time, a second replaces the first. Or give a SpriteRenderer a material of a
+"Sprite FX Free/..." shader yourself: every setting is in its inspector.
+
+Effects (SpriteFX.Effects lists them): flash, outline, dissolve, shine, hue_shift, blink.
+
+Settings: Set("progress", 0.5f), Set("edge_color", Color.cyan), Get("width"): the shader's properties,
+by the Godot pack's names ("flash_amount") or the shader's ("FlashAmount", "_FlashAmount"). Sizes
+are in texture pixels, as in Godot. Animate(property, from, to, seconds) runs one and, unless told
+not to, gives the own material back after; Finished and Wait() tell when.
+
+The effects read the sprite as a texture of its own: import sprites with Mesh Type Full Rect, not
+from an atlas, and give an outline or glow room to draw in, transparent pixels round the art (or the effect's Grow).
+
+Needs Unity 6.3 or later, in any render pipeline: the shaders are unlit sprite shaders, tested in
+Built-in, URP (2D and Universal Renderer) and HDRP. The demo runs on either input handler.
