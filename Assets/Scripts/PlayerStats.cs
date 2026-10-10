@@ -7,7 +7,6 @@ using TMPro;
 public class PlayerStats : MonoBehaviour
 {
     [Header("---Health---")]
-    [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private Transform healthContainer;
     [SerializeField] private Image[] healthIcons;
     [SerializeField] private Sprite fullHeartSprite;
@@ -15,20 +14,35 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private Sprite emptyHeartSprite;
     [SerializeField] private Material heartDissolveMaterial;
     [SerializeField] private float heartDissolveDuration = 0.35f;
+    [SerializeField] private Material heartOutlineMaterial;
 
     [Header("---Currency---")]
     [SerializeField] private TextMeshProUGUI currencyText;
     [SerializeField] private Image currencyCoinImage;
     [SerializeField] private Material coinShineMaterial;
+    [SerializeField] private float currencyGainNotificationDuration = 0.7f;
+    [SerializeField] private float currencyGainNotificationRise = 24f;
+    [SerializeField] private Color currencyGainNotificationColor = Color.white;
 
     [Header("---Player---")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private int MaxHealth = 100;
     [SerializeField] private int currentHealth = 100;
     [SerializeField] private int currency = 0;
+    public bool IsDead => currentHealth <= 0;
+    public Transform CurrencyTarget => currencyCoinImage != null ? currencyCoinImage.transform : null;
+    public Sprite CurrencySprite => currencyCoinImage != null ? currencyCoinImage.sprite : null;
     private Material[] heartMaterials;
     private Coroutine[] heartDissolveCoroutines;
+    private Image[] heartOutlineIcons;
+    private Material[] heartOutlineMaterials;
     private Material coinMaterial;
+    private Canvas currencyCanvas;
+    private TextMeshProUGUI currencyGainNotification;
+    private RectTransform currencyGainNotificationRect;
+    private Coroutine currencyGainNotificationCoroutine;
+    private int currencyGainNotificationAmount;
+    private Vector2 currencyGainNotificationStartPosition;
 
     private void Start()
     {
@@ -60,6 +74,17 @@ public class PlayerStats : MonoBehaviour
         {
             Destroy(coinMaterial);
         }
+
+        if (heartOutlineMaterials != null)
+        {
+            foreach (Material material in heartOutlineMaterials)
+            {
+                if (material != null)
+                {
+                    Destroy(material);
+                }
+            }
+        }
     }
 
     private void Update()
@@ -87,6 +112,7 @@ public class PlayerStats : MonoBehaviour
         }
 
         SetupHeartDissolveMaterials();
+        SetupHeartOutlineIcons();
 
         if (healthIcons.Length > 0 && fullHeartSprite == null)
         {
@@ -110,6 +136,41 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    private void SetupHeartOutlineIcons()
+    {
+        if (heartOutlineMaterial == null || healthIcons == null)
+        {
+            return;
+        }
+
+        heartOutlineIcons = new Image[healthIcons.Length];
+        heartOutlineMaterials = new Material[healthIcons.Length];
+
+        for (int i = 0; i < healthIcons.Length; i++)
+        {
+            GameObject outlineObject = new GameObject("Heart Outline", typeof(RectTransform), typeof(Image));
+            outlineObject.transform.SetParent(healthIcons[i].transform, false);
+            outlineObject.transform.SetAsLastSibling();
+
+            RectTransform outlineTransform = (RectTransform)outlineObject.transform;
+            outlineTransform.anchorMin = Vector2.zero;
+            outlineTransform.anchorMax = Vector2.one;
+            outlineTransform.offsetMin = Vector2.zero;
+            outlineTransform.offsetMax = Vector2.zero;
+
+            Image outlineIcon = outlineObject.GetComponent<Image>();
+            outlineIcon.raycastTarget = false;
+            outlineIcon.sprite = healthIcons[i].sprite;
+
+            Material material = new Material(heartOutlineMaterial);
+            material.SetFloat("_OutlineOnly", 1f);
+            outlineIcon.material = material;
+
+            heartOutlineIcons[i] = outlineIcon;
+            heartOutlineMaterials[i] = material;
+        }
+    }
+
     private void CacheCurrencyUI()
     {
         if (currencyCoinImage == null)
@@ -123,12 +184,18 @@ public class PlayerStats : MonoBehaviour
 
         if (currencyCoinImage == null || coinShineMaterial == null)
         {
+            currencyCanvas = currencyText != null
+                ? currencyText.GetComponentInParent<Canvas>(true)
+                : null;
             return;
         }
 
         coinMaterial = new Material(coinShineMaterial);
         coinMaterial.SetFloat("_Progress", -1f);
         currencyCoinImage.material = coinMaterial;
+        currencyCanvas = currencyText != null
+            ? currencyText.GetComponentInParent<Canvas>(true)
+            : null;
     }
 
     private void UpdateUI(bool animateEmptyHearts)
@@ -141,8 +208,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (Keyboard.current != null && Keyboard.current.cKey.wasPressedThisFrame)
         {
-            currency += 10;
-            UpdateCurrencyUI();
+            AddCurrency(10);
         }
     }
 
@@ -214,7 +280,8 @@ public class PlayerStats : MonoBehaviour
                 icon.sprite = emptyHeartSprite;
             }
 
-            icon.enabled = icon.sprite != null;
+            icon.enabled = icon.sprite != null && icon.sprite != emptyHeartSprite;
+            SyncHeartOutline(i);
 
             if (icon.sprite != emptyHeartSprite)
             {
@@ -222,10 +289,6 @@ public class PlayerStats : MonoBehaviour
             }
         }
 
-        if (healthText != null)
-        {
-            healthText.text = currentHealth.ToString();
-        }
     }
 
     private void SetupHeartDissolveMaterials()
@@ -277,6 +340,7 @@ public class PlayerStats : MonoBehaviour
             SetHeartDissolveProgress(heartIndex, 1f);
             healthIcons[heartIndex].sprite = emptyHeartSprite;
             healthIcons[heartIndex].enabled = false;
+            SyncHeartOutline(heartIndex);
             heartDissolveCoroutines[heartIndex] = null;
         }
 
@@ -291,11 +355,135 @@ public class PlayerStats : MonoBehaviour
             heartMaterials[heartIndex].SetFloat("_Progress", progress);
     }
 
+    private void SyncHeartOutline(int heartIndex)
+    {
+        if (heartOutlineIcons == null || heartIndex >= heartOutlineIcons.Length)
+        {
+            return;
+        }
+
+        Image outlineIcon = heartOutlineIcons[heartIndex];
+        outlineIcon.sprite = healthIcons[heartIndex].sprite;
+        outlineIcon.enabled = healthIcons[heartIndex].enabled;
+    }
+
     private void UpdateCurrencyUI()
     {
         if (currencyText != null)
         {
             currencyText.text = currency.ToString();
         }
+    }
+
+    public void AddCurrency(int amount)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        currency += amount;
+        UpdateCurrencyUI();
+        ShowCurrencyGainNotification(amount);
+    }
+
+    private void ShowCurrencyGainNotification(int amount)
+    {
+        if (currencyText == null || currencyCanvas == null)
+        {
+            return;
+        }
+
+        currencyGainNotificationAmount += amount;
+
+        if (currencyGainNotification == null)
+        {
+            CreateCurrencyGainNotification();
+        }
+
+        currencyGainNotification.text = $"+{currencyGainNotificationAmount}";
+        currencyGainNotification.ForceMeshUpdate();
+        currencyGainNotificationRect.sizeDelta = new Vector2(
+            Mathf.Max(currencyGainNotification.preferredWidth + 8f, 40f),
+            currencyText.rectTransform.sizeDelta.y);
+
+        if (currencyGainNotificationCoroutine != null)
+        {
+            StopCoroutine(currencyGainNotificationCoroutine);
+        }
+
+        currencyGainNotificationRect.anchoredPosition = currencyGainNotificationStartPosition;
+        currencyGainNotificationCoroutine = StartCoroutine(AnimateCurrencyGain());
+    }
+
+    private void CreateCurrencyGainNotification()
+    {
+        GameObject notificationObject = new GameObject(
+            "Currency Gain",
+            typeof(RectTransform),
+            typeof(TextMeshProUGUI),
+            typeof(LayoutElement));
+        notificationObject.transform.SetParent(currencyText.transform.parent, false);
+
+        currencyGainNotification = notificationObject.GetComponent<TextMeshProUGUI>();
+        LayoutElement layoutElement = notificationObject.GetComponent<LayoutElement>();
+        layoutElement.ignoreLayout = true;
+        currencyGainNotification.font = currencyText.font;
+        currencyGainNotification.fontSize = currencyText.fontSize;
+        currencyGainNotification.fontStyle = currencyText.fontStyle;
+        currencyGainNotification.alignment = TextAlignmentOptions.Center;
+        currencyGainNotification.color = currencyGainNotificationColor;
+        currencyGainNotification.raycastTarget = false;
+        currencyGainNotification.gameObject.transform.SetAsLastSibling();
+        currencyGainNotificationRect = currencyGainNotification.rectTransform;
+
+        RectTransform parentRect = currencyGainNotificationRect.parent as RectTransform;
+        Vector3[] currencyCorners = new Vector3[4];
+        currencyText.rectTransform.GetWorldCorners(currencyCorners);
+        Vector3 startWorldPosition = (currencyCorners[0] + currencyCorners[2]) * 0.5f;
+        Vector2 startScreenPosition = RectTransformUtility.WorldToScreenPoint(
+            currencyCanvas.renderMode == RenderMode.ScreenSpaceOverlay
+                ? null
+                : currencyCanvas.worldCamera,
+            startWorldPosition);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            parentRect,
+            startScreenPosition,
+            currencyCanvas.renderMode == RenderMode.ScreenSpaceOverlay
+                ? null
+                : currencyCanvas.worldCamera,
+            out Vector2 startPosition);
+
+        currencyGainNotificationRect.anchoredPosition = startPosition + Vector2.down * 18f;
+        currencyGainNotificationStartPosition = currencyGainNotificationRect.anchoredPosition;
+    }
+
+    private IEnumerator AnimateCurrencyGain()
+    {
+        float duration = Mathf.Max(0.05f, currencyGainNotificationDuration);
+        Vector2 startPosition = currencyGainNotificationStartPosition;
+        Vector2 endPosition = startPosition + Vector2.up * currencyGainNotificationRise;
+        Color startColor = currencyGainNotificationColor;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float progress = Mathf.Clamp01(elapsed / duration);
+            float smoothProgress = Mathf.SmoothStep(0f, 1f, progress);
+            currencyGainNotificationRect.anchoredPosition = Vector2.Lerp(
+                startPosition,
+                endPosition,
+                smoothProgress);
+            startColor.a = 1f - progress;
+            currencyGainNotification.color = startColor;
+            yield return null;
+        }
+
+        Destroy(currencyGainNotification.gameObject);
+        currencyGainNotification = null;
+        currencyGainNotificationRect = null;
+        currencyGainNotificationAmount = 0;
+        currencyGainNotificationCoroutine = null;
     }
 }

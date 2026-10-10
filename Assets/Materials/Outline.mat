@@ -43,15 +43,19 @@ Material:
     m_Floats:
     - _Diagonals: 1
     - _EnableExternalAlpha: 0
-    - _Grow: 0
+    - _Grow: 1
     - _Inside: 0
+    - _OutlineOnly: 1
     - _PPU: 100
+    - _PulseMaxAlpha: 1
+    - _PulseMinAlpha: 0.35
+    - _PulseSpeed: 3
     - _Width: 1
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 0.39215687}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

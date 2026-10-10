@@ -8,7 +8,11 @@ Shader "Sprite FX Free/Outline"
         [IntRange] _Width ("Width", Range(0, 16)) = 1
         [ToggleUI] _Diagonals ("Diagonals", Float) = 1
         [ToggleUI] _Inside ("Inside", Float) = 0                     // on the sprite's own edge pixels instead of around it
+        [ToggleUI] _OutlineOnly ("Outline Only", Float) = 0
         [IntRange] _Grow ("Grow", Range(0, 16)) = 0                  // grows the quad, in texture pixels, for unpadded sprites
+        _PulseSpeed ("Pulse Speed", Range(0, 20)) = 0
+        _PulseMinAlpha ("Pulse Minimum Alpha", Range(0, 1)) = 0.35
+        _PulseMaxAlpha ("Pulse Maximum Alpha", Range(0, 1)) = 1
         _PPU ("Pixels Per Unit", Float) = 100                        // the sprite's; SpriteFX sets it
         [HideInInspector] _RendererColor ("RendererColor", Color) = (1, 1, 1, 1)
         [HideInInspector] _Flip ("Flip", Vector) = (1, 1, 1, 1)
@@ -31,7 +35,8 @@ Shader "Sprite FX Free/Outline"
             #include "SpriteCommon.cginc"
 
             float4 _OutlineColor;
-            float _Width, _Diagonals, _Inside, _Grow;
+            float _Width, _Diagonals, _Inside, _OutlineOnly, _Grow;
+            float _PulseSpeed, _PulseMinAlpha, _PulseMaxAlpha;
 
             #define ALPHA_AT(p) (sfx_alpha(p) * sfx_in01(p))
 
@@ -63,12 +68,19 @@ Shader "Sprite FX Free/Outline"
                     }
                 }
                 float4 oc = sfx_col(_OutlineColor);
+                if (_PulseSpeed > 0.0)
+                {
+                    float pulse = sin(_Time.y * _PulseSpeed) * 0.5 + 0.5;
+                    oc.a *= lerp(_PulseMinAlpha, _PulseMaxAlpha, pulse);
+                }
                 float4 result;
                 if (_Inside > 0.5)
                 {
                     float edge = step(0.5, tex.a) * step(nearMin, 0.5);
                     result = float4(lerp(tex.rgb, oc.rgb, edge * oc.a), tex.a);
                 }
+                else if (_OutlineOnly > 0.5)
+                    result = float4(oc.rgb, saturate(nearMax - tex.a) * oc.a);
                 else
                     result = sfx_over(tex, float4(oc.rgb, nearMax * oc.a));
                 return sfx_out(result, i);

@@ -160,7 +160,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerAnimator
+  m_Name: EnemyAnimator
   serializedVersion: 6
   m_AnimatorParameters:
   - m_Name: Speed
@@ -297,7 +297,7 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3730139017379069210}
-    m_Position: {x: 390, y: 210, z: 0}
+    m_Position: {x: 30, y: 370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7369015721168690888}
     m_Position: {x: -500, y: 140, z: 0}
@@ -330,6 +330,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: TakeDamage
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: hasDied
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3335756240743137139}

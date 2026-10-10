@@ -4,7 +4,7 @@ namespace MyGame.Environment
 {
     public class Background : MonoBehaviour 
     {
-        [Header("Movement Settings")]
+        [Header("---Movement Settings---")]
         [SerializeField] private Transform playerCamera;
         [SerializeField] private float chunkWidth = 20f;
 

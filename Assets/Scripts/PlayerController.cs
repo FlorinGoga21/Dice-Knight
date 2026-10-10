@@ -4,26 +4,32 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
+    [Header("---Movement---")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 10f;
 
-    [Header("Ground Check")]
+    [Header("---Ground Check---")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 0.1f;
 
-    [Header("Particles")]
+    [Header("---Particles---")]
     [SerializeField] private ParticleSystem movementDust;
     [SerializeField] private ParticleSystem landingDust;
 
-    [Header("Animation")]
+    [Header("---Animation---")]
     [SerializeField] private Animator animator;
 
-    [Header("Damage Flash")]
+    [Header("---Attack---")]
+    [SerializeField] private float attackRange = 1.5f;
+    [SerializeField] private int attackDamage = 10;
+    [SerializeField] private float attackHitDelay = 0.25f;
+    [SerializeField] private float attackCooldown = 0.5f;
+
+    [Header("---Damage Flash---")]
     [SerializeField] private Material damageFlashMaterial;
     [SerializeField] private float damageFlashDuration = 0.1f;
 
-    [Header("Camera Follow")]
+    [Header("---Camera Follow---")]
     [SerializeField] private Camera playerCamera;
     [SerializeField] private float cameraFollowSpeed = 5f;
     [SerializeField] private float cameraFollowOffset;
@@ -40,6 +46,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer[] spriteRenderers;
     private Material[] damageFlashMaterials;
     private Coroutine damageFlashCoroutine;
+    private Coroutine attackDamageCoroutine;
+    private float attackCooldownRemaining;
     private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
     private void Awake()
@@ -86,6 +94,8 @@ public class PlayerController : MonoBehaviour
         HandleRotation();
         UpdateGroundedState();
         HandleJump();
+        UpdateAttackCooldown();
+        HandleAttack();
         HandleAnimation();
         HandleParticles();
     }
@@ -143,6 +153,19 @@ public class PlayerController : MonoBehaviour
 
         animator.ResetTrigger("TakeDamage");
         animator.SetTrigger("TakeDamage");
+    }
+
+    public void PlayAttackAnimation()
+    {
+        if (hasDied || attackCooldownRemaining > 0f)
+        {
+            return;
+        }
+
+        animator.ResetTrigger("Attack");
+        animator.SetTrigger("Attack");
+        attackCooldownRemaining = attackCooldown;
+        attackDamageCoroutine = StartCoroutine(ApplyAttackDamage());
     }
 
     private IEnumerator DamageFlash()
@@ -235,6 +258,48 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+    }
+
+    private void HandleAttack()
+    {
+        if (!inputActions.Player.Attack.WasPressedThisFrame())
+        {
+            return;
+        }
+
+        PlayAttackAnimation();
+    }
+
+    private IEnumerator ApplyAttackDamage()
+    {
+        yield return new WaitForSeconds(attackHitDelay);
+
+        if (hasDied)
+        {
+            attackDamageCoroutine = null;
+            yield break;
+        }
+
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
+        foreach (Collider2D hitCollider in hitColliders)
+        {
+            EnemyController enemy = hitCollider.GetComponentInParent<EnemyController>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(attackDamage);
+                break;
+            }
+        }
+
+        attackDamageCoroutine = null;
+    }
+
+    private void UpdateAttackCooldown()
+    {
+        if (attackCooldownRemaining > 0f)
+        {
+            attackCooldownRemaining -= Time.deltaTime;
+        }
     }
 
     private void HandleAnimation()
