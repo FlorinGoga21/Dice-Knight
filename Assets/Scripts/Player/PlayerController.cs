@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int attackDamage = 10;
     [SerializeField] private float attackHitDelay = 0.25f;
     [SerializeField] private float attackCooldown = 0.5f;
+    [SerializeField] private float attackMovementThreshold = 0.01f;
 
     [Header("---Damage Flash---")]
     [SerializeField] private Material damageFlashMaterial;
@@ -48,12 +49,14 @@ public class PlayerController : MonoBehaviour
     private Coroutine damageFlashCoroutine;
     private Coroutine attackDamageCoroutine;
     private float attackCooldownRemaining;
+    private IDamageable ownDamageable;
     private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        ownDamageable = GetComponentInParent<IDamageable>();
         animator = animator != null ? animator : GetComponent<Animator>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         SetupDamageFlashMaterials();
@@ -267,6 +270,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (Mathf.Abs(moveInput) > attackMovementThreshold)
+        {
+            return;
+        }
+
         PlayAttackAnimation();
     }
 
@@ -283,10 +291,12 @@ public class PlayerController : MonoBehaviour
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
         foreach (Collider2D hitCollider in hitColliders)
         {
-            EnemyController enemy = hitCollider.GetComponentInParent<EnemyController>();
-            if (enemy != null)
+            IDamageable damageable = hitCollider.GetComponentInParent<IDamageable>();
+            if (damageable != null
+                && !ReferenceEquals(damageable, ownDamageable)
+                && !damageable.IsDead)
             {
-                enemy.TakeDamage(attackDamage);
+                damageable.TakeDamage(attackDamage);
                 break;
             }
         }

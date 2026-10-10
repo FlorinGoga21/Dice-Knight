@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
 {
     [Header("---Health---")]
     [SerializeField] private Transform healthContainer;
@@ -26,10 +26,12 @@ public class PlayerStats : MonoBehaviour
 
     [Header("---Player---")]
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private DamageNumber damageNumber;
     [SerializeField] private int MaxHealth = 100;
     [SerializeField] private int currentHealth = 100;
     [SerializeField] private int currency = 0;
     public bool IsDead => currentHealth <= 0;
+    public bool CanReceiveCurrency => !IsDead;
     public Transform CurrencyTarget => currencyCoinImage != null ? currencyCoinImage.transform : null;
     public Sprite CurrencySprite => currencyCoinImage != null ? currencyCoinImage.sprite : null;
     private Material[] heartMaterials;
@@ -49,6 +51,18 @@ public class PlayerStats : MonoBehaviour
         if (playerController == null)
         {
             playerController = GetComponent<PlayerController>();
+        }
+
+        if (damageNumber == null)
+        {
+            damageNumber = GetComponent<DamageNumber>();
+        }
+
+        if (damageNumber == null)
+        {
+            Debug.LogWarning(
+                $"{nameof(DamageNumber)} is not attached to the player. Damage numbers will be disabled.",
+                this);
         }
 
         CacheHealthUI();
@@ -228,6 +242,7 @@ public class PlayerStats : MonoBehaviour
         }
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
+        damageNumber?.ShowDamage(damage);
         UpdateHealthUI(true);
 
         if (playerController != null)

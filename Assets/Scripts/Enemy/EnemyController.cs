@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Animator))]
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IDamageable
 {
     [Header("---Target---")]
     [SerializeField] private Transform target;
@@ -34,6 +34,7 @@ public class EnemyController : MonoBehaviour
     [Header("---Damage Flash---")]
     [SerializeField] private Material damageFlashMaterial;
     [SerializeField] private float damageFlashDuration = 0.1f;
+    [SerializeField] private DamageNumber damageNumber;
 
     [Header("---Health---")]
     [SerializeField] private int maxHealth = 30;
@@ -60,16 +61,33 @@ public class EnemyController : MonoBehaviour
     private bool hasDied;
     private int currentHealth;
     private Canvas healthBarCanvas;
-    private PlayerStats playerStats;
+    private ICurrencyReceiver currencyTarget;
+    private IDamageable targetDamageable;
+    private IDamageable ownDamageable;
     private SpriteRenderer[] spriteRenderers;
     private Material[] damageFlashMaterials;
     private Coroutine damageFlashCoroutine;
     private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
+    public bool IsDead => hasDied;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        ownDamageable = GetComponentInParent<IDamageable>();
+        if (damageNumber == null)
+        {
+            damageNumber = GetComponent<DamageNumber>();
+        }
+
+        if (damageNumber == null)
+        {
+            Debug.LogWarning(
+                $"{nameof(DamageNumber)} is not attached to the enemy. Damage numbers will be disabled.",
+                this);
+        }
+
         animator = animator != null ? animator : GetComponent<Animator>();
         visuals = visuals != null ? visuals : transform;
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
@@ -89,7 +107,7 @@ public class EnemyController : MonoBehaviour
 
     public class CoinPickup : MonoBehaviour
     {
-        private PlayerStats target;
+        private ICurrencyReceiver target;
         private int value;
         private float delay;
         private float jumpDuration;
@@ -99,7 +117,7 @@ public class EnemyController : MonoBehaviour
         private Camera mainCamera;
 
         public void Initialize(
-            PlayerStats playerStats,
+            ICurrencyReceiver currencyReceiver,
             int currencyValue,
             float pickupDelay,
             float launchDuration,
@@ -107,7 +125,7 @@ public class EnemyController : MonoBehaviour
             float launchHeight,
             float duration)
         {
-            target = playerStats;
+            target = currencyReceiver;
             value = currencyValue;
             delay = pickupDelay;
             jumpDuration = Mathf.Max(0.05f, launchDuration);
@@ -122,7 +140,7 @@ public class EnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
 
-            if (target == null || target.IsDead || target.CurrencyTarget == null)
+            if (target == null || !target.CanReceiveCurrency || target.CurrencyTarget == null)
             {
                 Destroy(gameObject);
                 yield break;
@@ -147,7 +165,7 @@ public class EnemyController : MonoBehaviour
 
             while (elapsed < flightDuration)
             {
-                if (target == null || target.IsDead || target.CurrencyTarget == null)
+                if (target == null || !target.CanReceiveCurrency || target.CurrencyTarget == null)
                 {
                     Destroy(gameObject);
                     yield break;
@@ -210,7 +228,19 @@ public class EnemyController : MonoBehaviour
             target = player != null ? player.transform : null;
         }
 
-        playerStats = target != null ? target.GetComponentInParent<PlayerStats>() : null;
+        currencyTarget = target != null
+            ? target.GetComponentInParent<ICurrencyReceiver>()
+            : null;
+        targetDamageable = target != null
+            ? target.GetComponentInParent<IDamageable>()
+            : null;
+
+        if (ReferenceEquals(targetDamageable, ownDamageable))
+        {
+            target = null;
+            currencyTarget = null;
+            targetDamageable = null;
+        }
     }
 
     private void Update()
@@ -255,6 +285,7 @@ public class EnemyController : MonoBehaviour
         }
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
+        damageNumber?.ShowDamage(damage);
         ShowHealthBar();
         FlashWhenDamaged();
         PlayDamageAnimation();
@@ -389,8 +420,8 @@ public class EnemyController : MonoBehaviour
             yield break;
         }
 
-        PlayerStats playerStats = target.GetComponentInParent<PlayerStats>();
-        if (playerStats != null && playerStats.IsDead)
+        if (ReferenceEquals(targetDamageable, ownDamageable)
+            || (targetDamageable != null && targetDamageable.IsDead))
         {
             attackDamageCoroutine = null;
             yield break;
@@ -399,9 +430,9 @@ public class EnemyController : MonoBehaviour
         float horizontalDistance = Mathf.Abs(target.position.x - transform.position.x);
         if (horizontalDistance <= attackRange)
         {
-            if (playerStats != null)
+            if (targetDamageable != null)
             {
-                playerStats.TakeDamage(attackDamage);
+                targetDamageable.TakeDamage(attackDamage);
             }
         }
 
@@ -416,8 +447,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        PlayerStats playerStats = target.GetComponentInParent<PlayerStats>();
-        if (playerStats != null && playerStats.IsDead)
+        if (targetDamageable != null && targetDamageable.IsDead)
         {
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             return;
@@ -448,8 +478,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        PlayerStats playerStats = target.GetComponentInParent<PlayerStats>();
-        if (playerStats != null && playerStats.IsDead)
+        if (targetDamageable != null && targetDamageable.IsDead)
         {
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             return;
@@ -520,12 +549,12 @@ public class EnemyController : MonoBehaviour
 
     private void SpawnCoins()
     {
-        if (playerStats == null)
+        if (currencyTarget == null)
         {
             return;
         }
 
-        Sprite pickupSprite = coinSprite != null ? coinSprite : playerStats.CurrencySprite;
+        Sprite pickupSprite = coinSprite != null ? coinSprite : currencyTarget.CurrencySprite;
         if (pickupSprite == null)
         {
             return;
@@ -555,7 +584,7 @@ public class EnemyController : MonoBehaviour
             float launchHeight = Random.Range(heightRange.x, heightRange.y);
 
             pickup.Initialize(
-                playerStats,
+                currencyTarget,
                 coinValue,
                 coinSpawnDelay,
                 coinJumpDuration,
