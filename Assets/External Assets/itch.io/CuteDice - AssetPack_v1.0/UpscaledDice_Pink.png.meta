@@ -1,0 +1,1066 @@
+fileFormatVersion: 2
+guid: 8137c30742105d54bb04cc68498c8071
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4314872556885813932
+    second: UpscaledDice_Pink_0
+  - first:
+      213: 7023949327649049969
+    second: UpscaledDice_Pink_1
+  - first:
+      213: 6982583029822758956
+    second: UpscaledDice_Pink_2
+  - first:
+      213: -2962491985531971848
+    second: UpscaledDice_Pink_3
+  - first:
+      213: -993737210083468006
+    second: UpscaledDice_Pink_4
+  - first:
+      213: -6647868936092574374
+    second: UpscaledDice_Pink_5
+  - first:
+      213: -6541652201351126997
+    second: UpscaledDice_Pink_6
+  - first:
+      213: -2653608022564361443
+    second: UpscaledDice_Pink_7
+  - first:
+      213: 4865973568323550542
+    second: UpscaledDice_Pink_8
+  - first:
+      213: -4329305031818982151
+    second: UpscaledDice_Pink_9
+  - first:
+      213: -3969889519279730610
+    second: UpscaledDice_Pink_10
+  - first:
+      213: 6536420570845703310
+    second: UpscaledDice_Pink_11
+  - first:
+      213: -1745989773014228348
+    second: UpscaledDice_Pink_12
+  - first:
+      213: 8954783315100336643
+    second: UpscaledDice_Pink_13
+  - first:
+      213: 2944067721196728808
+    second: UpscaledDice_Pink_14
+  - first:
+      213: 1261834539540677587
+    second: UpscaledDice_Pink_15
+  - first:
+      213: -3976850382899336243
+    second: UpscaledDice_Pink_16
+  - first:
+      213: -6737166642604836156
+    second: UpscaledDice_Pink_17
+  - first:
+      213: -2528006447603716237
+    second: UpscaledDice_Pink_18
+  - first:
+      213: -5762078479221394809
+    second: UpscaledDice_Pink_19
+  - first:
+      213: -1409560649868799963
+    second: UpscaledDice_Pink_20
+  - first:
+      213: -189611540699555349
+    second: UpscaledDice_Pink_21
+  - first:
+      213: 4407719893987470313
+    second: UpscaledDice_Pink_22
+  - first:
+      213: 3889789100717405326
+    second: UpscaledDice_Pink_23
+  - first:
+      213: 5634624033611474990
+    second: UpscaledDice_Pink_24
+  - first:
+      213: -5994375656677552586
+    second: UpscaledDice_Pink_25
+  - first:
+      213: 5349027416708802592
+    second: UpscaledDice_Pink_26
+  - first:
+      213: 7753677056773960675
+    second: UpscaledDice_Pink_27
+  - first:
+      213: 881284248587228930
+    second: UpscaledDice_Pink_28
+  - first:
+      213: -960855906665383020
+    second: UpscaledDice_Pink_29
+  - first:
+      213: 2010523028633888155
+    second: UpscaledDice_Pink_30
+  - first:
+      213: -5158419535810291590
+    second: UpscaledDice_Pink_31
+  - first:
+      213: -834378360628056459
+    second: UpscaledDice_Pink_32
+  - first:
+      213: 7861431511948375512
+    second: UpscaledDice_Pink_33
+  - first:
+      213: 4004078411853088019
+    second: UpscaledDice_Pink_34
+  - first:
+      213: -19182397038402557
+    second: UpscaledDice_Pink_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 567
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4555dbb454e7e14c0800000000000000
+      internalID: -4314872556885813932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_1
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 567
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d8dd2f2b41a7160800000000000000
+      internalID: 7023949327649049969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_2
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 567
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c20a143354e17e060800000000000000
+      internalID: 6982583029822758956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_3
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 567
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f6dc603c3d13e6d0800000000000000
+      internalID: -2962491985531971848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_4
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 567
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1d13e0c5498532f0800000000000000
+      internalID: -993737210083468006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_5
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 567
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5d19deac660eb3a0800000000000000
+      internalID: -6647868936092574374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_6
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 455
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2060566bf16735a0800000000000000
+      internalID: -6541652201351126997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_7
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 455
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1bace9109d7c2bd0800000000000000
+      internalID: -2653608022564361443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_8
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 455
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4d7d5aed29678340800000000000000
+      internalID: 4865973568323550542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_9
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 455
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fc4e1ed2083be3c0800000000000000
+      internalID: -4329305031818982151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_10
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 455
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4019cdf38e18e8c0800000000000000
+      internalID: -3969889519279730610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_11
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 455
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8c60d3b0e706ba50800000000000000
+      internalID: 6536420570845703310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_12
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 343
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 482a5065d8ff4c7e0800000000000000
+      internalID: -1745989773014228348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_13
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 343
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30286290bf7c54c70800000000000000
+      internalID: 8954783315100336643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_14
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 343
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e1ff9c7efd6bd820800000000000000
+      internalID: 2944067721196728808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_15
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 343
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d304a604dfe28110800000000000000
+      internalID: 1261834539540677587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_16
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 343
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcba862a5a36fc8c0800000000000000
+      internalID: -3976850382899336243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_17
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 343
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ca7de232a6c082a0800000000000000
+      internalID: -6737166642604836156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_18
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 231
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37feea4a787baecd0800000000000000
+      internalID: -2528006447603716237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_19
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 231
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 782f516e62cf800b0800000000000000
+      internalID: -5762078479221394809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_20
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 231
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 520933f9e0c307ce0800000000000000
+      internalID: -1409560649868799963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_21
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 231
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be9d94fee4d5e5df0800000000000000
+      internalID: -189611540699555349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_22
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 231
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ebab86f3ed5b2d30800000000000000
+      internalID: 4407719893987470313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_23
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 231
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e84727ff39e4bf530800000000000000
+      internalID: 3889789100717405326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_24
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 115
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e286a4e74b4323e40800000000000000
+      internalID: 5634624033611474990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_25
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 115
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63e4c7d8913bfcca0800000000000000
+      internalID: -5994375656677552586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_26
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 115
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 028e0ca58109b3a40800000000000000
+      internalID: 5349027416708802592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_27
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 115
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e3bb10d3389a9b60800000000000000
+      internalID: 7753677056773960675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_28
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 115
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2075037da53fa3c00800000000000000
+      internalID: 881284248587228930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_29
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 115
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49bbfdac4aa5aa2f0800000000000000
+      internalID: -960855906665383020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_30
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 0
+        width: 106
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b952776da00d6eb10800000000000000
+      internalID: 2010523028633888155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_31
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 0
+        width: 106
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a78979d33cc9968b0800000000000000
+      internalID: -5158419535810291590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_32
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 3
+        width: 106
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57eed7e3d41bb64f0800000000000000
+      internalID: -834378360628056459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_33
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 0
+        width: 106
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d5beb7fe4a691d60800000000000000
+      internalID: 7861431511948375512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_34
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 0
+        width: 106
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 315405fd918519730800000000000000
+      internalID: 4004078411853088019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledDice_Pink_35
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 0
+        width: 113
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 304e59626b9dbbff0800000000000000
+      internalID: -19182397038402557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      UpscaledDice_Pink_0: -4314872556885813932
+      UpscaledDice_Pink_1: 7023949327649049969
+      UpscaledDice_Pink_10: -3969889519279730610
+      UpscaledDice_Pink_11: 6536420570845703310
+      UpscaledDice_Pink_12: -1745989773014228348
+      UpscaledDice_Pink_13: 8954783315100336643
+      UpscaledDice_Pink_14: 2944067721196728808
+      UpscaledDice_Pink_15: 1261834539540677587
+      UpscaledDice_Pink_16: -3976850382899336243
+      UpscaledDice_Pink_17: -6737166642604836156
+      UpscaledDice_Pink_18: -2528006447603716237
+      UpscaledDice_Pink_19: -5762078479221394809
+      UpscaledDice_Pink_2: 6982583029822758956
+      UpscaledDice_Pink_20: -1409560649868799963
+      UpscaledDice_Pink_21: -189611540699555349
+      UpscaledDice_Pink_22: 4407719893987470313
+      UpscaledDice_Pink_23: 3889789100717405326
+      UpscaledDice_Pink_24: 5634624033611474990
+      UpscaledDice_Pink_25: -5994375656677552586
+      UpscaledDice_Pink_26: 5349027416708802592
+      UpscaledDice_Pink_27: 7753677056773960675
+      UpscaledDice_Pink_28: 881284248587228930
+      UpscaledDice_Pink_29: -960855906665383020
+      UpscaledDice_Pink_3: -2962491985531971848
+      UpscaledDice_Pink_30: 2010523028633888155
+      UpscaledDice_Pink_31: -5158419535810291590
+      UpscaledDice_Pink_32: -834378360628056459
+      UpscaledDice_Pink_33: 7861431511948375512
+      UpscaledDice_Pink_34: 4004078411853088019
+      UpscaledDice_Pink_35: -19182397038402557
+      UpscaledDice_Pink_4: -993737210083468006
+      UpscaledDice_Pink_5: -6647868936092574374
+      UpscaledDice_Pink_6: -6541652201351126997
+      UpscaledDice_Pink_7: -2653608022564361443
+      UpscaledDice_Pink_8: 4865973568323550542
+      UpscaledDice_Pink_9: -4329305031818982151
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

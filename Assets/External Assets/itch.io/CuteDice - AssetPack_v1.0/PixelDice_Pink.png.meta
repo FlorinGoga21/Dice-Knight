@@ -1,0 +1,1066 @@
+fileFormatVersion: 2
+guid: d77d644dc1d7149438c7b4abe7884a41
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1398926289758041833
+    second: PixelDice_Pink_0
+  - first:
+      213: 4174431629707660144
+    second: PixelDice_Pink_1
+  - first:
+      213: 2094105871309346724
+    second: PixelDice_Pink_2
+  - first:
+      213: -5489877425407132028
+    second: PixelDice_Pink_3
+  - first:
+      213: -5141151715755740544
+    second: PixelDice_Pink_4
+  - first:
+      213: -8398382167258612246
+    second: PixelDice_Pink_5
+  - first:
+      213: -4274674961727738268
+    second: PixelDice_Pink_6
+  - first:
+      213: -3487894257283163340
+    second: PixelDice_Pink_7
+  - first:
+      213: 1140410707158950983
+    second: PixelDice_Pink_8
+  - first:
+      213: 5933042323977414156
+    second: PixelDice_Pink_9
+  - first:
+      213: 5864823491690634633
+    second: PixelDice_Pink_10
+  - first:
+      213: -3605162092137461484
+    second: PixelDice_Pink_11
+  - first:
+      213: -3259361945147131444
+    second: PixelDice_Pink_12
+  - first:
+      213: -5247533655945893184
+    second: PixelDice_Pink_13
+  - first:
+      213: -4564598952078510448
+    second: PixelDice_Pink_14
+  - first:
+      213: -2865421548647508257
+    second: PixelDice_Pink_15
+  - first:
+      213: 7836492832483559965
+    second: PixelDice_Pink_16
+  - first:
+      213: 4884573374141965626
+    second: PixelDice_Pink_17
+  - first:
+      213: 2095094657327844546
+    second: PixelDice_Pink_18
+  - first:
+      213: -8778638888409782605
+    second: PixelDice_Pink_19
+  - first:
+      213: -9066618777194195557
+    second: PixelDice_Pink_20
+  - first:
+      213: -3594100839257987511
+    second: PixelDice_Pink_21
+  - first:
+      213: -8972353928394838529
+    second: PixelDice_Pink_22
+  - first:
+      213: 18377019733619831
+    second: PixelDice_Pink_23
+  - first:
+      213: 7971888887753137504
+    second: PixelDice_Pink_24
+  - first:
+      213: 7181106944737287326
+    second: PixelDice_Pink_25
+  - first:
+      213: 4686522316358446600
+    second: PixelDice_Pink_26
+  - first:
+      213: 924445578120800420
+    second: PixelDice_Pink_27
+  - first:
+      213: -2430204235944693427
+    second: PixelDice_Pink_28
+  - first:
+      213: -6141765927733870892
+    second: PixelDice_Pink_29
+  - first:
+      213: -4584470460653197553
+    second: PixelDice_Pink_30
+  - first:
+      213: 2639472151900493140
+    second: PixelDice_Pink_31
+  - first:
+      213: -5016551125678375505
+    second: PixelDice_Pink_32
+  - first:
+      213: 2026323103778854778
+    second: PixelDice_Pink_33
+  - first:
+      213: 1266733614182799073
+    second: PixelDice_Pink_34
+  - first:
+      213: 8129195679791185375
+    second: PixelDice_Pink_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PixelDice_Pink_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 141
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e6bbf77c0cf96310800000000000000
+      internalID: 1398926289758041833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 141
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07b41eb337f8ee930800000000000000
+      internalID: 4174431629707660144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_2
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 141
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a71475e132cf0d10800000000000000
+      internalID: 2094105871309346724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_3
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 141
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48efb26719900d3b0800000000000000
+      internalID: -5489877425407132028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_4
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 141
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0823df5e0c5f6a8b0800000000000000
+      internalID: -5141151715755740544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_5
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 141
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aed33985ae3f27b80800000000000000
+      internalID: -8398382167258612246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 113
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46e26ff35cd4da4c0800000000000000
+      internalID: -4274674961727738268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_7
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 113
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43b138417a2889fc0800000000000000
+      internalID: -3487894257283163340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_8
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 113
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 744e24afe7d83df00800000000000000
+      internalID: 1140410707158950983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_9
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 113
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c06280e1f86665250800000000000000
+      internalID: 5933042323977414156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_10
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 113
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98d169c74e9046150800000000000000
+      internalID: 5864823491690634633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_11
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 113
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 419417c9d24e7fdc0800000000000000
+      internalID: -3605162092137461484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_12
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 85
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc93419649b64c2d0800000000000000
+      internalID: -3259361945147131444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_13
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 85
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ca207a41f30d27b0800000000000000
+      internalID: -5247533655945893184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_14
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 85
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0967d37ff6947a0c0800000000000000
+      internalID: -4564598952078510448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_15
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 85
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd69d1d784afb38d0800000000000000
+      internalID: -2865421548647508257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_16
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 85
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1ac31d26b0d0cc60800000000000000
+      internalID: 7836492832483559965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_17
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 85
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a35201daa9d79c340800000000000000
+      internalID: 4884573374141965626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_18
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 57
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cc48d49d75431d10800000000000000
+      internalID: 2095094657327844546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_19
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 57
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b6a7e431720c2680800000000000000
+      internalID: -8778638888409782605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_20
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 57
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9514775246ec2280800000000000000
+      internalID: -9066618777194195557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_21
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 57
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 946281d34503f1ec0800000000000000
+      internalID: -3594100839257987511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_22
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 57
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffde1f2c3abcb7380800000000000000
+      internalID: -8972353928394838529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_23
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 57
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 774b0455dc9414000800000000000000
+      internalID: 18377019733619831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06dd86fd4b6d1ae60800000000000000
+      internalID: 7971888887753137504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_25
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 28
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9c182718ba68a360800000000000000
+      internalID: 7181106944737287326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_26
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 0
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80e6c7a673fd90140800000000000000
+      internalID: 4686522316358446600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_27
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 28
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a8221afa5a44dc00800000000000000
+      internalID: 924445578120800420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_28
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 0
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d41fdd88f1e264ed0800000000000000
+      internalID: -2430204235944693427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_29
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 28
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4de33dfdd6014caa0800000000000000
+      internalID: -6141765927733870892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_30
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 0
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f07ae75d760b060c0800000000000000
+      internalID: -4584470460653197553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_31
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 28
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 455909800f941a420800000000000000
+      internalID: 2639472151900493140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_32
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fadba5c7451a16ab0800000000000000
+      internalID: -5016551125678375505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_33
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 28
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a77d7e08022fe1c10800000000000000
+      internalID: 2026323103778854778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_34
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 0
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e6996ab287549110800000000000000
+      internalID: 1266733614182799073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelDice_Pink_35
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 28
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fddf7938664b0d070800000000000000
+      internalID: 8129195679791185375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PixelDice_Pink_0: 1398926289758041833
+      PixelDice_Pink_1: 4174431629707660144
+      PixelDice_Pink_10: 5864823491690634633
+      PixelDice_Pink_11: -3605162092137461484
+      PixelDice_Pink_12: -3259361945147131444
+      PixelDice_Pink_13: -5247533655945893184
+      PixelDice_Pink_14: -4564598952078510448
+      PixelDice_Pink_15: -2865421548647508257
+      PixelDice_Pink_16: 7836492832483559965
+      PixelDice_Pink_17: 4884573374141965626
+      PixelDice_Pink_18: 2095094657327844546
+      PixelDice_Pink_19: -8778638888409782605
+      PixelDice_Pink_2: 2094105871309346724
+      PixelDice_Pink_20: -9066618777194195557
+      PixelDice_Pink_21: -3594100839257987511
+      PixelDice_Pink_22: -8972353928394838529
+      PixelDice_Pink_23: 18377019733619831
+      PixelDice_Pink_24: 7971888887753137504
+      PixelDice_Pink_25: 7181106944737287326
+      PixelDice_Pink_26: 4686522316358446600
+      PixelDice_Pink_27: 924445578120800420
+      PixelDice_Pink_28: -2430204235944693427
+      PixelDice_Pink_29: -6141765927733870892
+      PixelDice_Pink_3: -5489877425407132028
+      PixelDice_Pink_30: -4584470460653197553
+      PixelDice_Pink_31: 2639472151900493140
+      PixelDice_Pink_32: -5016551125678375505
+      PixelDice_Pink_33: 2026323103778854778
+      PixelDice_Pink_34: 1266733614182799073
+      PixelDice_Pink_35: 8129195679791185375
+      PixelDice_Pink_4: -5141151715755740544
+      PixelDice_Pink_5: -8398382167258612246
+      PixelDice_Pink_6: -4274674961727738268
+      PixelDice_Pink_7: -3487894257283163340
+      PixelDice_Pink_8: 1140410707158950983
+      PixelDice_Pink_9: 5933042323977414156
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

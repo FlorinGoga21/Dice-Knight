@@ -1,0 +1,520 @@
+fileFormatVersion: 2
+guid: 8d7c567b1c524b04888e772e562a8fa3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5615434521856093482
+    second: UpscaledPokerChips_0
+  - first:
+      213: 2311039902678970555
+    second: UpscaledPokerChips_1
+  - first:
+      213: 6650797059206585207
+    second: UpscaledPokerChips_2
+  - first:
+      213: 186014219804038871
+    second: UpscaledPokerChips_3
+  - first:
+      213: -6648316163800171559
+    second: UpscaledPokerChips_4
+  - first:
+      213: -1644133143394737722
+    second: UpscaledPokerChips_5
+  - first:
+      213: -3162137179442006336
+    second: UpscaledPokerChips_6
+  - first:
+      213: -3239362522526050522
+    second: UpscaledPokerChips_7
+  - first:
+      213: -4524922283917576667
+    second: UpscaledPokerChips_8
+  - first:
+      213: 6364436397701140377
+    second: UpscaledPokerChips_9
+  - first:
+      213: -8335028021157234517
+    second: UpscaledPokerChips_10
+  - first:
+      213: -7787405537620088537
+    second: UpscaledPokerChips_11
+  - first:
+      213: -1079805952748017916
+    second: UpscaledPokerChips_12
+  - first:
+      213: -5936028431828457754
+    second: UpscaledPokerChips_13
+  - first:
+      213: -2225944975758342799
+    second: UpscaledPokerChips_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UpscaledPokerChips_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 155
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d25d41ed08f112b0800000000000000
+      internalID: -5615434521856093482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_1
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 155
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb0feec0c86721020800000000000000
+      internalID: 2311039902678970555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_2
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 155
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77b983b10b06c4c50800000000000000
+      internalID: 6650797059206585207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_3
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 155
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d6579682fad49200800000000000000
+      internalID: 186014219804038871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_4
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 155
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dbf33e5caf6cb3a0800000000000000
+      internalID: -6648316163800171559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_5
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 79
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c1a288fd9dde29e0800000000000000
+      internalID: -1644133143394737722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_6
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 79
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c6bd403df4dd14d0800000000000000
+      internalID: -3162137179442006336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_7
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 79
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6271f1ad2f87b03d0800000000000000
+      internalID: -3239362522526050522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_8
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 79
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 526f7d6282f3431c0800000000000000
+      internalID: -4524922283917576667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_9
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 79
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99f0b88fe25035850800000000000000
+      internalID: 6364436397701140377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_10
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 3
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba8fef5fc28045c80800000000000000
+      internalID: -8335028021157234517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_11
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 3
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 729ae384ce39de390800000000000000
+      internalID: -7787405537620088537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_12
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 3
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4072a100532c301f0800000000000000
+      internalID: -1079805952748017916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_13
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 3
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e6ee38779dfe9da0800000000000000
+      internalID: -5936028431828457754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UpscaledPokerChips_14
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 3
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 175cb5e86dadb11e0800000000000000
+      internalID: -2225944975758342799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      UpscaledPokerChips_0: -5615434521856093482
+      UpscaledPokerChips_1: 2311039902678970555
+      UpscaledPokerChips_10: -8335028021157234517
+      UpscaledPokerChips_11: -7787405537620088537
+      UpscaledPokerChips_12: -1079805952748017916
+      UpscaledPokerChips_13: -5936028431828457754
+      UpscaledPokerChips_14: -2225944975758342799
+      UpscaledPokerChips_2: 6650797059206585207
+      UpscaledPokerChips_3: 186014219804038871
+      UpscaledPokerChips_4: -6648316163800171559
+      UpscaledPokerChips_5: -1644133143394737722
+      UpscaledPokerChips_6: -3162137179442006336
+      UpscaledPokerChips_7: -3239362522526050522
+      UpscaledPokerChips_8: -4524922283917576667
+      UpscaledPokerChips_9: 6364436397701140377
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

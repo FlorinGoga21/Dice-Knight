@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Animator))]
 public class PlayerController : MonoBehaviour
@@ -265,6 +267,13 @@ public class PlayerController : MonoBehaviour
 
     private void HandleAttack()
     {
+        if (Mouse.current != null
+            && EventSystem.current != null
+            && EventSystem.current.IsPointerOverGameObject(Mouse.current.deviceId))
+        {
+            return;
+        }
+        
         if (!inputActions.Player.Attack.WasPressedThisFrame())
         {
             return;
