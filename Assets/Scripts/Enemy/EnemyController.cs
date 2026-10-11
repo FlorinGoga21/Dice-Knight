@@ -59,6 +59,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     private Coroutine attackDamageCoroutine;
     private bool isGrounded;
     private bool hasDied;
+    private bool turnBasedCombat;
     private int currentHealth;
     private Canvas healthBarCanvas;
     private ICurrencyReceiver currencyTarget;
@@ -250,6 +251,13 @@ public class EnemyController : MonoBehaviour, IDamageable
             return;
         }
 
+        if (turnBasedCombat)
+        {
+            rb.linearVelocity = Vector2.zero;
+            HandleAnimation();
+            return;
+        }
+
         UpdateGroundedState();
         UpdateAttackCooldown();
         HandleTarget();
@@ -263,7 +271,41 @@ public class EnemyController : MonoBehaviour, IDamageable
             return;
         }
 
+        if (turnBasedCombat)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         HandleMovement();
+    }
+
+    public bool IsWithinDetectionRange(Transform targetTransform)
+    {
+        return targetTransform != null
+            && !hasDied
+            && Mathf.Abs(targetTransform.position.x - transform.position.x) <= detectionRange;
+    }
+
+    public void SetTurnBasedCombat(bool enabled)
+    {
+        turnBasedCombat = enabled;
+        if (enabled)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    public void PerformTurnAttack()
+    {
+        if (hasDied || targetDamageable == null || targetDamageable.IsDead)
+        {
+            return;
+        }
+
+        animator.ResetTrigger("Attack");
+        animator.SetTrigger("Attack");
+        targetDamageable.TakeDamage(attackDamage);
     }
 
     public void PlayDamageAnimation()

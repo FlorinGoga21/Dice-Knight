@@ -1,5 +1,6 @@
 
 using System.Collections;
+using ActionInt = System.Action<int>;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class DiceRollUI : MonoBehaviour
 
     [Header("Dice UI")]
     [SerializeField] private Image[] diceImages;
+    [SerializeField] private Button rollButton;
     [SerializeField] private GameObject[] selectedIndicators;
     [SerializeField, Range(1, 3)] private int activeDiceCount = 1;
     [SerializeField] private DiceVisualSet[] diceVisuals;
@@ -32,6 +34,20 @@ public class DiceRollUI : MonoBehaviour
     private bool isRolling;
     private int selectedDieIndex;
 
+    public event ActionInt DiceRolled;
+    public bool IsRolling => isRolling;
+
+    public Sprite GetPipSprite(int dieIndex, int result)
+    {
+        DiceVisualSet visuals = GetDiceVisuals(dieIndex);
+        if (visuals == null || visuals.pipFaces == null || result < 1 || result > visuals.pipFaces.Length)
+        {
+            return null;
+        }
+
+        return visuals.pipFaces[result - 1];
+    }
+
     private void Awake()
     {
         activeDiceCount = Mathf.Clamp(activeDiceCount, 1, GetDiceSlotCount());
@@ -43,6 +59,14 @@ public class DiceRollUI : MonoBehaviour
     {
         if (!isRolling)
             StartCoroutine(RollAnimation());
+    }
+
+    public void SetRollButtonInteractable(bool interactable)
+    {
+        if (rollButton != null)
+        {
+            rollButton.interactable = interactable;
+        }
     }
 
     public void SelectDie(int dieIndex)
@@ -150,6 +174,7 @@ public class DiceRollUI : MonoBehaviour
         Debug.Log("Dice rolled: " + result);
 
         isRolling = false;
+        DiceRolled?.Invoke(result);
     }
 
     private IEnumerator PlayImpactAnimation(RectTransform diceImage)
