@@ -1,8 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Partial implementation of PlayerController handling enemy detection
+/// and turn-based dice combat sequencing.
+/// </summary>
 public partial class PlayerController
 {
+    private float encounterCheckTimer;
+    private const float EncounterCheckInterval = 0.1f;
+
     private void CheckForEnemyEncounter()
     {
         if (activeEnemy != null || turnCoroutine != null)
@@ -10,12 +17,25 @@ public partial class PlayerController
             return;
         }
 
+        encounterCheckTimer -= Time.deltaTime;
+        if (encounterCheckTimer > 0f)
+        {
+            return;
+        }
+        encounterCheckTimer = EncounterCheckInterval;
+
         EnemyController nearestEnemy = null;
         float nearestDistance = float.MaxValue;
-        foreach (EnemyController enemy in FindObjectsByType<EnemyController>())
+
+        foreach (EnemyController enemy in FindObjectsByType<EnemyController>(FindObjectsInactive.Exclude))
         {
+            if (enemy == null || enemy.IsDead)
+            {
+                continue;
+            }
+
             float distance = Mathf.Abs(enemy.transform.position.x - transform.position.x);
-            if (!enemy.IsDead && distance <= enemyDetectionRange && distance < nearestDistance)
+            if (distance <= enemyDetectionRange && distance < nearestDistance)
             {
                 nearestEnemy = enemy;
                 nearestDistance = distance;
@@ -57,6 +77,7 @@ public partial class PlayerController
     private IEnumerator RunTurnBasedCombat()
     {
         activeEnemy.SetTurnBasedCombat(true);
+        activeEnemy.Stats?.SetCombatHeartsVisible(true, combatUIFadeDuration);
 
         while (!hasDied && activeEnemy != null && !activeEnemy.IsDead)
         {
@@ -64,6 +85,7 @@ public partial class PlayerController
             ShowTurnText();
             waitingForPlayerRoll = true;
             diceRollUI.SetRollButtonInteractable(true);
+
             while (waitingForPlayerRoll && !hasDied && activeEnemy != null && !activeEnemy.IsDead)
             {
                 yield return null;
@@ -77,6 +99,7 @@ public partial class PlayerController
 
             int playerRoll = playerRollResult;
             int enemyRoll = Random.Range(1, 7);
+
             ShowRoll(playerRollDisplay, playerRoll, transform);
             ShowRoll(enemyRollDisplay, enemyRoll, activeEnemy.transform);
             yield return AnimateRollDisplaysIn();
@@ -86,6 +109,7 @@ public partial class PlayerController
             SpriteRenderer winningDisplay = playerRoll > enemyRoll
                 ? playerRollDisplay
                 : enemyRoll > playerRoll ? enemyRollDisplay : null;
+
             if (winningDisplay != null)
             {
                 yield return EnlargeWinningRoll(winningDisplay);
@@ -107,6 +131,7 @@ public partial class PlayerController
 
         if (activeEnemy != null)
         {
+            activeEnemy.Stats?.SetCombatHeartsVisible(false, combatUIFadeDuration);
             activeEnemy.SetTurnBasedCombat(false);
         }
 

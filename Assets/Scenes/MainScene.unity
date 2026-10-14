@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2617012
 RectTransform:
   m_ObjectHideFlags: 0
@@ -160,7 +160,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 50, y: -30}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 80, y: 16}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2617013
 MonoBehaviour:
@@ -2017,10 +2017,10 @@ RectTransform:
   - {fileID: 1552681355}
   m_Father: {fileID: 2617012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 24, y: -8}
+  m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &455770166
 MonoBehaviour:
@@ -2406,8 +2406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50fcdd57c57943541bacb8996cfc7803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  stats: {fileID: 512573325}
   target: {fileID: 1767568307}
-  detectionRange: 5.5
+  detectionRange: 8
   moveSpeed: 1.5
   stoppingDistance: 0.5
   attackRange: 1
@@ -2424,18 +2425,9 @@ MonoBehaviour:
   deathAnimationTimeout: 5
   damageFlashMaterial: {fileID: 2100000, guid: bef7e6d07e25823419becbe99854e4b3, type: 2}
   damageFlashDuration: 0.05
-  damageNumber: {fileID: 512573324}
-  maxHealth: 40
-  healthBar: {fileID: 875124599}
-  minimumCoinsDropped: 10
-  maximumCoinsDropped: 100
-  coinValue: 100
-  coinSprite: {fileID: 21300000, guid: f7c50b96859fbf74afd4b644506169cb, type: 3}
-  coinSpawnDelay: 0
-  coinJumpDuration: 2
-  coinJumpHorizontalRange: {x: -1, y: 1}
-  coinJumpHeightRange: {x: 1, y: 2}
-  coinFlightDuration: 1.5
+  playerCamera: {fileID: 1320703840}
+  damageShakeDuration: 0.25
+  damageShakeMagnitude: 0.035
 --- !u!95 &512573323
 Animator:
   serializedVersion: 7
@@ -2478,6 +2470,38 @@ MonoBehaviour:
   fontSize: 2
   color: {r: 1, g: 0, b: 0, a: 1}
   sortingOrder: 100
+--- !u!114 &512573325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512573319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd4066871694479a5766f1e792a1967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  maxHealth: 20
+  currentHealth: 20
+  fullHeartSprite: {fileID: 21300000, guid: a11b878d437c3d927ce2348305d66e70, type: 3}
+  halfHeartSprite: {fileID: 21300000, guid: 01d1fc0aa843bd377cf2fb43322ae6cf, type: 3}
+  emptyHeartSprite: {fileID: 21300000, guid: f03b01720fa59e8152f7c773f585d8f7, type: 3}
+  heartDissolveMaterial: {fileID: 2100000, guid: a841624804e5b984895171be57e2a9e9, type: 2}
+  heartDissolveDuration: 0.35
+  heartOutlineMaterial: {fileID: 2100000, guid: 445e2f2ae0a6b404995d36e89771930a, type: 2}
+  overheadOffset: {x: 0, y: 1.1, z: 0}
+  enemyController: {fileID: 512573322}
+  damageNumber: {fileID: 512573324}
+  minimumCoinsDropped: 10
+  maximumCoinsDropped: 100
+  coinValue: 100
+  coinSprite: {fileID: 21300000, guid: f7c50b96859fbf74afd4b644506169cb, type: 3}
+  coinSpawnDelay: 0
+  coinJumpDuration: 2
+  coinJumpHorizontalRange: {x: -1, y: 1}
+  coinJumpHeightRange: {x: 1, y: 2}
+  coinFlightDuration: 1.5
 --- !u!1 &536544076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,10 +2534,10 @@ RectTransform:
   - {fileID: 412340287}
   m_Father: {fileID: 2617012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 56, y: -8}
+  m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &536544078
 MonoBehaviour:
@@ -3805,7 +3829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &875124598
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3910,10 +3934,10 @@ RectTransform:
   - {fileID: 660501216}
   m_Father: {fileID: 2617012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 8, y: -8}
+  m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1021014269
 MonoBehaviour:
@@ -4970,7 +4994,7 @@ PrefabInstance:
       objectReference: {fileID: 1352414126}
     - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: attackDamage
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: playerCamera
@@ -4990,7 +5014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: damageShakeDuration
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: enemyDetectionRange
@@ -5006,7 +5030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: damageShakeMagnitude
-      value: 0.25
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: rollDisplayAppearDuration
@@ -5024,6 +5048,10 @@ PrefabInstance:
       propertyPath: damageNumber
       value: 
       objectReference: {fileID: 1774471029}
+    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: healthHeartsUI
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: healthContainer
       value: 
@@ -5784,10 +5812,10 @@ RectTransform:
   - {fileID: 281379256}
   m_Father: {fileID: 2617012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 40, y: -8}
+  m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1519923401
 MonoBehaviour:
@@ -6118,10 +6146,10 @@ RectTransform:
   - {fileID: 724861093}
   m_Father: {fileID: 2617012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 72, y: -8}
+  m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1681249374
 MonoBehaviour:
@@ -6584,7 +6612,7 @@ RectTransform:
   m_Father: {fileID: 2059847863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7436,6 +7464,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3686750594467381620, guid: bfbc0a6b5f804cf47bce3a89a8e5f11a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 512573322}
+    - targetCorrespondingSourceObject: {fileID: 3686750594467381620, guid: bfbc0a6b5f804cf47bce3a89a8e5f11a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 512573325}
     - targetCorrespondingSourceObject: {fileID: 3686750594467381620, guid: bfbc0a6b5f804cf47bce3a89a8e5f11a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 512573324}

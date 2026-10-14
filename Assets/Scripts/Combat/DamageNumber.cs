@@ -2,6 +2,10 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Spawns floating, fading damage number indicators that arc upwards and sideways
+/// when an entity takes damage.
+/// </summary>
 public sealed class DamageNumber : MonoBehaviour
 {
     [Header("---Animation---")]
@@ -20,6 +24,9 @@ public sealed class DamageNumber : MonoBehaviour
     [SerializeField] private Color color = Color.red;
     [SerializeField] private int sortingOrder = 100;
 
+    /// <summary>
+    /// Spawns and animates a floating damage number at this entity's position.
+    /// </summary>
     public void ShowDamage(int damage)
     {
         GameObject damageNumberObject = new GameObject("Damage Number");
@@ -31,6 +38,7 @@ public sealed class DamageNumber : MonoBehaviour
         {
             text.font = font;
         }
+
         text.color = color;
         text.alignment = TextAlignmentOptions.Center;
         text.fontSize = fontSize;
@@ -39,8 +47,8 @@ public sealed class DamageNumber : MonoBehaviour
 
         Vector3 startPosition = damageNumberObject.transform.position;
         float horizontalDirection = Random.value < 0.5f ? -1f : 1f;
-        Vector3 endPosition = startPosition
-            + Vector3.right * horizontalDirection * horizontalDistance;
+        Vector3 endPosition = startPosition + Vector3.right * horizontalDirection * horizontalDistance;
+
         StartCoroutine(Animate(damageNumberObject, text, startPosition, endPosition));
     }
 
@@ -60,12 +68,11 @@ public sealed class DamageNumber : MonoBehaviour
             float arcHeight = Mathf.Sin(progress * Mathf.PI) * jumpHeight;
 
             damageNumberObject.transform.position =
-                Vector3.Lerp(startPosition, endPosition, smoothProgress)
-                + Vector3.up * arcHeight;
+                Vector3.Lerp(startPosition, endPosition, smoothProgress) + Vector3.up * arcHeight;
 
-            Color color = text.color;
-            color.a = 1f - progress;
-            text.color = color;
+            Color textColor = text.color;
+            textColor.a = 1f - progress;
+            text.color = textColor;
             yield return null;
         }
 

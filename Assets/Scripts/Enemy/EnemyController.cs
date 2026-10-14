@@ -1,10 +1,17 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// Controls enemy movement, targeting AI, attack animations, damage flashing,
+/// and turn-based combat actions. Works in tandem with EnemyStats for health and rewards.
+/// </summary>
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Animator))]
+[RequireComponent(typeof(EnemyStats))]
 public class EnemyController : MonoBehaviour, IDamageable
 {
+    [Header("---Stats---")]
+    [SerializeField] private EnemyStats stats;
+
     [Header("---Target---")]
     [SerializeField] private Transform target;
     [SerializeField] private float detectionRange = 12f;
@@ -23,7 +30,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 0.1f;
 
-    [Header("---Animation---")]
+    [Header("---Animation & Visuals---")]
     [SerializeField] private Animator animator;
     [SerializeField] private Transform visuals;
     [SerializeField] private bool spriteFacesRight = true;
@@ -34,191 +41,50 @@ public class EnemyController : MonoBehaviour, IDamageable
     [Header("---Damage Flash---")]
     [SerializeField] private Material damageFlashMaterial;
     [SerializeField] private float damageFlashDuration = 0.1f;
-    [SerializeField] private DamageNumber damageNumber;
 
-    [Header("---Health---")]
-    [SerializeField] private int maxHealth = 30;
-    [SerializeField] private Slider healthBar;
-
-    [Header("---Coins---")]
-    [Min(0)]
-    [SerializeField] private int minimumCoinsDropped = 3;
-    [Min(0)]
-    [SerializeField] private int maximumCoinsDropped = 3;
-    [SerializeField] private int coinValue = 1;
-    [SerializeField] private Sprite coinSprite;
-    [SerializeField] private float coinSpawnDelay = 0.5f;
-    [SerializeField] private float coinJumpDuration = 0.35f;
-    [SerializeField] private Vector2 coinJumpHorizontalRange = new Vector2(-0.5f, 0.5f);
-    [SerializeField] private Vector2 coinJumpHeightRange = new Vector2(0.5f, 1f);
-    [SerializeField] private float coinFlightDuration = 0.5f;
+    [Header("---Damage Shake---")]
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private float damageShakeDuration = 0.2f;
+    [SerializeField] private float damageShakeMagnitude = 0.1f;
 
     private Rigidbody2D rb;
     private Collider2D col;
-    private float attackCooldownRemaining;
-    private Coroutine attackDamageCoroutine;
-    private bool isGrounded;
-    private bool hasDied;
-    private bool turnBasedCombat;
-    private int currentHealth;
-    private Canvas healthBarCanvas;
-    private ICurrencyReceiver currencyTarget;
     private IDamageable targetDamageable;
-    private IDamageable ownDamageable;
     private SpriteRenderer[] spriteRenderers;
     private Material[] damageFlashMaterials;
     private Coroutine damageFlashCoroutine;
+    private Coroutine attackDamageCoroutine;
+    private Coroutine damageShakeCoroutine;
+
+    private float attackCooldownRemaining;
+    private bool isGrounded;
+    private bool hasDied;
+    private bool turnBasedCombat;
+    private Vector3 damageShakeOffset;
+
     private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
-    public bool IsDead => hasDied;
+    public bool IsDead => (stats != null && stats.IsDead) || hasDied;
+    public EnemyStats Stats => stats;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-        ownDamageable = GetComponentInParent<IDamageable>();
-        if (damageNumber == null)
-        {
-            damageNumber = GetComponent<DamageNumber>();
-        }
-
-        if (damageNumber == null)
-        {
-            Debug.LogWarning(
-                $"{nameof(DamageNumber)} is not attached to the enemy. Damage numbers will be disabled.",
-                this);
-        }
-
         animator = animator != null ? animator : GetComponent<Animator>();
         visuals = visuals != null ? visuals : transform;
+
+        if (stats == null)
+        {
+            stats = GetComponent<EnemyStats>();
+            if (stats == null)
+            {
+                stats = gameObject.AddComponent<EnemyStats>();
+            }
+        }
+
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         SetupDamageFlashMaterials();
-        currentHealth = maxHealth;
-        healthBarCanvas = healthBar != null
-            ? healthBar.GetComponentInParent<Canvas>(true)
-            : null;
-
-        if (healthBar != null)
-        {
-            healthBar.maxValue = maxHealth;
-            healthBar.value = maxHealth;
-            SetHealthBarVisible(false);
-        }
-    }
-
-    public class CoinPickup : MonoBehaviour
-    {
-        private ICurrencyReceiver target;
-        private int value;
-        private float delay;
-        private float jumpDuration;
-        private Vector2 jumpOffset;
-        private float jumpHeight;
-        private float flightDuration;
-        private Camera mainCamera;
-
-        public void Initialize(
-            ICurrencyReceiver currencyReceiver,
-            int currencyValue,
-            float pickupDelay,
-            float launchDuration,
-            Vector2 launchOffset,
-            float launchHeight,
-            float duration)
-        {
-            target = currencyReceiver;
-            value = currencyValue;
-            delay = pickupDelay;
-            jumpDuration = Mathf.Max(0.05f, launchDuration);
-            jumpOffset = launchOffset;
-            jumpHeight = Mathf.Max(0f, launchHeight);
-            flightDuration = Mathf.Max(0.05f, duration);
-            mainCamera = Camera.main;
-            StartCoroutine(FlyToCurrency());
-        }
-
-        private IEnumerator FlyToCurrency()
-        {
-            yield return new WaitForSeconds(delay);
-
-            if (target == null || !target.CanReceiveCurrency || target.CurrencyTarget == null)
-            {
-                Destroy(gameObject);
-                yield break;
-            }
-
-            Vector3 startPosition = transform.position;
-            Vector3 jumpEndPosition = startPosition + (Vector3)jumpOffset;
-            float jumpElapsed = 0f;
-
-            while (jumpElapsed < jumpDuration)
-            {
-                jumpElapsed += Time.deltaTime;
-                float progress = Mathf.Clamp01(jumpElapsed / jumpDuration);
-                float arcHeight = Mathf.Sin(progress * Mathf.PI) * jumpHeight;
-                transform.position = Vector3.Lerp(startPosition, jumpEndPosition, progress)
-                    + Vector3.up * arcHeight;
-                yield return null;
-            }
-
-            startPosition = transform.position;
-            float elapsed = 0f;
-
-            while (elapsed < flightDuration)
-            {
-                if (target == null || !target.CanReceiveCurrency || target.CurrencyTarget == null)
-                {
-                    Destroy(gameObject);
-                    yield break;
-                }
-
-                elapsed += Time.deltaTime;
-                float progress = Mathf.Clamp01(elapsed / flightDuration);
-                Vector3 targetPosition = GetCurrencyWorldPosition();
-                transform.position = Vector3.Lerp(startPosition, targetPosition, progress * progress);
-                yield return null;
-            }
-
-            target.AddCurrency(value);
-            Destroy(gameObject);
-        }
-
-        private Vector3 GetCurrencyWorldPosition()
-        {
-            Transform currencyTarget = target.CurrencyTarget;
-            RectTransform rectTransform = currencyTarget as RectTransform;
-            Canvas canvas = currencyTarget.GetComponentInParent<Canvas>();
-
-            if (mainCamera == null || rectTransform == null || canvas == null)
-            {
-                return currencyTarget.position;
-            }
-
-            Camera canvasCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay
-                ? null
-                : canvas.worldCamera;
-            Vector2 screenPosition = RectTransformUtility.WorldToScreenPoint(canvasCamera, rectTransform.position);
-            float distanceFromCamera = Mathf.Abs(mainCamera.transform.position.z - transform.position.z);
-            return mainCamera.ScreenToWorldPoint(
-                new Vector3(screenPosition.x, screenPosition.y, distanceFromCamera)
-            );
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (damageFlashMaterials == null)
-        {
-            return;
-        }
-
-        foreach (Material material in damageFlashMaterials)
-        {
-            if (material != null)
-            {
-                Destroy(material);
-            }
-        }
     }
 
     private void Start()
@@ -229,17 +95,12 @@ public class EnemyController : MonoBehaviour, IDamageable
             target = player != null ? player.transform : null;
         }
 
-        currencyTarget = target != null
-            ? target.GetComponentInParent<ICurrencyReceiver>()
-            : null;
-        targetDamageable = target != null
-            ? target.GetComponentInParent<IDamageable>()
-            : null;
+        targetDamageable = target != null ? target.GetComponentInParent<IDamageable>() : null;
 
-        if (ReferenceEquals(targetDamageable, ownDamageable))
+        // Prevent target damageable from matching this enemy's own damageable
+        if (ReferenceEquals(targetDamageable, this) || (stats != null && ReferenceEquals(targetDamageable, stats)))
         {
             target = null;
-            currencyTarget = null;
             targetDamageable = null;
         }
     }
@@ -266,26 +127,37 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
-        if (hasDied)
+        if (hasDied || turnBasedCombat)
         {
-            return;
-        }
-
-        if (turnBasedCombat)
-        {
-            rb.linearVelocity = Vector2.zero;
             return;
         }
 
         HandleMovement();
     }
 
-    public bool IsWithinDetectionRange(Transform targetTransform)
+    private void OnDestroy()
     {
-        return targetTransform != null
-            && !hasDied
-            && Mathf.Abs(targetTransform.position.x - transform.position.x) <= detectionRange;
+        CleanupDamageFlashMaterials();
     }
+
+    // ==========================================
+    // IDamageable Implementation & Forwarding
+    // ==========================================
+
+    /// <summary>
+    /// Forwards damage taking to EnemyStats.
+    /// </summary>
+    public void TakeDamage(int damage)
+    {
+        if (stats != null)
+        {
+            stats.TakeDamage(damage);
+        }
+    }
+
+    // ==========================================
+    // Combat & Turn-Based Combat
+    // ==========================================
 
     public void SetTurnBasedCombat(bool enabled)
     {
@@ -308,83 +180,6 @@ public class EnemyController : MonoBehaviour, IDamageable
         targetDamageable.TakeDamage(attackDamage);
     }
 
-    public void PlayDamageAnimation()
-    {
-        if (hasDied)
-        {
-            return;
-        }
-
-        animator.ResetTrigger("TakeDamage");
-        animator.SetTrigger("TakeDamage");
-    }
-
-    public void TakeDamage(int damage)
-    {
-        if (hasDied || damage <= 0)
-        {
-            return;
-        }
-
-        currentHealth = Mathf.Max(0, currentHealth - damage);
-        damageNumber?.ShowDamage(damage);
-        ShowHealthBar();
-        FlashWhenDamaged();
-        PlayDamageAnimation();
-
-        if (currentHealth == 0)
-        {
-            Die();
-        }
-    }
-
-    private void FlashWhenDamaged()
-    {
-        if (hasDied || damageFlashMaterials == null)
-        {
-            return;
-        }
-
-        if (damageFlashCoroutine != null)
-        {
-            StopCoroutine(damageFlashCoroutine);
-        }
-
-        damageFlashCoroutine = StartCoroutine(DamageFlash());
-    }
-
-    private IEnumerator DamageFlash()
-    {
-        SetFlashAmount(1f);
-        yield return new WaitForSeconds(damageFlashDuration);
-        SetFlashAmount(0f);
-        damageFlashCoroutine = null;
-    }
-
-    private void SetFlashAmount(float amount)
-    {
-        foreach (Material material in damageFlashMaterials)
-        {
-            material.SetFloat(FlashAmount, amount);
-        }
-    }
-
-    private void SetupDamageFlashMaterials()
-    {
-        if (damageFlashMaterial == null)
-        {
-            return;
-        }
-
-        damageFlashMaterials = new Material[spriteRenderers.Length];
-        for (int i = 0; i < spriteRenderers.Length; i++)
-        {
-            Material material = new Material(damageFlashMaterial);
-            spriteRenderers[i].material = material;
-            damageFlashMaterials[i] = material;
-        }
-    }
-
     public void PlayAttackAnimation()
     {
         if (hasDied || attackCooldownRemaining > 0f)
@@ -398,72 +193,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         attackDamageCoroutine = StartCoroutine(ApplyAttackDamage());
     }
 
-    public void Die()
-    {
-        if (hasDied)
-        {
-            return;
-        }
-
-        hasDied = true;
-        rb.linearVelocity = Vector2.zero;
-        rb.simulated = false;
-        col.enabled = false;
-        if (attackDamageCoroutine != null)
-        {
-            StopCoroutine(attackDamageCoroutine);
-            attackDamageCoroutine = null;
-        }
-
-        if (healthBar != null)
-        {
-            SetHealthBarVisible(false);
-        }
-
-        animator.SetBool("hasDied", true);
-        SetHealthBarVisible(false);
-        SpawnCoins();
-        StartCoroutine(HideAfterDeathAnimation());
-    }
-
-    private IEnumerator HideAfterDeathAnimation()
-    {
-        float elapsed = 0f;
-
-        while (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die")
-            && elapsed < deathAnimationTimeout)
-        {
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        while (elapsed < deathAnimationTimeout)
-        {
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("Die") && stateInfo.normalizedTime >= 1f)
-            {
-                break;
-            }
-
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        visuals.gameObject.SetActive(false);
-    }
-
     private IEnumerator ApplyAttackDamage()
     {
         yield return new WaitForSeconds(attackHitDelay);
 
-        if (hasDied || target == null)
-        {
-            attackDamageCoroutine = null;
-            yield break;
-        }
-
-        if (ReferenceEquals(targetDamageable, ownDamageable)
-            || (targetDamageable != null && targetDamageable.IsDead))
+        if (hasDied || target == null || targetDamageable == null || targetDamageable.IsDead)
         {
             attackDamageCoroutine = null;
             yield break;
@@ -472,24 +206,26 @@ public class EnemyController : MonoBehaviour, IDamageable
         float horizontalDistance = Mathf.Abs(target.position.x - transform.position.x);
         if (horizontalDistance <= attackRange)
         {
-            if (targetDamageable != null)
-            {
-                targetDamageable.TakeDamage(attackDamage);
-            }
+            targetDamageable.TakeDamage(attackDamage);
         }
 
         attackDamageCoroutine = null;
     }
 
+    // ==========================================
+    // AI, Movement & Targeting
+    // ==========================================
+
+    public bool IsWithinDetectionRange(Transform targetTransform)
+    {
+        return targetTransform != null
+            && !hasDied
+            && Mathf.Abs(targetTransform.position.x - transform.position.x) <= detectionRange;
+    }
+
     private void HandleTarget()
     {
-        if (target == null)
-        {
-            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-            return;
-        }
-
-        if (targetDamageable != null && targetDamageable.IsDead)
+        if (target == null || (targetDamageable != null && targetDamageable.IsDead))
         {
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             return;
@@ -515,14 +251,8 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     private void HandleMovement()
     {
-        if (target == null)
+        if (target == null || (targetDamageable != null && targetDamageable.IsDead))
         {
-            return;
-        }
-
-        if (targetDamageable != null && targetDamageable.IsDead)
-        {
-            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             return;
         }
 
@@ -549,12 +279,6 @@ public class EnemyController : MonoBehaviour, IDamageable
         visuals.localScale = scale;
     }
 
-    private void HandleAnimation()
-    {
-        animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
-        animator.SetBool("Grounded", isGrounded);
-    }
-
     private void UpdateAttackCooldown()
     {
         if (attackCooldownRemaining > 0f)
@@ -563,83 +287,204 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
     }
 
-    private void ShowHealthBar()
-    {
-        if (healthBar == null)
-        {
-            return;
-        }
-
-        SetHealthBarVisible(true);
-        healthBar.value = currentHealth;
-    }
-
-    private void SetHealthBarVisible(bool visible)
-    {
-        if (healthBar == null)
-        {
-            return;
-        }
-
-        if (healthBarCanvas != null)
-        {
-            healthBarCanvas.gameObject.SetActive(visible);
-        }
-
-        healthBar.gameObject.SetActive(visible);
-    }
-
-    private void SpawnCoins()
-    {
-        if (currencyTarget == null)
-        {
-            return;
-        }
-
-        Sprite pickupSprite = coinSprite != null ? coinSprite : currencyTarget.CurrencySprite;
-        if (pickupSprite == null)
-        {
-            return;
-        }
-
-        int minimumCoins = Mathf.Max(0, minimumCoinsDropped);
-        int maximumCoins = Mathf.Max(minimumCoins, maximumCoinsDropped);
-        int coinsToSpawn = Random.Range(minimumCoins, maximumCoins + 1);
-
-        for (int i = 0; i < coinsToSpawn; i++)
-        {
-            GameObject coinObject = new GameObject("Coin Pickup");
-            coinObject.transform.position = transform.position + Vector3.up * 0.2f;
-
-            SpriteRenderer renderer = coinObject.AddComponent<SpriteRenderer>();
-            renderer.sprite = pickupSprite;
-            renderer.sortingOrder = 20;
-
-            CoinPickup pickup = coinObject.AddComponent<CoinPickup>();
-            Vector2 horizontalRange = new Vector2(
-                Mathf.Min(coinJumpHorizontalRange.x, coinJumpHorizontalRange.y),
-                Mathf.Max(coinJumpHorizontalRange.x, coinJumpHorizontalRange.y));
-            Vector2 heightRange = new Vector2(
-                Mathf.Min(coinJumpHeightRange.x, coinJumpHeightRange.y),
-                Mathf.Max(coinJumpHeightRange.x, coinJumpHeightRange.y));
-            Vector2 launchOffset = new Vector2(Random.Range(horizontalRange.x, horizontalRange.y), 0f);
-            float launchHeight = Random.Range(heightRange.x, heightRange.y);
-
-            pickup.Initialize(
-                currencyTarget,
-                coinValue,
-                coinSpawnDelay,
-                coinJumpDuration,
-                launchOffset,
-                launchHeight,
-                coinFlightDuration);
-        }
-    }
-
     private void UpdateGroundedState()
     {
         Bounds bounds = col.bounds;
         Vector2 origin = new Vector2(bounds.center.x, bounds.min.y);
         isGrounded = Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundLayer);
+    }
+
+    // ==========================================
+    // Visuals, Animations & Effects
+    // ==========================================
+
+    private void HandleAnimation()
+    {
+        animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
+        animator.SetBool("Grounded", isGrounded);
+    }
+
+    public void ShakeWhenDamaged()
+    {
+        if (hasDied || playerCamera == null || damageShakeDuration <= 0f || damageShakeMagnitude <= 0f)
+        {
+            return;
+        }
+
+        if (damageShakeCoroutine != null)
+        {
+            StopCoroutine(damageShakeCoroutine);
+        }
+
+        damageShakeCoroutine = StartCoroutine(DamageShake());
+    }
+
+    private IEnumerator DamageShake()
+    {
+        if (playerCamera == null)
+        {
+            damageShakeCoroutine = null;
+            yield break;
+        }
+
+        // Cache the original camera position.
+        Vector3 originalCamPos = playerCamera.transform.position;
+        float elapsed = 0f;
+
+        while (elapsed < damageShakeDuration)
+        {
+            float strength = Mathf.Lerp(
+                damageShakeMagnitude,
+                0f,
+                elapsed / damageShakeDuration
+            );
+            // Apply a random offset to the camera's position.
+            Vector2 offset2D = Random.insideUnitCircle * strength;
+            playerCamera.transform.position = originalCamPos + new Vector3(offset2D.x, offset2D.y, 0f);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Restore the original camera position.
+        playerCamera.transform.position = originalCamPos;
+        damageShakeCoroutine = null;
+    }
+
+    public void PlayDamageAnimation()
+    {
+        if (hasDied)
+        {
+            return;
+        }
+
+        animator.ResetTrigger("TakeDamage");
+        animator.SetTrigger("TakeDamage");
+    }
+
+    public void FlashWhenDamaged()
+    {
+        if (hasDied || damageFlashMaterials == null)
+        {
+            return;
+        }
+
+        if (damageFlashCoroutine != null)
+        {
+            StopCoroutine(damageFlashCoroutine);
+        }
+
+        damageFlashCoroutine = StartCoroutine(DamageFlash());
+        ShakeWhenDamaged();
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        SetFlashAmount(1f);
+        yield return new WaitForSeconds(damageFlashDuration);
+        SetFlashAmount(0f);
+        damageFlashCoroutine = null;
+    }
+
+    private void SetFlashAmount(float amount)
+    {
+        if (damageFlashMaterials == null)
+        {
+            return;
+        }
+
+        foreach (Material material in damageFlashMaterials)
+        {
+            if (material != null)
+            {
+                material.SetFloat(FlashAmount, amount);
+            }
+        }
+    }
+
+    private void SetupDamageFlashMaterials()
+    {
+        if (damageFlashMaterial == null || spriteRenderers == null)
+        {
+            return;
+        }
+
+        damageFlashMaterials = new Material[spriteRenderers.Length];
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            Material material = new Material(damageFlashMaterial);
+            spriteRenderers[i].material = material;
+            damageFlashMaterials[i] = material;
+        }
+    }
+
+    private void CleanupDamageFlashMaterials()
+    {
+        if (damageFlashMaterials == null)
+        {
+            return;
+        }
+
+        foreach (Material material in damageFlashMaterials)
+        {
+            if (material != null)
+            {
+                Destroy(material);
+            }
+        }
+    }
+
+    // ==========================================
+    // Death Handling
+    // ==========================================
+
+    /// <summary>
+    /// Disables enemy controls, collider, and physics, and begins death animation.
+    /// Called by EnemyStats when health reaches 0.
+    /// </summary>
+    public void Die()
+    {
+        if (hasDied)
+        {
+            return;
+        }
+
+        hasDied = true;
+        rb.linearVelocity = Vector2.zero;
+        rb.simulated = false;
+        col.enabled = false;
+
+        if (attackDamageCoroutine != null)
+        {
+            StopCoroutine(attackDamageCoroutine);
+            attackDamageCoroutine = null;
+        }
+
+        animator.SetBool("hasDied", true);
+        StartCoroutine(HideAfterDeathAnimation());
+    }
+
+    private IEnumerator HideAfterDeathAnimation()
+    {
+        float elapsed = 0f;
+
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die") && elapsed < deathAnimationTimeout)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        while (elapsed < deathAnimationTimeout)
+        {
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("Die") && stateInfo.normalizedTime >= 1f)
+            {
+                break;
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        visuals.gameObject.SetActive(false);
     }
 }

@@ -88,6 +88,7 @@ public partial class PlayerController : MonoBehaviour
     private Coroutine turnTextCoroutine;
     private Vector2 turnTextStartPosition;
     private Color turnTextColor;
+    private PlayerStats playerStats;
     private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
     private void Awake()
@@ -95,6 +96,7 @@ public partial class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         ownDamageable = GetComponentInParent<IDamageable>();
+        playerStats = GetComponent<PlayerStats>();
         animator = animator != null ? animator : GetComponent<Animator>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         SetupDamageFlashMaterials();
@@ -261,6 +263,8 @@ public partial class PlayerController : MonoBehaviour
             StopCoroutine(combatUIFadeCoroutine);
             combatUIFadeCoroutine = null;
         }
+
+        playerStats?.SetCombatHeartsVisible(visible, combatUIFadeDuration);
 
         if (playerDice != null)
         {
@@ -634,14 +638,11 @@ public partial class PlayerController : MonoBehaviour
     private IEnumerator QuitGame()
     {
         Debug.Log("Quitting game...");
-        yield return new WaitForSeconds(3f); // Optional: Wait for a moment before quitting
-        if (Application.isEditor)
-        {
-            UnityEditor.EditorApplication.isPlaying = false; // Stop play mode in the editor
-        }
-        else
-        {
-            Application.Quit(); // Quit the application
-        }
+        yield return new WaitForSeconds(3f);
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

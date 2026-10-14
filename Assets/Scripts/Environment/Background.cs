@@ -1,13 +1,18 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace MyGame.Environment 
+namespace MyGame.Environment
 {
-    public class Background : MonoBehaviour 
+    /// <summary>
+    /// Creates an endlessly scrolling parallax background by spawning adjacent chunks
+    /// and repositioning them as the camera moves horizontally.
+    /// </summary>
+    public class Background : MonoBehaviour
     {
         [Header("---Movement Settings---")]
         [SerializeField] private Transform playerCamera;
         [SerializeField] private float chunkWidth = 20f;
 
+        private Camera targetCamera;
         private bool isClone;
 
         private void Start()
@@ -17,16 +22,20 @@ namespace MyGame.Environment
                 CreateAdjacentChunks();
             }
 
-            if (playerCamera == null)
+            if (playerCamera == null && Camera.main != null)
             {
-                playerCamera = Camera.main != null ? Camera.main.transform : null;
+                playerCamera = Camera.main.transform;
             }
 
+            if (playerCamera != null)
+            {
+                targetCamera = playerCamera.GetComponent<Camera>();
+            }
         }
 
         private void LateUpdate()
         {
-            if (playerCamera == null)
+            if (playerCamera == null || targetCamera == null)
             {
                 return;
             }
@@ -50,8 +59,7 @@ namespace MyGame.Environment
 
         private void RecycleChunk()
         {
-            float cameraHalfWidth = playerCamera.GetComponent<Camera>().orthographicSize
-                * playerCamera.GetComponent<Camera>().aspect;
+            float cameraHalfWidth = targetCamera.orthographicSize * targetCamera.aspect;
             float leftEdge = playerCamera.position.x - cameraHalfWidth;
             float rightEdge = playerCamera.position.x + cameraHalfWidth;
 

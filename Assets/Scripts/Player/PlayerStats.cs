@@ -1,22 +1,30 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using TMPro;
 
+/// <summary>
+/// Manages player health and currency.
+/// Health is represented by overhead hearts (20 HP per full heart, 10 HP per half heart),
+/// which fade in exclusively during combat encounters.
+/// </summary>
 public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
 {
-    [Header("---Health---")]
-    [SerializeField] private Transform healthContainer;
-    [SerializeField] private Image[] healthIcons;
+    [Header("---Health Settings---")]
+    [SerializeField] private int MaxHealth = 100;
+    [SerializeField] private int currentHealth = 100;
+
+    [Header("---Overhead Hearts UI---")]
     [SerializeField] private Sprite fullHeartSprite;
     [SerializeField] private Sprite halfHeartSprite;
     [SerializeField] private Sprite emptyHeartSprite;
     [SerializeField] private Material heartDissolveMaterial;
     [SerializeField] private float heartDissolveDuration = 0.35f;
     [SerializeField] private Material heartOutlineMaterial;
+    [SerializeField] private Vector3 overheadOffset = new Vector3(0f, 1.4f, 0f);
 
-    [Header("---Currency---")]
+    [Header("---Currency Settings---")]
     [SerializeField] private TextMeshProUGUI currencyText;
     [SerializeField] private Image currencyCoinImage;
     [SerializeField] private Material coinShineMaterial;
@@ -24,20 +32,11 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     [SerializeField] private float currencyGainNotificationRise = 24f;
     [SerializeField] private Color currencyGainNotificationColor = Color.white;
 
-    [Header("---Player---")]
+    [Header("---References---")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private DamageNumber damageNumber;
-    [SerializeField] private int MaxHealth = 100;
-    [SerializeField] private int currentHealth = 100;
     [SerializeField] private int currency = 0;
-    public bool IsDead => currentHealth <= 0;
-    public bool CanReceiveCurrency => !IsDead;
-    public Transform CurrencyTarget => currencyCoinImage != null ? currencyCoinImage.transform : null;
-    public Sprite CurrencySprite => currencyCoinImage != null ? currencyCoinImage.sprite : null;
-    private Material[] heartMaterials;
-    private Coroutine[] heartDissolveCoroutines;
-    private Image[] heartOutlineIcons;
-    private Material[] heartOutlineMaterials;
+
     private Material coinMaterial;
     private Canvas currencyCanvas;
     private TextMeshProUGUI currencyGainNotification;
@@ -45,8 +44,23 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     private Coroutine currencyGainNotificationCoroutine;
     private int currencyGainNotificationAmount;
     private Vector2 currencyGainNotificationStartPosition;
+    private HealthHeartsUI healthHeartsUI;
 
-    private void Start()
+    public bool IsDead => currentHealth <= 0;
+    public bool CanReceiveCurrency => !IsDead;
+    public Transform CurrencyTarget => currencyCoinImage != null ? currencyCoinImage.transform : null;
+    public Sprite CurrencySprite => currencyCoinImage != null ? currencyCoinImage.sprite : null;
+    public int CurrentHealth => currentHealth;
+    public int MaxHealthValue => MaxHealth;
+    public int Currency => currency;
+
+    public Sprite FullHeartSprite => fullHeartSprite;
+    public Sprite HalfHeartSprite => halfHeartSprite;
+    public Sprite EmptyHeartSprite => emptyHeartSprite;
+    public Material HeartDissolveMaterial => heartDissolveMaterial;
+    public Material HeartOutlineMaterial => heartOutlineMaterial;
+
+    private void Awake()
     {
         if (playerController == null)
         {
@@ -58,131 +72,149 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
             damageNumber = GetComponent<DamageNumber>();
         }
 
-        if (damageNumber == null)
-        {
-            Debug.LogWarning(
-                $"{nameof(DamageNumber)} is not attached to the player. Damage numbers will be disabled.",
-                this);
-        }
-
-        CacheHealthUI();
-        CacheCurrencyUI();
         currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
-        UpdateUI(false);
+        InitializeOverheadHearts();
     }
 
-    private void OnDestroy()
+    private void Start()
     {
-        if (heartMaterials != null)
-        {
-            foreach (Material material in heartMaterials)
-            {
-                if (material != null)
-                {
-                    Destroy(material);
-                }
-            }
-        }
+        CacheCurrencyUI();
+        UpdateCurrencyUI();
 
-        if (coinMaterial != null)
+        // Ensure hearts start hidden until combat encounters
+        if (healthHeartsUI != null)
         {
-            Destroy(coinMaterial);
-        }
-
-        if (heartOutlineMaterials != null)
-        {
-            foreach (Material material in heartOutlineMaterials)
-            {
-                if (material != null)
-                {
-                    Destroy(material);
-                }
-            }
+            healthHeartsUI.SetVisible(false);
         }
     }
 
     private void Update()
     {
-        AddCurrency();
-        TestTakeDamage();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        HandleDebugInput();
+#endif
     }
 
-    private void CacheHealthUI()
+    private void OnValidate()
     {
-        if (healthContainer == null)
+        MaxHealth = Mathf.Max(HealthHeartsUI.HealthPerFullHeart, MaxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
+
+        if (healthHeartsUI != null)
         {
-            GameObject healthObject = GameObject.Find("PlayerHealth");
-            healthContainer = healthObject != null ? healthObject.transform : null;
+            healthHeartsUI.OverheadOffset = overheadOffset;
+            healthHeartsUI.ConfigureVisuals(
+                fullHeartSprite,
+                halfHeartSprite,
+                emptyHeartSprite,
+                heartDissolveMaterial,
+                heartOutlineMaterial,
+                heartDissolveDuration
+            );
+            healthHeartsUI.SetMaxHealth(MaxHealth, currentHealth);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (coinMaterial != null)
+        {
+            Destroy(coinMaterial);
+        }
+    }
+
+    private void InitializeOverheadHearts()
+    {
+        if (healthHeartsUI == null)
+        {
+            healthHeartsUI = GetComponentInChildren<HealthHeartsUI>(true);
         }
 
-        if (healthContainer == null)
+        if (healthHeartsUI == null)
+        {
+            GameObject overheadObj = new GameObject(
+                "PlayerOverheadHearts",
+                typeof(RectTransform),
+                typeof(Canvas),
+                typeof(CanvasGroup),
+                typeof(HealthHeartsUI)
+            );
+            healthHeartsUI = overheadObj.GetComponent<HealthHeartsUI>();
+        }
+
+        healthHeartsUI.FollowTarget = transform;
+        healthHeartsUI.OverheadOffset = overheadOffset;
+        healthHeartsUI.ConfigureVisuals(
+            fullHeartSprite,
+            halfHeartSprite,
+            emptyHeartSprite,
+            heartDissolveMaterial,
+            heartOutlineMaterial,
+            heartDissolveDuration
+        );
+
+        healthHeartsUI.SetMaxHealth(MaxHealth, currentHealth);
+    }
+
+    // ==========================================
+    // IDamageable Implementation
+    // ==========================================
+
+    public void TakeDamage(int damage)
+    {
+        if (damage <= 0 || IsDead)
         {
             return;
         }
 
-        if (healthIcons == null || healthIcons.Length == 0)
+        currentHealth = Mathf.Max(0, currentHealth - damage);
+        damageNumber?.ShowDamage(damage);
+
+        if (healthHeartsUI != null)
         {
-            healthIcons = healthContainer.GetComponentsInChildren<Image>(true);
+            healthHeartsUI.UpdateHearts(currentHealth, MaxHealth, animateEmptyHearts: true);
         }
 
-        SetupHeartDissolveMaterials();
-        SetupHeartOutlineIcons();
-
-        if (healthIcons.Length > 0 && fullHeartSprite == null)
+        if (playerController != null)
         {
-            fullHeartSprite = healthIcons[0].sprite;
-        }
+            playerController.FlashWhenDamaged();
 
-        foreach (Image icon in healthIcons)
-        {
-            string iconName = icon.transform.parent != null
-                ? icon.transform.parent.name.ToLowerInvariant()
-                : icon.name.ToLowerInvariant();
-
-            if (iconName.Contains("half") && halfHeartSprite == null)
+            if (currentHealth > 0)
             {
-                halfHeartSprite = icon.sprite;
+                playerController.PlayDamageAnimation();
             }
-            else if (iconName.Contains("empty") && emptyHeartSprite == null)
+            else
             {
-                emptyHeartSprite = icon.sprite;
+                playerController.Die();
             }
         }
     }
 
-    private void SetupHeartOutlineIcons()
+    /// <summary>
+    /// Controls fading the overhead hearts in/out for combat encounters.
+    /// </summary>
+    public void SetCombatHeartsVisible(bool visible, float fadeDuration)
     {
-        if (heartOutlineMaterial == null || healthIcons == null)
+        if (healthHeartsUI != null)
+        {
+            healthHeartsUI.Fade(visible, fadeDuration);
+        }
+    }
+
+    // ==========================================
+    // ICurrencyReceiver Implementation
+    // ==========================================
+
+    public void AddCurrency(int amount)
+    {
+        if (amount <= 0)
         {
             return;
         }
 
-        heartOutlineIcons = new Image[healthIcons.Length];
-        heartOutlineMaterials = new Material[healthIcons.Length];
-
-        for (int i = 0; i < healthIcons.Length; i++)
-        {
-            GameObject outlineObject = new GameObject("Heart Outline", typeof(RectTransform), typeof(Image));
-            outlineObject.transform.SetParent(healthIcons[i].transform, false);
-            outlineObject.transform.SetAsLastSibling();
-
-            RectTransform outlineTransform = (RectTransform)outlineObject.transform;
-            outlineTransform.anchorMin = Vector2.zero;
-            outlineTransform.anchorMax = Vector2.one;
-            outlineTransform.offsetMin = Vector2.zero;
-            outlineTransform.offsetMax = Vector2.zero;
-
-            Image outlineIcon = outlineObject.GetComponent<Image>();
-            outlineIcon.raycastTarget = false;
-            outlineIcon.sprite = healthIcons[i].sprite;
-
-            Material material = new Material(heartOutlineMaterial);
-            material.SetFloat("_OutlineOnly", 1f);
-            outlineIcon.material = material;
-
-            heartOutlineIcons[i] = outlineIcon;
-            heartOutlineMaterials[i] = material;
-        }
+        currency += amount;
+        UpdateCurrencyUI();
+        ShowCurrencyGainNotification(amount);
     }
 
     private void CacheCurrencyUI()
@@ -198,188 +230,14 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
 
         if (currencyCoinImage == null || coinShineMaterial == null)
         {
-            currencyCanvas = currencyText != null
-                ? currencyText.GetComponentInParent<Canvas>(true)
-                : null;
+            currencyCanvas = currencyText != null ? currencyText.GetComponentInParent<Canvas>(true) : null;
             return;
         }
 
         coinMaterial = new Material(coinShineMaterial);
         coinMaterial.SetFloat("_Progress", -1f);
         currencyCoinImage.material = coinMaterial;
-        currencyCanvas = currencyText != null
-            ? currencyText.GetComponentInParent<Canvas>(true)
-            : null;
-    }
-
-    private void UpdateUI(bool animateEmptyHearts)
-    {
-        UpdateHealthUI(animateEmptyHearts);
-        UpdateCurrencyUI();
-    }
-
-    private void AddCurrency()
-    {
-        if (Keyboard.current != null && Keyboard.current.cKey.wasPressedThisFrame)
-        {
-            AddCurrency(10);
-        }
-    }
-
-    private void TestTakeDamage()
-    {
-        if (Keyboard.current != null && Keyboard.current.vKey.wasPressedThisFrame)
-        {
-            TakeDamage(10);
-        }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        if (damage <= 0)
-        {
-            return;
-        }
-
-        currentHealth = Mathf.Max(0, currentHealth - damage);
-        damageNumber?.ShowDamage(damage);
-        UpdateHealthUI(true);
-
-        if (playerController != null)
-        {
-            playerController.FlashWhenDamaged();
-            
-            if(currentHealth > 0)
-            {
-                playerController.PlayDamageAnimation();
-            }
-        }
-
-        if (currentHealth == 0 && playerController != null)
-        {
-            playerController.Die();
-        }
-    }
-
-    private void UpdateHealthUI(bool animateEmptyHearts)
-    {
-        if (healthIcons == null || healthIcons.Length == 0)
-        {
-            return;
-        }
-
-        int healthPerHeart = Mathf.Max(1, MaxHealth / healthIcons.Length);
-        int halfHeartHealth = Mathf.Max(1, healthPerHeart / 2);
-
-        for (int i = 0; i < healthIcons.Length; i++)
-        {
-            int heartHealth = currentHealth - i * healthPerHeart;
-            Image icon = healthIcons[i];
-
-            bool wasEmpty = icon.sprite == emptyHeartSprite;
-
-            if (heartHealth >= healthPerHeart)
-            {
-                icon.sprite = fullHeartSprite;
-            }
-            else if (heartHealth >= halfHeartHealth)
-            {
-                icon.sprite = halfHeartSprite;
-            }
-            else if (animateEmptyHearts && !wasEmpty)
-            {
-                StartHeartDissolve(i);
-            }
-            else
-            {
-                icon.sprite = emptyHeartSprite;
-            }
-
-            icon.enabled = icon.sprite != null && icon.sprite != emptyHeartSprite;
-            SyncHeartOutline(i);
-
-            if (icon.sprite != emptyHeartSprite)
-            {
-                SetHeartDissolveProgress(i, 0f);
-            }
-        }
-
-    }
-
-    private void SetupHeartDissolveMaterials()
-        {
-            if (heartDissolveMaterial == null || healthIcons == null)
-            {
-                return;
-            }
-
-            heartMaterials = new Material[healthIcons.Length];
-            heartDissolveCoroutines = new Coroutine[healthIcons.Length];
-
-            for (int i = 0; i < healthIcons.Length; i++)
-            {
-                Material material = new Material(heartDissolveMaterial);
-                material.SetFloat("_Progress", 0f);
-                healthIcons[i].material = material;
-                heartMaterials[i] = material;
-            }
-        }
-
-    private void StartHeartDissolve(int heartIndex)
-        {
-            if (heartDissolveCoroutines == null || heartIndex >= heartDissolveCoroutines.Length)
-            {
-                return;
-            }
-
-            if (heartDissolveCoroutines[heartIndex] != null)
-            {
-                StopCoroutine(heartDissolveCoroutines[heartIndex]);
-            }
-
-            heartDissolveCoroutines[heartIndex] = StartCoroutine(DissolveHeart(heartIndex));
-        }
-
-    private IEnumerator DissolveHeart(int heartIndex)
-        {
-            float elapsed = 0f;
-
-            while (elapsed < heartDissolveDuration)
-            {
-                elapsed += Time.deltaTime;
-                float progress = Mathf.Clamp01(elapsed / heartDissolveDuration);
-                SetHeartDissolveProgress(heartIndex, progress);
-                yield return null;
-            }
-
-            SetHeartDissolveProgress(heartIndex, 1f);
-            healthIcons[heartIndex].sprite = emptyHeartSprite;
-            healthIcons[heartIndex].enabled = false;
-            SyncHeartOutline(heartIndex);
-            heartDissolveCoroutines[heartIndex] = null;
-        }
-
-    private void SetHeartDissolveProgress(int heartIndex, float progress)
-        {
-            if (heartMaterials == null || heartIndex >= heartMaterials.Length
-                || heartMaterials[heartIndex] == null)
-            {
-                return;
-            }
-
-            heartMaterials[heartIndex].SetFloat("_Progress", progress);
-    }
-
-    private void SyncHeartOutline(int heartIndex)
-    {
-        if (heartOutlineIcons == null || heartIndex >= heartOutlineIcons.Length)
-        {
-            return;
-        }
-
-        Image outlineIcon = heartOutlineIcons[heartIndex];
-        outlineIcon.sprite = healthIcons[heartIndex].sprite;
-        outlineIcon.enabled = healthIcons[heartIndex].enabled;
+        currencyCanvas = currencyText != null ? currencyText.GetComponentInParent<Canvas>(true) : null;
     }
 
     private void UpdateCurrencyUI()
@@ -388,18 +246,6 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
         {
             currencyText.text = currency.ToString();
         }
-    }
-
-    public void AddCurrency(int amount)
-    {
-        if (amount <= 0)
-        {
-            return;
-        }
-
-        currency += amount;
-        UpdateCurrencyUI();
-        ShowCurrencyGainNotification(amount);
     }
 
     private void ShowCurrencyGainNotification(int amount)
@@ -456,17 +302,16 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
         Vector3[] currencyCorners = new Vector3[4];
         currencyText.rectTransform.GetWorldCorners(currencyCorners);
         Vector3 startWorldPosition = (currencyCorners[0] + currencyCorners[2]) * 0.5f;
-        Vector2 startScreenPosition = RectTransformUtility.WorldToScreenPoint(
-            currencyCanvas.renderMode == RenderMode.ScreenSpaceOverlay
-                ? null
-                : currencyCanvas.worldCamera,
-            startWorldPosition);
+
+        Camera canvasCamera = currencyCanvas.renderMode == RenderMode.ScreenSpaceOverlay
+            ? null
+            : currencyCanvas.worldCamera;
+
+        Vector2 startScreenPosition = RectTransformUtility.WorldToScreenPoint(canvasCamera, startWorldPosition);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             parentRect,
             startScreenPosition,
-            currencyCanvas.renderMode == RenderMode.ScreenSpaceOverlay
-                ? null
-                : currencyCanvas.worldCamera,
+            canvasCamera,
             out Vector2 startPosition);
 
         currencyGainNotificationRect.anchoredPosition = startPosition + Vector2.down * 18f;
@@ -500,5 +345,27 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
         currencyGainNotificationRect = null;
         currencyGainNotificationAmount = 0;
         currencyGainNotificationCoroutine = null;
+    }
+
+    // ==========================================
+    // Debug
+    // ==========================================
+
+    private void HandleDebugInput()
+    {
+        if (Keyboard.current == null)
+        {
+            return;
+        }
+
+        if (Keyboard.current.cKey.wasPressedThisFrame)
+        {
+            AddCurrency(10);
+        }
+
+        if (Keyboard.current.vKey.wasPressedThisFrame)
+        {
+            TakeDamage(10);
+        }
     }
 }

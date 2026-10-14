@@ -1,19 +1,21 @@
-
+using System;
 using System.Collections;
-using ActionInt = System.Action<int>;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages the dice rolling UI, die selection, rolling animation frames, and roll results.
+/// </summary>
 public class DiceRollUI : MonoBehaviour
 {
-    [System.Serializable]
+    [Serializable]
     private class DiceVisualSet
     {
-        // Assign pip faces in order: one pip through six pips.
-        public Sprite[] pipFaces;
+        [Tooltip("Assign pip faces in order: 1 through 6 pips.")]
+        [SerializeField] public Sprite[] pipFaces;
 
-        // Assign the rolling-die frames for this die.
-        public Sprite[] rollFrames;
+        [Tooltip("Assign the rolling-die animation frames for this die.")]
+        [SerializeField] public Sprite[] rollFrames;
     }
 
     [Header("Dice UI")]
@@ -34,7 +36,7 @@ public class DiceRollUI : MonoBehaviour
     private bool isRolling;
     private int selectedDieIndex;
 
-    public event ActionInt DiceRolled;
+    public event Action<int> DiceRolled;
     public bool IsRolling => isRolling;
 
     public Sprite GetPipSprite(int dieIndex, int result)
@@ -58,7 +60,9 @@ public class DiceRollUI : MonoBehaviour
     public void RollDice()
     {
         if (!isRolling)
+        {
             StartCoroutine(RollAnimation());
+        }
     }
 
     public void SetRollButtonInteractable(bool interactable)
@@ -131,7 +135,7 @@ public class DiceRollUI : MonoBehaviour
         isRolling = true;
         Image selectedDiceImage = diceImages[selectedDieIndex];
         DiceVisualSet selectedDiceVisuals = GetDiceVisuals(selectedDieIndex);
-        float randomZRotation = Random.Range(randomRotationMin, randomRotationMax);
+        float randomZRotation = UnityEngine.Random.Range(randomRotationMin, randomRotationMax);
         selectedDiceImage.rectTransform.localRotation = Quaternion.Euler(0f, 0f, randomZRotation);
 
         float elapsed = 0f;
@@ -151,11 +155,11 @@ public class DiceRollUI : MonoBehaviour
             elapsed += frameInterval;
         }
 
-        //reset the rotation to identity so the final pip face is not rotated. (maybe will use in the future)
+        // Reset rotation so the final pip face is upright
         selectedDiceImage.rectTransform.localRotation = Quaternion.identity;
 
-        // Map the result directly to the matching pip face.
-        int result = Random.Range(1, 7);
+        // Map the result directly to the matching pip face (1-6)
+        int result = UnityEngine.Random.Range(1, 7);
         if (selectedDiceVisuals == null
             || selectedDiceVisuals.pipFaces == null
             || selectedDiceVisuals.pipFaces.Length < result)
@@ -171,7 +175,7 @@ public class DiceRollUI : MonoBehaviour
 
         yield return PlayImpactAnimation(selectedDiceImage.rectTransform);
 
-        Debug.Log("Dice rolled: " + result);
+        Debug.Log($"Dice rolled: {result}");
 
         isRolling = false;
         DiceRolled?.Invoke(result);

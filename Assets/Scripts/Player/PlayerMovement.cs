@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Partial implementation of PlayerController handling input, horizontal movement,
+/// jumping, ground checks, camera follow, dust particles, and melee attack.
+/// </summary>
 public partial class PlayerController
 {
     private void HandleInput()

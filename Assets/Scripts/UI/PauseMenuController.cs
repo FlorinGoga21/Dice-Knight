@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Controls toggling the pause menu UI and manages game time scaling.
+/// </summary>
 public class PauseMenuController : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
