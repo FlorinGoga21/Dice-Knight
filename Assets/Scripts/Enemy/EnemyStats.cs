@@ -219,10 +219,21 @@ public class EnemyStats : MonoBehaviour, IDamageable
             return;
         }
 
+        // First try to find the player by tag.
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             currencyTarget = player.GetComponentInParent<ICurrencyReceiver>();
+        }
+
+        // Fallback: if tag lookup fails, search for any PlayerStats component in the scene.
+        if (currencyTarget == null)
+        {
+            PlayerStats fallbackPlayer = FindAnyObjectByType<PlayerStats>();
+            if (fallbackPlayer != null)
+            {
+                currencyTarget = fallbackPlayer as ICurrencyReceiver;
+            }
         }
     }
 
