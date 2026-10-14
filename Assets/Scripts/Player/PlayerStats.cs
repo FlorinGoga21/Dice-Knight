@@ -31,10 +31,13 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     [SerializeField] private float currencyGainNotificationDuration = 0.7f;
     [SerializeField] private float currencyGainNotificationRise = 24f;
     [SerializeField] private Color currencyGainNotificationColor = Color.white;
+    [SerializeField] private float currencyCountDuration = 1.5f;
 
     [Header("---References---")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private DamageNumber damageNumber;
+    [SerializeField] private HealNumber healNumber;
+    [SerializeField] private Button RollButton;
     [SerializeField] private int currency = 0;
 
     private Material coinMaterial;
@@ -44,6 +47,7 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     private Coroutine currencyGainNotificationCoroutine;
     private int currencyGainNotificationAmount;
     private Vector2 currencyGainNotificationStartPosition;
+    private Coroutine currencyAnimationCoroutine;
     private HealthHeartsUI healthHeartsUI;
 
     public bool IsDead => currentHealth <= 0;
@@ -70,6 +74,11 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
         if (damageNumber == null)
         {
             damageNumber = GetComponent<DamageNumber>();
+        }
+
+        if(healNumber == null)
+        {
+            healNumber = GetComponent<HealNumber>();
         }
 
         currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
@@ -156,6 +165,28 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
         healthHeartsUI.SetMaxHealth(MaxHealth, currentHealth);
     }
 
+    public void Heal(int amount)
+    {
+        if (amount <= 0 || IsDead)
+        {
+            return;
+        }
+
+        int previousHealth = currentHealth;
+        currentHealth = Mathf.Min(MaxHealth, currentHealth + amount);
+        int actualHealedAmount = currentHealth - previousHealth;
+
+        if (actualHealedAmount > 0)
+        {
+            healNumber?.ShowHeal(actualHealedAmount);
+
+            if (healthHeartsUI != null)
+            {
+                healthHeartsUI.UpdateHearts(currentHealth, MaxHealth, animateEmptyHearts: false);
+            }
+        }
+    }
+
     // ==========================================
     // IDamageable Implementation
     // ==========================================
@@ -207,10 +238,7 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
 
     public void AddCurrency(int amount)
     {
-        if (amount <= 0)
-        {
-            return;
-        }
+        if (amount <= 0){ return; }
 
         currency += amount;
         UpdateCurrencyUI();
@@ -242,11 +270,50 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
 
     private void UpdateCurrencyUI()
     {
-        if (currencyText != null)
+        if (currencyText == null)
+            return;
+
+        if (currencyAnimationCoroutine != null)
         {
-            currencyText.text = currency.ToString();
+            StopCoroutine(currencyAnimationCoroutine);
         }
+
+        currencyAnimationCoroutine = StartCoroutine(
+            AnimateCurrencyCounter()
+        );
     }
+
+    private IEnumerator AnimateCurrencyCounter()
+{
+    int displayedCurrency = 0;
+
+    int.TryParse(currencyText.text, out displayedCurrency);
+
+    int targetCurrency = currency;
+    int startingCurrency = displayedCurrency;
+
+    float elapsed = 0f;
+
+    while (elapsed < currencyCountDuration)
+    {
+        elapsed += Time.deltaTime;
+
+        float progress = Mathf.Clamp01(
+            elapsed / currencyCountDuration
+        );
+
+        int currentDisplay = Mathf.RoundToInt(
+            Mathf.Lerp(startingCurrency, targetCurrency, progress)
+        );
+
+        currencyText.text = currentDisplay.ToString();
+
+        yield return null;
+    }
+
+    currencyText.text = targetCurrency.ToString();
+    currencyAnimationCoroutine = null;
+}
 
     private void ShowCurrencyGainNotification(int amount)
     {
@@ -353,19 +420,14 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
 
     private void HandleDebugInput()
     {
-        if (Keyboard.current == null)
-        {
-            return;
-        }
+        if (Keyboard.current == null){ return;}
+        if (Keyboard.current.cKey.wasPressedThisFrame){ AddCurrency(10); }
+        if (Keyboard.current.vKey.wasPressedThisFrame){ TakeDamage(10); }
+        if (Keyboard.current.bKey.wasPressedThisFrame){ Heal(10); }
+        if (Keyboard.current.spaceKey.wasPressedThisFrame &&
+            RollButton.gameObject.activeInHierarchy &&
+            RollButton.IsInteractable())
+        { RollButton.onClick.Invoke(); }
 
-        if (Keyboard.current.cKey.wasPressedThisFrame)
-        {
-            AddCurrency(10);
-        }
-
-        if (Keyboard.current.vKey.wasPressedThisFrame)
-        {
-            TakeDamage(10);
-        }
     }
 }

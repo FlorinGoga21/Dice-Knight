@@ -2665,7 +2665,7 @@ MonoBehaviour:
   heartDissolveMaterial: {fileID: 2100000, guid: a841624804e5b984895171be57e2a9e9, type: 2}
   heartDissolveDuration: 0.35
   heartOutlineMaterial: {fileID: 2100000, guid: 445e2f2ae0a6b404995d36e89771930a, type: 2}
-  overheadOffset: {x: 0, y: 1.1, z: 0}
+  overheadOffset: {x: 0, y: 1, z: 0}
   enemyController: {fileID: 512573322}
   damageNumber: {fileID: 512573324}
   minimumCoinsDropped: 10
@@ -4019,7 +4019,7 @@ MonoBehaviour:
   heartDissolveMaterial: {fileID: 2100000, guid: a841624804e5b984895171be57e2a9e9, type: 2}
   heartDissolveDuration: 0.35
   heartOutlineMaterial: {fileID: 2100000, guid: 445e2f2ae0a6b404995d36e89771930a, type: 2}
-  overheadOffset: {x: 0, y: 1.1, z: 0}
+  overheadOffset: {x: 0, y: 1, z: 0}
   enemyController: {fileID: 729043386}
   damageNumber: {fileID: 729043384}
   minimumCoinsDropped: 10
@@ -5778,6 +5778,18 @@ PrefabInstance:
       value: Knight
       objectReference: {fileID: 0}
     - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: MaxHealth
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: RollButton
+      value: 
+      objectReference: {fileID: 1352414129}
+    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: healNumber
+      value: 
+      objectReference: {fileID: 1774471035}
+    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: currencyText
       value: 
       objectReference: {fileID: 685027557}
@@ -5785,6 +5797,10 @@ PrefabInstance:
       propertyPath: damageNumber
       value: 
       objectReference: {fileID: 1774471029}
+    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: currentHealth
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: healthHeartsUI
       value: 
@@ -5794,9 +5810,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2617012}
     - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: overheadOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: currencyCoinImage
       value: 
       objectReference: {fileID: 1149351463}
+    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: currencyCountDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: 'healthIcons.Array.data[0]'
       value: 
@@ -5912,6 +5936,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5510382206488389914, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       insertIndex: 3
       addedObject: {fileID: 1774471029}
+    - targetCorrespondingSourceObject: {fileID: 5510382206488389914, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 1774471035}
   m_SourcePrefab: {fileID: 100100000, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
 --- !u!1 &1302163706
 GameObject:
@@ -7341,6 +7368,26 @@ MonoBehaviour:
   fontSize: 2
   color: {r: 1, g: 0, b: 0, a: 1}
   sortingOrder: 100
+--- !u!114 &1774471035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774471023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa6781c71f17714e8cbbb2a549d7812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  lifetime: 0.8
+  horizontalDistance: 0.6
+  jumpHeight: 0.7
+  verticalOffset: 0.8
+  font: {fileID: 11400000, guid: b6442d2bdb14527f403091eca8d72618, type: 2}
+  fontSize: 2
+  color: {r: 0, g: 1, b: 0, a: 1}
+  sortingOrder: 100
 --- !u!1 &1808179905
 GameObject:
   m_ObjectHideFlags: 0
@@ -7821,7 +7868,7 @@ MonoBehaviour:
   heartDissolveMaterial: {fileID: 2100000, guid: a841624804e5b984895171be57e2a9e9, type: 2}
   heartDissolveDuration: 0.35
   heartOutlineMaterial: {fileID: 2100000, guid: 445e2f2ae0a6b404995d36e89771930a, type: 2}
-  overheadOffset: {x: 0, y: 1.1, z: 0}
+  overheadOffset: {x: 0, y: 1, z: 0}
   enemyController: {fileID: 1890556765}
   damageNumber: {fileID: 1890556763}
   minimumCoinsDropped: 10
