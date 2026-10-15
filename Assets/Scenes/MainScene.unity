@@ -5703,154 +5703,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 214300840}
     m_Modifications:
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+    - target: {fileID: 644210985334408834, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: turnText
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      objectReference: {fileID: 2100896389}
+    - target: {fileID: 644210985334408834, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: diceRollUI
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      objectReference: {fileID: 61008312}
+    - target: {fileID: 644210985334408834, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: playerDice
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      objectReference: {fileID: 872157203}
+    - target: {fileID: 644210985334408834, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: rollButton
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: turnTextDuration
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: winningRollScale
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: enemyDetectionRange
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: rollDisplayDuration
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: combatUIFadeDuration
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456789012345678901, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: rollDisplayAppearDuration
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 3851560494749466488, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3851560494749466488, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3851560494749466488, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: attackDamage
-      value: 10
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1352414126}
     - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 1320703840}
-    - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: cameraFollowOffset
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: damageShakeDuration
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: damageShakeMagnitude
-      value: 0.35
-      objectReference: {fileID: 0}
     - target: {fileID: 5510382206488389914, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: m_Name
       value: Knight
-      objectReference: {fileID: 0}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: MaxHealth
-      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: RollButton
       value: 
       objectReference: {fileID: 1352414129}
     - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: healNumber
-      value: 
-      objectReference: {fileID: 1774471035}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: currencyText
       value: 
       objectReference: {fileID: 685027557}
     - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: damageNumber
-      value: 
-      objectReference: {fileID: 1774471029}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: currentHealth
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: healthHeartsUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: healthContainer
-      value: 
-      objectReference: {fileID: 2617012}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: overheadOffset.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: currencyCoinImage
       value: 
       objectReference: {fileID: 1149351463}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: currencyCountDuration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: 'healthIcons.Array.data[0]'
-      value: 
-      objectReference: {fileID: 660501217}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: 'healthIcons.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1552681356}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: 'healthIcons.Array.data[2]'
-      value: 
-      objectReference: {fileID: 281379257}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: 'healthIcons.Array.data[3]'
-      value: 
-      objectReference: {fileID: 412340288}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: 'healthIcons.Array.data[4]'
-      value: 
-      objectReference: {fileID: 724861094}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: currencyGainNotificationRise
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      propertyPath: currencyGainNotificationDuration
-      value: 0.75
-      objectReference: {fileID: 0}
     - target: {fileID: 7448375094655010986, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5934,16 +5822,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5510382206488389914, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 1774471039}
-    - targetCorrespondingSourceObject: {fileID: 5510382206488389914, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 1774471029}
-    - targetCorrespondingSourceObject: {fileID: 5510382206488389914, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 1774471035}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
 --- !u!1 &1302163706
 GameObject:
@@ -7348,78 +7227,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7448375094655010986, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
   m_PrefabInstance: {fileID: 1286721193}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1774471023 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5510382206488389914, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
-  m_PrefabInstance: {fileID: 1286721193}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1774471029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1774471023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83c5fce6e1c842738f67f22518b9bb45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageNumber
-  lifetime: 0.8
-  horizontalDistance: 0.6
-  jumpHeight: 0.7
-  verticalOffset: 0.8
-  font: {fileID: 11400000, guid: b6442d2bdb14527f403091eca8d72618, type: 2}
-  fontSize: 2
-  color: {r: 1, g: 0, b: 0, a: 1}
-  sortingOrder: 100
---- !u!114 &1774471035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1774471023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fa6781c71f17714e8cbbb2a549d7812, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  lifetime: 0.8
-  horizontalDistance: 0.6
-  jumpHeight: 0.7
-  verticalOffset: 0.8
-  font: {fileID: 11400000, guid: b6442d2bdb14527f403091eca8d72618, type: 2}
-  fontSize: 2
-  color: {r: 0, g: 1, b: 0, a: 1}
-  sortingOrder: 100
---- !u!114 &1774471039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1774471023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 649858e273c61b647bd2f84041da1188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CombatController
-  enemyDetectionRange: 5
-  diceRollUI: {fileID: 61008312}
-  playerDice: {fileID: 872157203}
-  rollButton: {fileID: 1352414126}
-  turnText: {fileID: 2100896389}
-  combatUIFadeDuration: 0.35
-  turnTextDuration: 0.7
-  turnTextRise: 24
-  rollDisplayOffset: {x: 0, y: 1.8, z: -1}
-  rollDisplayScale: 2
-  winningRollScale: 1.3
-  rollDisplayRise: 0.8
-  rollDisplayAppearDuration: 0.35
-  rollDisplayDuration: 1.5
-  rollDisplayFadeDuration: 0.35
 --- !u!1 &1808179905
 GameObject:
   m_ObjectHideFlags: 0
