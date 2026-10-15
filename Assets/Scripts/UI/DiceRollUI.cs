@@ -23,6 +23,10 @@ public class DiceRollUI : MonoBehaviour
     [SerializeField] private Button rollButton;
     [SerializeField] private GameObject[] selectedIndicators;
     [SerializeField, Range(1, 3)] private int activeDiceCount = 1;
+    /// <summary>
+    /// Number of dice currently available for the player to roll.
+    /// </summary>
+    public int ActiveDiceCount => activeDiceCount;
     [SerializeField] private DiceVisualSet[] diceVisuals;
 
     [Header("Animation")]
@@ -36,7 +40,11 @@ public class DiceRollUI : MonoBehaviour
     private bool isRolling;
     private int selectedDieIndex;
 
-    public event Action<int> DiceRolled;
+    /// <summary>
+    /// Fired after all active dice finish their roll animation.
+    /// Passes an array of results, one per die.
+    /// </summary>
+    public event Action<int[]> DiceRolled;
     public bool IsRolling => isRolling;
 
     public Sprite GetPipSprite(int dieIndex, int result)
@@ -54,14 +62,17 @@ public class DiceRollUI : MonoBehaviour
     {
         activeDiceCount = Mathf.Clamp(activeDiceCount, 1, GetDiceSlotCount());
         UpdateDiceAvailability();
-        SelectDie(0);
+        HighlightAllActiveDice();
     }
 
+    /// <summary>
+    /// Called by the Roll button. Rolls ALL active dice with animation.
+    /// </summary>
     public void RollDice()
     {
         if (!isRolling)
         {
-            StartCoroutine(RollAnimation());
+            StartCoroutine(RollAllDiceAnimated());
         }
     }
 
@@ -90,6 +101,22 @@ public class DiceRollUI : MonoBehaviour
         for (int i = 0; i < selectedIndicators.Length; i++)
         {
             selectedIndicators[i].SetActive(i == selectedDieIndex);
+        }
+    }
+
+    /// <summary>
+    /// Highlights all active dice selection indicators.
+    /// </summary>
+    private void HighlightAllActiveDice()
+    {
+        if (selectedIndicators == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < selectedIndicators.Length; i++)
+        {
+            selectedIndicators[i].SetActive(i < activeDiceCount);
         }
     }
 
@@ -126,59 +153,114 @@ public class DiceRollUI : MonoBehaviour
                 slot.gameObject.SetActive(i < activeDiceCount);
             }
 
-            selectedIndicators[i].SetActive(i == selectedDieIndex && i < activeDiceCount);
+            selectedIndicators[i].SetActive(i < activeDiceCount);
         }
     }
 
-    private IEnumerator RollAnimation()
+    /// <summary>
+    /// Rolls all active dice simultaneously with rolling animation,
+    /// then fires DiceRolled with the array of results.
+    /// </summary>
+    private IEnumerator RollAllDiceAnimated()
     {
         isRolling = true;
-        Image selectedDiceImage = diceImages[selectedDieIndex];
-        DiceVisualSet selectedDiceVisuals = GetDiceVisuals(selectedDieIndex);
-        float randomZRotation = UnityEngine.Random.Range(randomRotationMin, randomRotationMax);
-        selectedDiceImage.rectTransform.localRotation = Quaternion.Euler(0f, 0f, randomZRotation);
+        int count = activeDiceCount;
+        int[] results = new int[count];
 
+        // Pre-generate results and start roll animation for each die.
+        for (int i = 0; i < count; i++)
+        {
+            results[i] = UnityEngine.Random.Range(1, 7);
+        }
+
+        // Apply random rotation to all dice at the start.
+        for (int i = 0; i < count; i++)
+        {
+            if (diceImages != null && i < diceImages.Length)
+            {
+                float randomZ = UnityEngine.Random.Range(randomRotationMin, randomRotationMax);
+                diceImages[i].rectTransform.localRotation = Quaternion.Euler(0f, 0f, randomZ);
+            }
+        }
+
+        // Animate all dice rolling frames simultaneously.
         float elapsed = 0f;
         int frameIndex = 0;
 
-        // Play the rolling-die frames repeatedly while the roll is in progress.
-        while (elapsed < rollDuration
-            && selectedDiceVisuals != null
-            && selectedDiceVisuals.rollFrames != null
-            && selectedDiceVisuals.rollFrames.Length > 0)
+        while (elapsed < rollDuration)
         {
-            selectedDiceImage.sprite =
-                selectedDiceVisuals.rollFrames[frameIndex % selectedDiceVisuals.rollFrames.Length];
-            frameIndex++;
+            for (int i = 0; i < count; i++)
+            {
+                if (diceImages == null || i >= diceImages.Length)
+                {
+                    continue;
+                }
 
+                DiceVisualSet visuals = GetDiceVisuals(i);
+                if (visuals != null && visuals.rollFrames != null && visuals.rollFrames.Length > 0)
+                {
+                    // Offset each die's frame index slightly for visual variety.
+                    int offset = (frameIndex + i * 2) % visuals.rollFrames.Length;
+                    diceImages[i].sprite = visuals.rollFrames[offset];
+                }
+            }
+
+            frameIndex++;
             yield return new WaitForSeconds(frameInterval);
             elapsed += frameInterval;
         }
 
-        // Reset rotation so the final pip face is upright
-        selectedDiceImage.rectTransform.localRotation = Quaternion.identity;
-
-        // Map the result directly to the matching pip face (1-6)
-        int result = UnityEngine.Random.Range(1, 7);
-        if (selectedDiceVisuals == null
-            || selectedDiceVisuals.pipFaces == null
-            || selectedDiceVisuals.pipFaces.Length < result)
+        // Reset rotation and show final pip face for each die.
+        for (int i = 0; i < count; i++)
         {
-            Debug.LogWarning(
-                $"{nameof(DiceRollUI)} has no six pip faces configured for die {selectedDieIndex + 1}.",
-                this);
+            if (diceImages == null || i >= diceImages.Length)
+            {
+                continue;
+            }
+
+            diceImages[i].rectTransform.localRotation = Quaternion.identity;
+
+            DiceVisualSet visuals = GetDiceVisuals(i);
+            if (visuals == null || visuals.pipFaces == null || visuals.pipFaces.Length < results[i])
+            {
+                Debug.LogWarning(
+                    $"{nameof(DiceRollUI)} has no six pip faces configured for die {i + 1}.",
+                    this);
+            }
+            else
+            {
+                diceImages[i].sprite = visuals.pipFaces[results[i] - 1];
+            }
         }
-        else
+
+        // Play impact animation on all dice simultaneously.
+        Coroutine[] impacts = new Coroutine[count];
+        for (int i = 0; i < count; i++)
         {
-            selectedDiceImage.sprite = selectedDiceVisuals.pipFaces[result - 1];
+            if (diceImages != null && i < diceImages.Length)
+            {
+                impacts[i] = StartCoroutine(PlayImpactAnimation(diceImages[i].rectTransform));
+            }
         }
 
-        yield return PlayImpactAnimation(selectedDiceImage.rectTransform);
+        // Wait for all impact animations to finish.
+        for (int i = 0; i < count; i++)
+        {
+            if (impacts[i] != null)
+            {
+                yield return impacts[i];
+            }
+        }
 
-        Debug.Log($"Dice rolled: {result}");
+        string rollLog = "Dice rolled:";
+        for (int i = 0; i < count; i++)
+        {
+            rollLog += $" [{results[i]}]";
+        }
+        Debug.Log(rollLog);
 
         isRolling = false;
-        DiceRolled?.Invoke(result);
+        DiceRolled?.Invoke(results);
     }
 
     private IEnumerator PlayImpactAnimation(RectTransform diceImage)

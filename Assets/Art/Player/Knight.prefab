@@ -7565,6 +7565,9 @@ GameObject:
   - component: {fileID: 7448375094655010986}
   - component: {fileID: 5339762120934824912}
   - component: {fileID: 7061868257307744292}
+  - component: {fileID: 644210985334408834}
+  - component: {fileID: 4296657186505820701}
+  - component: {fileID: 5053322919817734972}
   - component: {fileID: 2359889434350267324}
   - component: {fileID: 1666253628533664871}
   - component: {fileID: 8251680543454918299}
@@ -7618,11 +7621,18 @@ MonoBehaviour:
   movementDust: {fileID: 6302216853956381640}
   landingDust: {fileID: 2717519289115889830}
   animator: {fileID: 7354166001910025638}
+  attackRange: 1.5
+  attackDamage: 10
+  attackHitDelay: 0.25
+  attackCooldown: 0.5
+  attackMovementThreshold: 0.01
   damageFlashMaterial: {fileID: 2100000, guid: bef7e6d07e25823419becbe99854e4b3, type: 2}
   damageFlashDuration: 0.05
   playerCamera: {fileID: 0}
   cameraFollowSpeed: 5
-  cameraFollowOffset: 0
+  cameraFollowOffset: 2.5
+  damageShakeDuration: 0.25
+  damageShakeMagnitude: 0.35
 --- !u!114 &7061868257307744292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7635,26 +7645,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59825514e09764b429405363b4de9026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  healthContainer: {fileID: 0}
-  healthIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  MaxHealth: 120
+  currentHealth: 120
   fullHeartSprite: {fileID: 21300000, guid: a11b878d437c3d927ce2348305d66e70, type: 3}
   halfHeartSprite: {fileID: 21300000, guid: 01d1fc0aa843bd377cf2fb43322ae6cf, type: 3}
   emptyHeartSprite: {fileID: 21300000, guid: f03b01720fa59e8152f7c773f585d8f7, type: 3}
   heartDissolveMaterial: {fileID: 2100000, guid: a841624804e5b984895171be57e2a9e9, type: 2}
   heartDissolveDuration: 0.5
   heartOutlineMaterial: {fileID: 2100000, guid: 445e2f2ae0a6b404995d36e89771930a, type: 2}
+  overheadOffset: {x: 0, y: 1, z: 0}
   currencyText: {fileID: 0}
   currencyCoinImage: {fileID: 0}
   coinShineMaterial: {fileID: 2100000, guid: 9fb6d87593e17b646a440cc1836022d2, type: 2}
+  currencyGainNotificationDuration: 0.75
+  currencyGainNotificationRise: 10
+  currencyGainNotificationColor: {r: 1, g: 1, b: 1, a: 1}
+  currencyCountDuration: 0.5
   playerController: {fileID: 5339762120934824912}
-  MaxHealth: 100
-  currentHealth: 100
+  damageNumber: {fileID: 4296657186505820701}
+  healNumber: {fileID: 5053322919817734972}
+  RollButton: {fileID: 0}
   currency: 0
+--- !u!114 &644210985334408834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510382206488389914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 649858e273c61b647bd2f84041da1188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatController
+  enemyDetectionRange: 5
+  diceRollUI: {fileID: 0}
+  playerDice: {fileID: 0}
+  rollButton: {fileID: 0}
+  turnText: {fileID: 0}
+  combatUIFadeDuration: 0.35
+  turnTextDuration: 0.7
+  turnTextRise: 24
+  rollDisplayOffset: {x: 0, y: 1.8, z: -1}
+  rollDisplayScale: 2
+  winningRollScale: 1.3
+  rollDisplayRise: 0.8
+  rollDisplayAppearDuration: 0.35
+  rollDisplayDuration: 1.5
+  rollDisplayFadeDuration: 0.35
+--- !u!114 &4296657186505820701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510382206488389914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83c5fce6e1c842738f67f22518b9bb45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageNumber
+  lifetime: 0.8
+  horizontalDistance: 0.6
+  jumpHeight: 0.7
+  verticalOffset: 0.8
+  font: {fileID: 11400000, guid: b6442d2bdb14527f403091eca8d72618, type: 2}
+  fontSize: 2
+  color: {r: 1, g: 0, b: 0, a: 1}
+  sortingOrder: 100
+--- !u!114 &5053322919817734972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510382206488389914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa6781c71f17714e8cbbb2a549d7812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  lifetime: 0.8
+  horizontalDistance: 0.6
+  jumpHeight: 0.7
+  verticalOffset: 0.8
+  font: {fileID: 11400000, guid: b6442d2bdb14527f403091eca8d72618, type: 2}
+  fontSize: 2
+  color: {r: 0, g: 1, b: 0, a: 1}
+  sortingOrder: 100
 --- !u!50 &2359889434350267324
 Rigidbody2D:
   serializedVersion: 5
@@ -13479,14 +13557,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7658819665882118577}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.15625, y: -0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1764010056152087108}
   m_Father: {fileID: 5778543293915044174}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7704936385986064012
 GameObject:
   m_ObjectHideFlags: 0

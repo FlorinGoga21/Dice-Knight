@@ -26,6 +26,14 @@ public class EnemyController : MonoBehaviour, IDamageable
     [SerializeField] private int attackDamage = 10;
     [SerializeField] private float attackHitDelay = 0.25f;
 
+    [Header("---Dice---")]
+    [SerializeField, Range(1, 3)] private int diceCount = 1;
+
+    /// <summary>
+    /// Number of dice this enemy rolls during turn-based combat. Editable in the Inspector.
+    /// </summary>
+    public int DiceCount => diceCount;
+
     [Header("---Ground Check---")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 0.1f;
@@ -168,7 +176,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
     }
 
-    public void PerformTurnAttack()
+    public void PerformTurnAttack(int damageMultiplier = 1)
     {
         if (hasDied || targetDamageable == null || targetDamageable.IsDead)
         {
@@ -177,7 +185,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
-        targetDamageable.TakeDamage(attackDamage);
+        targetDamageable.TakeDamage(attackDamage * Mathf.Max(1, damageMultiplier));
     }
 
     public void PlayAttackAnimation()
