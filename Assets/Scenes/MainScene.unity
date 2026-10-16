@@ -5719,6 +5719,18 @@ PrefabInstance:
       propertyPath: rollButton
       value: 
       objectReference: {fileID: 1352414126}
+    - target: {fileID: 644210985334408834, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: rollResultPadding
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 644210985334408834, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: rollResultFontSize
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 644210985334408834, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: rollResultTextScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: playerCamera
       value: 

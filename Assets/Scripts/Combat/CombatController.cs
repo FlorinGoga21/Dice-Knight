@@ -31,9 +31,14 @@ public sealed class CombatController : MonoBehaviour
     [SerializeField] private float rollDisplayAppearDuration = 0.35f;
     [SerializeField] private float rollDisplayDuration = 1.5f;
     [SerializeField] private float rollDisplayFadeDuration = 0.35f;
+    [SerializeField] private TMP_FontAsset rollResultFont;
+    [SerializeField] private float rollResultFontSize = 6f;
+    [SerializeField] private float rollResultTextScale = 0.1f;
+    [SerializeField] private float rollResultPadding = 0.25f;
 
     private const float EncounterCheckInterval = 0.1f;
     private const float DiceDisplaySpacing = 0.7f;
+    private const float RollResultSortingOrderOffset = 1f;
 
     private PlayerController player;
     private PlayerStats playerStats;
@@ -47,6 +52,7 @@ public sealed class CombatController : MonoBehaviour
     private Color turnTextColor;
     private SpriteRenderer[] playerRollDisplays;
     private SpriteRenderer[] enemyRollDisplays;
+    private TMP_Text[] rollResultDisplays;
     private bool waitingForPlayerRoll;
     private int[] lastDiceResults;
     private int turnNumber;
@@ -61,6 +67,7 @@ public sealed class CombatController : MonoBehaviour
         diceRollUI = diceRollUI != null ? diceRollUI : FindAnyObjectByType<DiceRollUI>();
         playerDice = playerDice != null ? playerDice : GameObject.Find("PlayerDice");
         rollButton = rollButton != null ? rollButton : GameObject.Find("RollButton");
+        rollResultFont = ResolveRollResultFont();
         playerDiceCanvasGroup = GetOrAddCanvasGroup(playerDice);
         rollButtonCanvasGroup = GetOrAddCanvasGroup(rollButton);
         CreateTurnTextIfNeeded();
@@ -101,6 +108,7 @@ public sealed class CombatController : MonoBehaviour
 
         DestroyRollDisplays(ref playerRollDisplays);
         DestroyRollDisplays(ref enemyRollDisplays);
+        DestroyRollResultDisplays(ref rollResultDisplays);
         SetCombatUIVisible(false);
         activeEnemy = null;
         waitingForPlayerRoll = false;
@@ -194,24 +202,26 @@ public sealed class CombatController : MonoBehaviour
 
             playerRollDisplays = CreateRollDisplays(playerRolls, transform, "Player Roll");
             enemyRollDisplays = CreateRollDisplays(enemyRolls, activeEnemy.transform, "Enemy Roll");
-            yield return AnimateDisplaysIn(playerRollDisplays, enemyRollDisplays);
+            rollResultDisplays = CreateRollResultDisplays(playerRoll, enemyRoll, playerRollDisplays, enemyRollDisplays);
+            yield return AnimateDisplaysIn(playerRollDisplays, enemyRollDisplays, rollResultDisplays);
             yield return new WaitForSeconds(rollDisplayDuration);
 
             if (playerRoll > enemyRoll)
             {
-                yield return EnlargeDisplays(playerRollDisplays);
+                yield return EnlargeDisplays(playerRollDisplays, rollResultDisplays != null ? rollResultDisplays[0] : null);
                 player.PlayAttackAnimationVisualOnly();
                 activeEnemy.TakeDamage(player.AttackDamage * playerMultiplier);
             }
             else if (enemyRoll > playerRoll)
             {
-                yield return EnlargeDisplays(enemyRollDisplays);
+                yield return EnlargeDisplays(enemyRollDisplays, rollResultDisplays != null ? rollResultDisplays[1] : null);
                 activeEnemy.PerformTurnAttack(enemyMultiplier);
             }
 
-            yield return AnimateDisplaysOut(playerRollDisplays, enemyRollDisplays);
+            yield return AnimateDisplaysOut(playerRollDisplays, enemyRollDisplays, rollResultDisplays);
             DestroyRollDisplays(ref playerRollDisplays);
             DestroyRollDisplays(ref enemyRollDisplays);
+            DestroyRollResultDisplays(ref rollResultDisplays);
             yield return new WaitForSeconds(player.AttackHitDelay + player.AttackCooldown);
         }
 
@@ -228,6 +238,7 @@ public sealed class CombatController : MonoBehaviour
 
         DestroyRollDisplays(ref playerRollDisplays);
         DestroyRollDisplays(ref enemyRollDisplays);
+        DestroyRollResultDisplays(ref rollResultDisplays);
         waitingForPlayerRoll = false;
         diceRollUI?.SetRollButtonInteractable(false);
         SetCombatUIVisible(false);
@@ -374,10 +385,86 @@ public sealed class CombatController : MonoBehaviour
         return displays;
     }
 
-    private IEnumerator AnimateDisplaysIn(SpriteRenderer[] playerDisplays, SpriteRenderer[] enemyDisplays)
+    private TMP_Text[] CreateRollResultDisplays(
+        int playerTotal,
+        int enemyTotal,
+        SpriteRenderer[] playerDisplays,
+        SpriteRenderer[] enemyDisplays)
+    {
+        if (playerDisplays == null || playerDisplays.Length == 0
+            || enemyDisplays == null || enemyDisplays.Length == 0)
+        {
+            return null;
+        }
+
+        bool enemyIsRight = activeEnemy != null && activeEnemy.transform.position.x >= transform.position.x;
+        float inwardDirection = enemyIsRight ? 1f : -1f;
+        SpriteRenderer playerInnerEdge = playerDisplays[enemyIsRight ? playerDisplays.Length - 1 : 0];
+        SpriteRenderer enemyInnerEdge = enemyDisplays[enemyIsRight ? 0 : enemyDisplays.Length - 1];
+        Vector3 playerTotalPosition = playerInnerEdge.transform.position
+            + Vector3.right * inwardDirection * (playerInnerEdge.bounds.extents.x + rollResultPadding);
+        Vector3 enemyTotalPosition = enemyInnerEdge.transform.position
+            - Vector3.right * inwardDirection * (enemyInnerEdge.bounds.extents.x + rollResultPadding);
+        Vector3 comparisonPosition = (playerTotalPosition + enemyTotalPosition) * 0.5f;
+
+        TMP_Text[] resultDisplays = new TMP_Text[3];
+        resultDisplays[0] = CreateWorldResultText("Player Roll Total", playerTotal.ToString(), playerTotalPosition, playerInnerEdge);
+        resultDisplays[1] = CreateWorldResultText("Enemy Roll Total", enemyTotal.ToString(), enemyTotalPosition, enemyInnerEdge);
+        string comparison = playerTotal > enemyTotal ? ">" : playerTotal < enemyTotal ? "<" : "=";
+        resultDisplays[2] = CreateWorldResultText("Roll Comparison", comparison, comparisonPosition, playerInnerEdge);
+        return resultDisplays;
+    }
+
+    private TMP_Text CreateWorldResultText(string objectName, string value, Vector3 position, SpriteRenderer referenceRenderer)
+    {
+        GameObject textObject = new GameObject(objectName);
+        textObject.transform.position = position;
+        textObject.transform.localScale = Vector3.one * rollResultTextScale;
+
+        TextMeshPro text = textObject.AddComponent<TextMeshPro>();
+        text.text = value;
+        text.fontSize = rollResultFontSize;
+        text.alignment = TextAlignmentOptions.Center;
+        text.enableWordWrapping = false;
+        text.overflowMode = TextOverflowModes.Overflow;
+        text.color = new Color(1f, 0.94f, 0.78f, 0f);
+        if (rollResultFont != null)
+        {
+            text.font = rollResultFont;
+        }
+
+        MeshRenderer meshRenderer = textObject.GetComponent<MeshRenderer>();
+        meshRenderer.sortingLayerID = referenceRenderer.sortingLayerID;
+        meshRenderer.sortingOrder = referenceRenderer.sortingOrder + (int)RollResultSortingOrderOffset;
+        return text;
+    }
+
+    private TMP_FontAsset ResolveRollResultFont()
+    {
+        if (rollResultFont != null)
+        {
+            return rollResultFont;
+        }
+
+        foreach (TMP_FontAsset loadedFont in Resources.FindObjectsOfTypeAll<TMP_FontAsset>())
+        {
+            if (loadedFont != null && loadedFont.name == "Pixel UI TMP")
+            {
+                return loadedFont;
+            }
+        }
+
+        return TMP_Settings.defaultFontAsset;
+    }
+
+    private IEnumerator AnimateDisplaysIn(
+        SpriteRenderer[] playerDisplays,
+        SpriteRenderer[] enemyDisplays,
+        TMP_Text[] resultDisplays)
     {
         Vector3[] playerEnds = PrepareEntrance(playerDisplays);
         Vector3[] enemyEnds = PrepareEntrance(enemyDisplays);
+        Vector3[] resultEnds = PrepareTextEntrance(resultDisplays);
         float duration = Mathf.Max(0.05f, rollDisplayAppearDuration);
         float elapsed = 0f;
         while (elapsed < duration)
@@ -386,10 +473,37 @@ public sealed class CombatController : MonoBehaviour
             float progress = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / duration));
             AnimateEntrance(playerDisplays, playerEnds, progress);
             AnimateEntrance(enemyDisplays, enemyEnds, progress);
+            AnimateTextEntrance(resultDisplays, resultEnds, progress);
             yield return null;
         }
         AnimateEntrance(playerDisplays, playerEnds, 1f);
         AnimateEntrance(enemyDisplays, enemyEnds, 1f);
+        AnimateTextEntrance(resultDisplays, resultEnds, 1f);
+    }
+
+    private Vector3[] PrepareTextEntrance(TMP_Text[] displays)
+    {
+        if (displays == null) return null;
+        Vector3[] ends = new Vector3[displays.Length];
+        for (int i = 0; i < displays.Length; i++)
+        {
+            if (displays[i] == null) continue;
+            ends[i] = displays[i].transform.position;
+            displays[i].transform.position = ends[i] - Vector3.up * rollDisplayRise;
+            SetTextAlpha(displays[i], 0f);
+        }
+        return ends;
+    }
+
+    private void AnimateTextEntrance(TMP_Text[] displays, Vector3[] ends, float progress)
+    {
+        if (displays == null || ends == null) return;
+        for (int i = 0; i < displays.Length; i++)
+        {
+            if (displays[i] == null) continue;
+            displays[i].transform.position = ends[i] - Vector3.up * (rollDisplayRise * (1f - progress));
+            SetTextAlpha(displays[i], progress);
+        }
     }
 
     private Vector3[] PrepareEntrance(SpriteRenderer[] displays)
@@ -418,12 +532,14 @@ public sealed class CombatController : MonoBehaviour
         }
     }
 
-    private IEnumerator EnlargeDisplays(SpriteRenderer[] displays)
+    private IEnumerator EnlargeDisplays(SpriteRenderer[] displays, TMP_Text winningTotal)
     {
         if (displays == null) yield break;
         float duration = Mathf.Min(0.2f, Mathf.Max(0.05f, rollDisplayFadeDuration));
         Vector3 baseScale = Vector3.one * rollDisplayScale;
         Vector3 winningScale = baseScale * Mathf.Max(1f, winningRollScale);
+        Vector3 totalBaseScale = Vector3.one * rollResultTextScale;
+        Vector3 totalWinningScale = totalBaseScale * Mathf.Max(1f, winningRollScale);
         float elapsed = 0f;
         while (elapsed < duration)
         {
@@ -433,20 +549,33 @@ public sealed class CombatController : MonoBehaviour
             {
                 if (renderer != null) renderer.transform.localScale = Vector3.Lerp(baseScale, winningScale, progress);
             }
+            if (winningTotal != null)
+            {
+                winningTotal.transform.localScale = Vector3.Lerp(totalBaseScale, totalWinningScale, progress);
+            }
             yield return null;
         }
         foreach (SpriteRenderer renderer in displays)
         {
             if (renderer != null) renderer.transform.localScale = winningScale;
         }
+        if (winningTotal != null)
+        {
+            winningTotal.transform.localScale = totalWinningScale;
+        }
     }
 
-    private IEnumerator AnimateDisplaysOut(SpriteRenderer[] playerDisplays, SpriteRenderer[] enemyDisplays)
+    private IEnumerator AnimateDisplaysOut(
+        SpriteRenderer[] playerDisplays,
+        SpriteRenderer[] enemyDisplays,
+        TMP_Text[] resultDisplays)
     {
         Vector3[] playerStarts = GetPositions(playerDisplays);
         Vector3[] enemyStarts = GetPositions(enemyDisplays);
+        Vector3[] resultStarts = GetTextPositions(resultDisplays);
         Color[] playerColors = GetColors(playerDisplays);
         Color[] enemyColors = GetColors(enemyDisplays);
+        Color[] resultColors = GetTextColors(resultDisplays);
         float duration = Mathf.Max(0.05f, rollDisplayFadeDuration);
         float elapsed = 0f;
         while (elapsed < duration)
@@ -455,10 +584,74 @@ public sealed class CombatController : MonoBehaviour
             float progress = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / duration));
             AnimateOut(playerDisplays, playerStarts, playerColors, progress);
             AnimateOut(enemyDisplays, enemyStarts, enemyColors, progress);
+            AnimateTextOut(resultDisplays, resultStarts, resultColors, progress);
             yield return null;
         }
         HideDisplays(playerDisplays);
         HideDisplays(enemyDisplays);
+        HideTextDisplays(resultDisplays);
+    }
+
+    private Vector3[] GetTextPositions(TMP_Text[] displays)
+    {
+        if (displays == null) return null;
+        Vector3[] positions = new Vector3[displays.Length];
+        for (int i = 0; i < displays.Length; i++)
+        {
+            if (displays[i] != null) positions[i] = displays[i].transform.position;
+        }
+        return positions;
+    }
+
+    private Color[] GetTextColors(TMP_Text[] displays)
+    {
+        if (displays == null) return null;
+        Color[] colors = new Color[displays.Length];
+        for (int i = 0; i < displays.Length; i++)
+        {
+            if (displays[i] != null) colors[i] = displays[i].color;
+        }
+        return colors;
+    }
+
+    private void AnimateTextOut(TMP_Text[] displays, Vector3[] starts, Color[] colors, float progress)
+    {
+        if (displays == null || starts == null || colors == null) return;
+        for (int i = 0; i < displays.Length; i++)
+        {
+            if (displays[i] == null) continue;
+            displays[i].transform.position = starts[i] + Vector3.up * (rollDisplayRise * progress);
+            Color color = colors[i];
+            color.a *= 1f - progress;
+            displays[i].color = color;
+        }
+    }
+
+    private static void HideTextDisplays(TMP_Text[] displays)
+    {
+        if (displays == null) return;
+        foreach (TMP_Text text in displays)
+        {
+            if (text != null) text.enabled = false;
+        }
+    }
+
+    private static void DestroyRollResultDisplays(ref TMP_Text[] displays)
+    {
+        if (displays == null) return;
+        foreach (TMP_Text text in displays)
+        {
+            if (text != null) Destroy(text.gameObject);
+        }
+        displays = null;
+    }
+
+    private static void SetTextAlpha(TMP_Text text, float alpha)
+    {
+        if (text == null) return;
+        Color color = text.color;
+        color.a = alpha;
+        text.color = color;
     }
 
     private Vector3[] GetPositions(SpriteRenderer[] displays)
