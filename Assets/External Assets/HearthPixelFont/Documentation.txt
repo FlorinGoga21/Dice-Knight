@@ -1,0 +1,14 @@
+Hearth
+
+Documentation. 1 pixel font, each as a TextMesh Pro font asset made from its bitmap
+(point filtered, so crisp) and as TTF.
+
+  Hearth/Hearth TMP.asset   crisp at font size 8 and its multiples
+  <Font>/<Font>.ttf        the outline font, for a dynamic TMP asset of your own
+  <Font>/BMFont/           the bitmap font the TMP asset is made of
+  Demo/HearthPixelFontDemo.unity   every font at 1x to 4x; type your own text to try it
+
+Keep the text on a canvas scaled by whole numbers (PixelCanvas does it) and at whole-pixel positions.
+
+Needs Unity 6.3 or later and TextMesh Pro's Essential Resources (Window > TextMeshPro > Import
+TMP Essential Resources; Unity offers it when a TMP text first shows).

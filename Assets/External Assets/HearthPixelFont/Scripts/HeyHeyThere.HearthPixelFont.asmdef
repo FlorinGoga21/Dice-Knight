@@ -1,0 +1,6 @@
+{
+    "name": "HeyHeyThere.HearthPixelFont",
+    "rootNamespace": "HeyHeyThere.HearthPixelFont",
+    "references": ["Unity.TextMeshPro", "UnityEngine.UI"],
+    "autoReferenced": true
+}

@@ -2665,7 +2665,7 @@ MonoBehaviour:
   emptyHeartSprite: {fileID: 21300000, guid: f03b01720fa59e8152f7c773f585d8f7, type: 3}
   heartDissolveMaterial: {fileID: 2100000, guid: a841624804e5b984895171be57e2a9e9, type: 2}
   heartDissolveDuration: 0.35
-  heartOutlineMaterial: {fileID: 2100000, guid: 445e2f2ae0a6b404995d36e89771930a, type: 2}
+  heartOutlineMaterial: {fileID: 2100000, guid: 415db1f7c8fe32447be48456a75c7796, type: 2}
   overheadOffset: {x: 0, y: 1, z: 0}
   enemyController: {fileID: 512573322}
   damageNumber: {fileID: 512573324}
@@ -4019,7 +4019,7 @@ MonoBehaviour:
   emptyHeartSprite: {fileID: 21300000, guid: f03b01720fa59e8152f7c773f585d8f7, type: 3}
   heartDissolveMaterial: {fileID: 2100000, guid: a841624804e5b984895171be57e2a9e9, type: 2}
   heartDissolveDuration: 0.35
-  heartOutlineMaterial: {fileID: 2100000, guid: 445e2f2ae0a6b404995d36e89771930a, type: 2}
+  heartOutlineMaterial: {fileID: 2100000, guid: 415db1f7c8fe32447be48456a75c7796, type: 2}
   overheadOffset: {x: 0, y: 1, z: 0}
   enemyController: {fileID: 729043386}
   damageNumber: {fileID: 729043384}
@@ -5739,6 +5739,10 @@ PrefabInstance:
       propertyPath: currencyCoinImage
       value: 
       objectReference: {fileID: 1149351463}
+    - target: {fileID: 7061868257307744292, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: heartOutlineMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 415db1f7c8fe32447be48456a75c7796, type: 2}
     - target: {fileID: 7448375094655010986, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7706,7 +7710,7 @@ MonoBehaviour:
   emptyHeartSprite: {fileID: 21300000, guid: f03b01720fa59e8152f7c773f585d8f7, type: 3}
   heartDissolveMaterial: {fileID: 2100000, guid: a841624804e5b984895171be57e2a9e9, type: 2}
   heartDissolveDuration: 0.35
-  heartOutlineMaterial: {fileID: 2100000, guid: 445e2f2ae0a6b404995d36e89771930a, type: 2}
+  heartOutlineMaterial: {fileID: 2100000, guid: 415db1f7c8fe32447be48456a75c7796, type: 2}
   overheadOffset: {x: 0, y: 1, z: 0}
   enemyController: {fileID: 1890556765}
   damageNumber: {fileID: 1890556763}
@@ -8711,6 +8715,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1165656925}
+  pauseBlurMaterial: {fileID: 2100000, guid: 4a79cdff3a2f4b4984c162ae443a88a3, type: 2}
+  fadeDuration: 0.4
 --- !u!1001 &7244147824625266329
 PrefabInstance:
   m_ObjectHideFlags: 0

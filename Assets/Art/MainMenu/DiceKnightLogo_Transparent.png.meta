@@ -1,0 +1,1066 @@
+fileFormatVersion: 2
+guid: eb0b82a99701fa344a3787b63508fe87
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2809650546632130475
+    second: DiceKnightLogo_Transparent_0
+  - first:
+      213: 4708251527980499027
+    second: DiceKnightLogo_Transparent_1
+  - first:
+      213: 2196255366938310239
+    second: DiceKnightLogo_Transparent_2
+  - first:
+      213: -9195539737951329131
+    second: DiceKnightLogo_Transparent_3
+  - first:
+      213: 6835662821032738338
+    second: DiceKnightLogo_Transparent_4
+  - first:
+      213: -4941717160806857490
+    second: DiceKnightLogo_Transparent_5
+  - first:
+      213: -5990168959908849502
+    second: DiceKnightLogo_Transparent_6
+  - first:
+      213: -5024317905238843463
+    second: DiceKnightLogo_Transparent_7
+  - first:
+      213: -1393544604647513438
+    second: DiceKnightLogo_Transparent_8
+  - first:
+      213: 5391796409410117235
+    second: DiceKnightLogo_Transparent_9
+  - first:
+      213: 2664698606911380806
+    second: DiceKnightLogo_Transparent_10
+  - first:
+      213: -6660938877868366923
+    second: DiceKnightLogo_Transparent_11
+  - first:
+      213: -1628248928731915201
+    second: DiceKnightLogo_Transparent_12
+  - first:
+      213: 6035950384065373140
+    second: DiceKnightLogo_Transparent_13
+  - first:
+      213: -9053797545353967187
+    second: DiceKnightLogo_Transparent_14
+  - first:
+      213: -9024831625758295302
+    second: DiceKnightLogo_Transparent_15
+  - first:
+      213: -7011874038193794904
+    second: DiceKnightLogo_Transparent_16
+  - first:
+      213: 160846532517472645
+    second: DiceKnightLogo_Transparent_17
+  - first:
+      213: -6528918790557812364
+    second: DiceKnightLogo_Transparent_18
+  - first:
+      213: 6817763345442964514
+    second: DiceKnightLogo_Transparent_19
+  - first:
+      213: 2925726009695910771
+    second: DiceKnightLogo_Transparent_20
+  - first:
+      213: 839686654494036944
+    second: DiceKnightLogo_Transparent_21
+  - first:
+      213: 3695959293739678513
+    second: DiceKnightLogo_Transparent_22
+  - first:
+      213: -6548885790925826364
+    second: DiceKnightLogo_Transparent_23
+  - first:
+      213: -779799175505712041
+    second: DiceKnightLogo_Transparent_24
+  - first:
+      213: 8319372096653562530
+    second: DiceKnightLogo_Transparent_25
+  - first:
+      213: 1100838976709471613
+    second: DiceKnightLogo_Transparent_26
+  - first:
+      213: -2909456848505500661
+    second: DiceKnightLogo_Transparent_27
+  - first:
+      213: 2074109303355834652
+    second: DiceKnightLogo_Transparent_28
+  - first:
+      213: 7902931480514627429
+    second: DiceKnightLogo_Transparent_29
+  - first:
+      213: -1286128996049611894
+    second: DiceKnightLogo_Transparent_30
+  - first:
+      213: -939794931420655648
+    second: DiceKnightLogo_Transparent_31
+  - first:
+      213: -4633962569210582183
+    second: DiceKnightLogo_Transparent_32
+  - first:
+      213: -1843270414400874656
+    second: DiceKnightLogo_Transparent_33
+  - first:
+      213: 5580929353164719602
+    second: DiceKnightLogo_Transparent_34
+  - first:
+      213: -4509699561932693062
+    second: DiceKnightLogo_Transparent_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1604
+        height: 903
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5508209c6bd1209d0800000000000000
+      internalID: -2809650546632130475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_1
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 901
+        width: 53
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 350c77eb1d1175140800000000000000
+      internalID: 4708251527980499027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_2
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 900
+        width: 49
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f563766be9aaa7e10800000000000000
+      internalID: 2196255366938310239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_3
+      rect:
+        serializedVersion: 2
+        x: 1131
+        y: 843
+        width: 116
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5942c611451e26080800000000000000
+      internalID: -9195539737951329131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_4
+      rect:
+        serializedVersion: 2
+        x: 1123
+        y: 841
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22e300c6e172dde50800000000000000
+      internalID: 6835662821032738338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_5
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 786
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee4c7a1bc6e7b6bb0800000000000000
+      internalID: -4941717160806857490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_6
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 621
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a8df087115aedca0800000000000000
+      internalID: -5990168959908849502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_7
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 613
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bf9a933c79064ab0800000000000000
+      internalID: -5024317905238843463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_8
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 524
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a2a25db09229ace0800000000000000
+      internalID: -1393544604647513438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_9
+      rect:
+        serializedVersion: 2
+        x: 1621
+        y: 508
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37edd14744283da40800000000000000
+      internalID: 5391796409410117235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_10
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 457
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64d5e6ac349eaf420800000000000000
+      internalID: 2664698606911380806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_11
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 456
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b3211ab1679f83a0800000000000000
+      internalID: -6660938877868366923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_12
+      rect:
+        serializedVersion: 2
+        x: 1611
+        y: 459
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3c1605e93c4769e0800000000000000
+      internalID: -1628248928731915201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 433
+        width: 5
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d3691cf4e004c350800000000000000
+      internalID: 6035950384065373140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_14
+      rect:
+        serializedVersion: 2
+        x: 1605
+        y: 426
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da98fd00a137a5280800000000000000
+      internalID: -9053797545353967187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_15
+      rect:
+        serializedVersion: 2
+        x: 1620
+        y: 419
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afa37f4b37b51c280800000000000000
+      internalID: -9024831625758295302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_16
+      rect:
+        serializedVersion: 2
+        x: 1644
+        y: 427
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a0dca776b1d0be90800000000000000
+      internalID: -7011874038193794904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_17
+      rect:
+        serializedVersion: 2
+        x: 1611
+        y: 411
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 589ae02b1117b3200800000000000000
+      internalID: 160846532517472645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_18
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 264
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 479bd61a3fe9465a0800000000000000
+      internalID: -6528918790557812364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_19
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 237
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2248ecff3af8d9e50800000000000000
+      internalID: 6817763345442964514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_20
+      rect:
+        serializedVersion: 2
+        x: 1565
+        y: 185
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37bbb0efd444a9820800000000000000
+      internalID: 2925726009695910771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_21
+      rect:
+        serializedVersion: 2
+        x: 1565
+        y: 153
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d3d0cb309a27ab00800000000000000
+      internalID: 839686654494036944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_22
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 96
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13b38a7456faa4330800000000000000
+      internalID: 3695959293739678513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_23
+      rect:
+        serializedVersion: 2
+        x: 1339
+        y: 104
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c65345121fad15a0800000000000000
+      internalID: -6548885790925826364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_24
+      rect:
+        serializedVersion: 2
+        x: 1385
+        y: 78
+        width: 44
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75ce6db08c89d25f0800000000000000
+      internalID: -779799175505712041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_25
+      rect:
+        serializedVersion: 2
+        x: 686
+        y: 59
+        width: 23
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a2155f08d8547370800000000000000
+      internalID: 8319372096653562530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_26
+      rect:
+        serializedVersion: 2
+        x: 773
+        y: 72
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7d2ca18737f64f00800000000000000
+      internalID: 1100838976709471613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_27
+      rect:
+        serializedVersion: 2
+        x: 1131
+        y: 80
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0c808749688f97d0800000000000000
+      internalID: -2909456848505500661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_28
+      rect:
+        serializedVersion: 2
+        x: 1145
+        y: 72
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c118bdb1c67b8cc10800000000000000
+      internalID: 2074109303355834652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_29
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 80
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 567835c5f4adcad60800000000000000
+      internalID: 7902931480514627429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_30
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 15
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8312270e70c62ee0800000000000000
+      internalID: -1286128996049611894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_31
+      rect:
+        serializedVersion: 2
+        x: 1143
+        y: 45
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ef85f63d7d25f2f0800000000000000
+      internalID: -939794931420655648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_32
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 49
+        width: 30
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95b2fb7589bd0bfb0800000000000000
+      internalID: -4633962569210582183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_33
+      rect:
+        serializedVersion: 2
+        x: 1113
+        y: 15
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06716acf2536b66e0800000000000000
+      internalID: -1843270414400874656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_34
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 31
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f50feb7da1737d40800000000000000
+      internalID: 5580929353164719602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceKnightLogo_Transparent_35
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 31
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab1644f44245a61c0800000000000000
+      internalID: -4509699561932693062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DiceKnightLogo_Transparent_0: -2809650546632130475
+      DiceKnightLogo_Transparent_1: 4708251527980499027
+      DiceKnightLogo_Transparent_10: 2664698606911380806
+      DiceKnightLogo_Transparent_11: -6660938877868366923
+      DiceKnightLogo_Transparent_12: -1628248928731915201
+      DiceKnightLogo_Transparent_13: 6035950384065373140
+      DiceKnightLogo_Transparent_14: -9053797545353967187
+      DiceKnightLogo_Transparent_15: -9024831625758295302
+      DiceKnightLogo_Transparent_16: -7011874038193794904
+      DiceKnightLogo_Transparent_17: 160846532517472645
+      DiceKnightLogo_Transparent_18: -6528918790557812364
+      DiceKnightLogo_Transparent_19: 6817763345442964514
+      DiceKnightLogo_Transparent_2: 2196255366938310239
+      DiceKnightLogo_Transparent_20: 2925726009695910771
+      DiceKnightLogo_Transparent_21: 839686654494036944
+      DiceKnightLogo_Transparent_22: 3695959293739678513
+      DiceKnightLogo_Transparent_23: -6548885790925826364
+      DiceKnightLogo_Transparent_24: -779799175505712041
+      DiceKnightLogo_Transparent_25: 8319372096653562530
+      DiceKnightLogo_Transparent_26: 1100838976709471613
+      DiceKnightLogo_Transparent_27: -2909456848505500661
+      DiceKnightLogo_Transparent_28: 2074109303355834652
+      DiceKnightLogo_Transparent_29: 7902931480514627429
+      DiceKnightLogo_Transparent_3: -9195539737951329131
+      DiceKnightLogo_Transparent_30: -1286128996049611894
+      DiceKnightLogo_Transparent_31: -939794931420655648
+      DiceKnightLogo_Transparent_32: -4633962569210582183
+      DiceKnightLogo_Transparent_33: -1843270414400874656
+      DiceKnightLogo_Transparent_34: 5580929353164719602
+      DiceKnightLogo_Transparent_35: -4509699561932693062
+      DiceKnightLogo_Transparent_4: 6835662821032738338
+      DiceKnightLogo_Transparent_5: -4941717160806857490
+      DiceKnightLogo_Transparent_6: -5990168959908849502
+      DiceKnightLogo_Transparent_7: -5024317905238843463
+      DiceKnightLogo_Transparent_8: -1393544604647513438
+      DiceKnightLogo_Transparent_9: 5391796409410117235
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
