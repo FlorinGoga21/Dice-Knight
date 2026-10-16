@@ -5720,6 +5720,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1352414126}
     - target: {fileID: 644210985334408834, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: rollResultFont
+      value: 
+      objectReference: {fileID: 11400000, guid: b6442d2bdb14527f403091eca8d72618, type: 2}
+    - target: {fileID: 644210985334408834, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: rollResultPadding
       value: 1
       objectReference: {fileID: 0}
