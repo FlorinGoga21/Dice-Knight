@@ -39,6 +39,11 @@ public sealed class CombatController : MonoBehaviour
     private const float EncounterCheckInterval = 0.1f;
     private const float DiceDisplaySpacing = 0.7f;
     private const float RollResultSortingOrderOffset = 1f;
+    private const int RollComparisonDisplayIndex = 2;
+    private const float RollResultBackgroundPadding = 0.18f;
+    private const float RollResultBackgroundAlpha = 0.78f;
+
+    private static Sprite rollResultBackgroundSprite;
 
     private PlayerController player;
     private PlayerStats playerStats;
@@ -53,6 +58,7 @@ public sealed class CombatController : MonoBehaviour
     private SpriteRenderer[] playerRollDisplays;
     private SpriteRenderer[] enemyRollDisplays;
     private TMP_Text[] rollResultDisplays;
+    private SpriteRenderer rollResultsBackground;
     private bool waitingForPlayerRoll;
     private int[] lastDiceResults;
     private int turnNumber;
@@ -205,6 +211,10 @@ public sealed class CombatController : MonoBehaviour
             rollResultDisplays = CreateRollResultDisplays(playerRoll, enemyRoll, playerRollDisplays, enemyRollDisplays);
             yield return AnimateDisplaysIn(playerRollDisplays, enemyRollDisplays, rollResultDisplays);
             yield return new WaitForSeconds(rollDisplayDuration);
+            if (rollResultDisplays != null && rollResultDisplays.Length > RollComparisonDisplayIndex)
+            {
+                yield return PopComparisonDisplay(rollResultDisplays[RollComparisonDisplayIndex]);
+            }
 
             if (playerRoll > enemyRoll)
             {
@@ -412,6 +422,8 @@ public sealed class CombatController : MonoBehaviour
         resultDisplays[1] = CreateWorldResultText("Enemy Roll Total", enemyTotal.ToString(), enemyTotalPosition, enemyInnerEdge);
         string comparison = playerTotal > enemyTotal ? ">" : playerTotal < enemyTotal ? "<" : "=";
         resultDisplays[2] = CreateWorldResultText("Roll Comparison", comparison, comparisonPosition, playerInnerEdge);
+        rollResultsBackground = CreateRollResultsBackground(resultDisplays, playerInnerEdge);
+        resultDisplays[RollComparisonDisplayIndex].transform.localScale = Vector3.zero;
         return resultDisplays;
     }
 
@@ -427,7 +439,7 @@ public sealed class CombatController : MonoBehaviour
         text.alignment = TextAlignmentOptions.Center;
         text.enableWordWrapping = false;
         text.overflowMode = TextOverflowModes.Overflow;
-        text.color = new Color(1f, 0.94f, 0.78f, 0f);
+        text.color = new Color(1f, 1f, 1f, 0f);
         if (rollResultFont != null)
         {
             text.font = rollResultFont;
@@ -436,7 +448,59 @@ public sealed class CombatController : MonoBehaviour
         MeshRenderer meshRenderer = textObject.GetComponent<MeshRenderer>();
         meshRenderer.sortingLayerID = referenceRenderer.sortingLayerID;
         meshRenderer.sortingOrder = referenceRenderer.sortingOrder + (int)RollResultSortingOrderOffset;
+        text.ForceMeshUpdate();
         return text;
+    }
+
+    private SpriteRenderer CreateRollResultsBackground(TMP_Text[] labels, SpriteRenderer referenceRenderer)
+    {
+        if (labels == null || labels.Length == 0 || referenceRenderer == null)
+        {
+            return null;
+        }
+
+        MeshRenderer firstLabelRenderer = labels[0] != null ? labels[0].GetComponent<MeshRenderer>() : null;
+        if (firstLabelRenderer == null)
+        {
+            return null;
+        }
+
+        Bounds bounds = firstLabelRenderer.bounds;
+        for (int i = 1; i < labels.Length; i++)
+        {
+            if (labels[i] == null) continue;
+            MeshRenderer labelRenderer = labels[i].GetComponent<MeshRenderer>();
+            if (labelRenderer != null) bounds.Encapsulate(labelRenderer.bounds);
+        }
+
+        GameObject backgroundObject = new GameObject("Roll Results Background");
+        backgroundObject.transform.position = bounds.center;
+        backgroundObject.transform.localScale = new Vector3(
+            bounds.size.x + RollResultBackgroundPadding * 2f,
+            bounds.size.y + RollResultBackgroundPadding * 2f,
+            1f);
+
+        SpriteRenderer background = backgroundObject.AddComponent<SpriteRenderer>();
+        background.sprite = GetRollResultBackgroundSprite();
+        background.color = new Color(0.025f, 0.035f, 0.065f, 0f);
+        background.sortingLayerID = referenceRenderer.sortingLayerID;
+        background.sortingOrder = referenceRenderer.sortingOrder - 1;
+        return background;
+    }
+
+    private static Sprite GetRollResultBackgroundSprite()
+    {
+        if (rollResultBackgroundSprite == null)
+        {
+            rollResultBackgroundSprite = Sprite.Create(
+                Texture2D.whiteTexture,
+                new Rect(0f, 0f, 1f, 1f),
+                new Vector2(0.5f, 0.5f),
+                1f);
+            rollResultBackgroundSprite.name = "Roll Result Background";
+        }
+
+        return rollResultBackgroundSprite;
     }
 
     private TMP_FontAsset ResolveRollResultFont()
@@ -467,6 +531,7 @@ public sealed class CombatController : MonoBehaviour
         Vector3[] resultEnds = PrepareTextEntrance(resultDisplays);
         float duration = Mathf.Max(0.05f, rollDisplayAppearDuration);
         float elapsed = 0f;
+        SetResultBackgroundAlpha(0f);
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
@@ -474,11 +539,13 @@ public sealed class CombatController : MonoBehaviour
             AnimateEntrance(playerDisplays, playerEnds, progress);
             AnimateEntrance(enemyDisplays, enemyEnds, progress);
             AnimateTextEntrance(resultDisplays, resultEnds, progress);
+            SetResultBackgroundAlpha(RollResultBackgroundAlpha * progress);
             yield return null;
         }
         AnimateEntrance(playerDisplays, playerEnds, 1f);
         AnimateEntrance(enemyDisplays, enemyEnds, 1f);
         AnimateTextEntrance(resultDisplays, resultEnds, 1f);
+        SetResultBackgroundAlpha(RollResultBackgroundAlpha);
     }
 
     private Vector3[] PrepareTextEntrance(TMP_Text[] displays)
@@ -487,7 +554,7 @@ public sealed class CombatController : MonoBehaviour
         Vector3[] ends = new Vector3[displays.Length];
         for (int i = 0; i < displays.Length; i++)
         {
-            if (displays[i] == null) continue;
+            if (i == RollComparisonDisplayIndex || displays[i] == null) continue;
             ends[i] = displays[i].transform.position;
             displays[i].transform.position = ends[i] - Vector3.up * rollDisplayRise;
             SetTextAlpha(displays[i], 0f);
@@ -500,10 +567,44 @@ public sealed class CombatController : MonoBehaviour
         if (displays == null || ends == null) return;
         for (int i = 0; i < displays.Length; i++)
         {
-            if (displays[i] == null) continue;
+            if (i == RollComparisonDisplayIndex || displays[i] == null) continue;
             displays[i].transform.position = ends[i] - Vector3.up * (rollDisplayRise * (1f - progress));
             SetTextAlpha(displays[i], progress);
         }
+    }
+
+    private IEnumerator PopComparisonDisplay(TMP_Text comparisonDisplay)
+    {
+        if (comparisonDisplay == null) yield break;
+
+        Vector3 finalScale = Vector3.one * rollResultTextScale;
+        Vector3 peakScale = finalScale * 1.35f;
+        const float popDuration = 0.32f;
+        float elapsed = 0f;
+        SetTextAlpha(comparisonDisplay, 0f);
+
+        while (elapsed < popDuration)
+        {
+            elapsed += Time.deltaTime;
+            float progress = Mathf.Clamp01(elapsed / popDuration);
+            float scaleProgress;
+            if (progress < 0.65f)
+            {
+                scaleProgress = Mathf.SmoothStep(0f, 1f, progress / 0.65f);
+                comparisonDisplay.transform.localScale = Vector3.LerpUnclamped(Vector3.zero, peakScale, scaleProgress);
+            }
+            else
+            {
+                scaleProgress = Mathf.SmoothStep(0f, 1f, (progress - 0.65f) / 0.35f);
+                comparisonDisplay.transform.localScale = Vector3.LerpUnclamped(peakScale, finalScale, scaleProgress);
+            }
+
+            SetTextAlpha(comparisonDisplay, Mathf.Clamp01(progress * 3f));
+            yield return null;
+        }
+
+        comparisonDisplay.transform.localScale = finalScale;
+        SetTextAlpha(comparisonDisplay, 1f);
     }
 
     private Vector3[] PrepareEntrance(SpriteRenderer[] displays)
@@ -585,11 +686,13 @@ public sealed class CombatController : MonoBehaviour
             AnimateOut(playerDisplays, playerStarts, playerColors, progress);
             AnimateOut(enemyDisplays, enemyStarts, enemyColors, progress);
             AnimateTextOut(resultDisplays, resultStarts, resultColors, progress);
+            SetResultBackgroundAlpha(RollResultBackgroundAlpha * (1f - progress));
             yield return null;
         }
         HideDisplays(playerDisplays);
         HideDisplays(enemyDisplays);
         HideTextDisplays(resultDisplays);
+        SetResultBackgroundAlpha(0f);
     }
 
     private Vector3[] GetTextPositions(TMP_Text[] displays)
@@ -624,6 +727,7 @@ public sealed class CombatController : MonoBehaviour
             Color color = colors[i];
             color.a *= 1f - progress;
             displays[i].color = color;
+            SetTextAlpha(displays[i], color.a);
         }
     }
 
@@ -636,14 +740,30 @@ public sealed class CombatController : MonoBehaviour
         }
     }
 
-    private static void DestroyRollResultDisplays(ref TMP_Text[] displays)
+    private void DestroyRollResultDisplays(ref TMP_Text[] displays)
     {
-        if (displays == null) return;
-        foreach (TMP_Text text in displays)
+        if (displays != null)
         {
-            if (text != null) Destroy(text.gameObject);
+            foreach (TMP_Text text in displays)
+            {
+                if (text != null) Destroy(text.gameObject);
+            }
+            displays = null;
         }
-        displays = null;
+
+        if (rollResultsBackground != null)
+        {
+            Destroy(rollResultsBackground.gameObject);
+            rollResultsBackground = null;
+        }
+    }
+
+    private void SetResultBackgroundAlpha(float alpha)
+    {
+        if (rollResultsBackground == null) return;
+        Color color = rollResultsBackground.color;
+        color.a = alpha;
+        rollResultsBackground.color = color;
     }
 
     private static void SetTextAlpha(TMP_Text text, float alpha)
