@@ -28,6 +28,9 @@ public partial class PlayerController : MonoBehaviour
     [SerializeField] private float attackCooldown = 0.5f;
     [SerializeField] private float attackMovementThreshold = 0.01f;
 
+    [Header("---Block---")]
+    [SerializeField] private Vector3 blockShieldBlockingOffset = new Vector3(-0.4f, 0f, 0f);
+
     [Header("---Damage Flash---")]
     [SerializeField] private Material damageFlashMaterial;
     [SerializeField] private float damageFlashDuration = 0.1f;
@@ -50,6 +53,9 @@ public partial class PlayerController : MonoBehaviour
     private bool hasDied;
     private bool gameplayEnabled = true;
     private SpriteRenderer[] spriteRenderers;
+    private SpriteRenderer blockingShieldRenderer;
+    private Vector3 blockingShieldRestPosition;
+    private bool blockingPoseActive;
     private Material[] damageFlashMaterials;
     private Coroutine damageFlashCoroutine;
     private Coroutine damageShakeCoroutine;
@@ -73,6 +79,7 @@ public partial class PlayerController : MonoBehaviour
         combatController = GetComponent<CombatController>();
         animator = animator != null ? animator : GetComponent<Animator>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+        CacheBlockingShield();
         SetupDamageFlashMaterials();
         playerCamera = playerCamera != null ? playerCamera : Camera.main;
         inputActions = new PlayerInputActions();
@@ -128,6 +135,15 @@ public partial class PlayerController : MonoBehaviour
         HandleParticles();
     }
 
+    private void LateUpdate()
+    {
+        if (blockingPoseActive && blockingShieldRenderer != null)
+        {
+            blockingShieldRenderer.transform.localPosition = blockingShieldRestPosition
+                + blockShieldBlockingOffset;
+        }
+    }
+
     private void FixedUpdate()
     {
         if (hasDied || !gameplayEnabled)
@@ -178,6 +194,35 @@ public partial class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", 0f);
         animator.SetBool("Grounded", isGrounded);
         movementDust?.Stop(withChildren: true, stopBehavior: ParticleSystemStopBehavior.StopEmitting);
+    }
+
+    public void SetBlockingPose(bool blocking)
+    {
+        blockingPoseActive = blocking && blockingShieldRenderer != null;
+        if (blockingShieldRenderer != null)
+        {
+            blockingShieldRenderer.transform.localPosition = blockingPoseActive
+                ? blockingShieldRestPosition + blockShieldBlockingOffset
+                : blockingShieldRestPosition;
+        }
+    }
+
+    private void CacheBlockingShield()
+    {
+        foreach (SpriteRenderer renderer in spriteRenderers)
+        {
+            if (renderer == null || renderer.sprite == null)
+            {
+                continue;
+            }
+
+            if (renderer.sprite.name.Contains("Shield"))
+            {
+                blockingShieldRenderer = renderer;
+                blockingShieldRestPosition = renderer.transform.localPosition;
+                return;
+            }
+        }
     }
 
     public void PlayDamageAnimation()

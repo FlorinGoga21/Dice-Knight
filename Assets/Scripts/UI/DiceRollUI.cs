@@ -45,6 +45,7 @@ public class DiceRollUI : MonoBehaviour
     /// Passes an array of results, one per die.
     /// </summary>
     public event Action<int[]> DiceRolled;
+    public event Action RollStarted;
     public bool IsRolling => isRolling;
 
     public Sprite GetPipSprite(int dieIndex, int result)
@@ -72,6 +73,7 @@ public class DiceRollUI : MonoBehaviour
     {
         if (!isRolling)
         {
+            RollStarted?.Invoke();
             StartCoroutine(RollAllDiceAnimated());
         }
     }

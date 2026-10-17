@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Coordinates turn-based encounters between the player and enemies.
@@ -18,6 +17,7 @@ public sealed class CombatController : MonoBehaviour
     [SerializeField] private DiceRollUI diceRollUI;
     [SerializeField] private GameObject playerDice;
     [SerializeField] private GameObject rollButton;
+    [SerializeField] private UnityEngine.UI.Button blockButton;
     [SerializeField] private TMP_Text turnText;
     [SerializeField] private float combatUIFadeDuration = 0.35f;
     [SerializeField] private float turnTextDuration = 0.7f;
@@ -42,8 +42,11 @@ public sealed class CombatController : MonoBehaviour
     private const int RollComparisonDisplayIndex = 2;
     private const float RollResultBackgroundPadding = 0.18f;
     private const float RollResultBackgroundAlpha = 0.78f;
+    private const string BlockShieldResourcePath = "Addons/Ver300/0_Unit/0_Sprite/8_Weapons/7_Shield/New_Shield_02";
+    private const int BlocksPerEncounter = 1;
 
     private static Sprite rollResultBackgroundSprite;
+    private static Sprite blockShieldSprite;
 
     private PlayerController player;
     private PlayerStats playerStats;
@@ -53,6 +56,8 @@ public sealed class CombatController : MonoBehaviour
     private Coroutine turnTextCoroutine;
     private CanvasGroup playerDiceCanvasGroup;
     private CanvasGroup rollButtonCanvasGroup;
+    private CanvasGroup blockButtonCanvasGroup;
+    private TMP_Text blockUsageLabel;
     private Vector2 turnTextStartPosition;
     private Color turnTextColor;
     private SpriteRenderer[] playerRollDisplays;
@@ -60,6 +65,8 @@ public sealed class CombatController : MonoBehaviour
     private TMP_Text[] rollResultDisplays;
     private SpriteRenderer rollResultsBackground;
     private bool waitingForPlayerRoll;
+    private bool blockChosenThisTurn;
+    private int blockUsesRemaining;
     private int[] lastDiceResults;
     private int turnNumber;
     private float encounterCheckTimer;
@@ -73,9 +80,14 @@ public sealed class CombatController : MonoBehaviour
         diceRollUI = diceRollUI != null ? diceRollUI : FindAnyObjectByType<DiceRollUI>();
         playerDice = playerDice != null ? playerDice : GameObject.Find("PlayerDice");
         rollButton = rollButton != null ? rollButton : GameObject.Find("RollButton");
+        blockButton = blockButton != null ? blockButton : FindButtonIncludingInactive("BlockButton");
+        blockUsageLabel = blockButton != null
+            ? blockButton.transform.Find("UsageLabel")?.GetComponent<TMP_Text>()
+            : null;
         rollResultFont = ResolveRollResultFont();
         playerDiceCanvasGroup = GetOrAddCanvasGroup(playerDice);
         rollButtonCanvasGroup = GetOrAddCanvasGroup(rollButton);
+        blockButtonCanvasGroup = GetOrAddCanvasGroup(blockButton != null ? blockButton.gameObject : null);
         CreateTurnTextIfNeeded();
         if (turnText != null)
         {
@@ -90,7 +102,9 @@ public sealed class CombatController : MonoBehaviour
         if (diceRollUI != null)
         {
             diceRollUI.DiceRolled += HandlePlayerDiceRolled;
+            diceRollUI.RollStarted += HandlePlayerRollStarted;
         }
+
     }
 
     private void OnDisable()
@@ -98,7 +112,9 @@ public sealed class CombatController : MonoBehaviour
         if (diceRollUI != null)
         {
             diceRollUI.DiceRolled -= HandlePlayerDiceRolled;
+            diceRollUI.RollStarted -= HandlePlayerRollStarted;
         }
+
 
         if (encounterCoroutine != null)
         {
@@ -115,6 +131,7 @@ public sealed class CombatController : MonoBehaviour
         DestroyRollDisplays(ref playerRollDisplays);
         DestroyRollDisplays(ref enemyRollDisplays);
         DestroyRollResultDisplays(ref rollResultDisplays);
+        player?.SetBlockingPose(false);
         SetCombatUIVisible(false);
         activeEnemy = null;
         waitingForPlayerRoll = false;
@@ -165,6 +182,8 @@ public sealed class CombatController : MonoBehaviour
         activeEnemy = nearestEnemy;
         player.PrepareForTurnCombat();
         turnNumber = 0;
+        blockUsesRemaining = BlocksPerEncounter;
+        UpdateBlockButtonLabel();
         SetCombatUIVisible(true);
         encounterCoroutine = StartCoroutine(RunEncounter());
     }
@@ -178,6 +197,11 @@ public sealed class CombatController : MonoBehaviour
         {
             turnNumber++;
             ShowTurnText();
+            blockChosenThisTurn = false;
+            player.SetBlockingPose(false);
+            if (playerDice != null) playerDice.SetActive(true);
+            SetCanvasGroupVisibility(playerDiceCanvasGroup, true);
+            if (blockButton != null) blockButton.interactable = blockUsesRemaining > 0;
             lastDiceResults = null;
             waitingForPlayerRoll = true;
             diceRollUI.SetRollButtonInteractable(true);
@@ -194,9 +218,9 @@ public sealed class CombatController : MonoBehaviour
                 break;
             }
 
-            int[] playerRolls = lastDiceResults ?? new[] { Random.Range(1, 7) };
-            int playerRoll = SumArray(playerRolls);
-            int playerMultiplier = ComputeDiceMultiplier(playerRolls);
+            int[] playerRolls = blockChosenThisTurn ? null : lastDiceResults ?? new[] { Random.Range(1, 7) };
+            int playerRoll = playerRolls != null ? SumArray(playerRolls) : 0;
+            int playerMultiplier = playerRolls != null ? ComputeDiceMultiplier(playerRolls) : 1;
 
             int[] enemyRolls = new int[Mathf.Max(1, activeEnemy.DiceCount)];
             for (int i = 0; i < enemyRolls.Length; i++)
@@ -206,9 +230,16 @@ public sealed class CombatController : MonoBehaviour
             int enemyRoll = SumArray(enemyRolls);
             int enemyMultiplier = ComputeDiceMultiplier(enemyRolls);
 
-            playerRollDisplays = CreateRollDisplays(playerRolls, transform, "Player Roll");
+            playerRollDisplays = blockChosenThisTurn
+                ? CreateBlockDisplay(transform, "Player Block")
+                : CreateRollDisplays(playerRolls, transform, "Player Roll");
             enemyRollDisplays = CreateRollDisplays(enemyRolls, activeEnemy.transform, "Enemy Roll");
-            rollResultDisplays = CreateRollResultDisplays(playerRoll, enemyRoll, playerRollDisplays, enemyRollDisplays);
+            rollResultDisplays = CreateRollResultDisplays(
+                playerRoll,
+                enemyRoll,
+                playerRollDisplays,
+                enemyRollDisplays,
+                blockChosenThisTurn);
             yield return AnimateDisplaysIn(playerRollDisplays, enemyRollDisplays, rollResultDisplays);
             yield return new WaitForSeconds(rollDisplayDuration);
             if (rollResultDisplays != null && rollResultDisplays.Length > RollComparisonDisplayIndex)
@@ -216,11 +247,16 @@ public sealed class CombatController : MonoBehaviour
                 yield return PopComparisonDisplay(rollResultDisplays[RollComparisonDisplayIndex]);
             }
 
-            if (playerRoll > enemyRoll)
+            if (!blockChosenThisTurn && playerRoll > enemyRoll)
             {
                 yield return EnlargeDisplays(playerRollDisplays, rollResultDisplays != null ? rollResultDisplays[0] : null);
                 player.PlayAttackAnimationVisualOnly();
                 activeEnemy.TakeDamage(player.AttackDamage * playerMultiplier);
+            }
+            else if (blockChosenThisTurn)
+            {
+                yield return EnlargeDisplays(enemyRollDisplays, rollResultDisplays != null ? rollResultDisplays[1] : null);
+                activeEnemy.PerformTurnAttack(enemyMultiplier, applyDamage: false);
             }
             else if (enemyRoll > playerRoll)
             {
@@ -250,7 +286,10 @@ public sealed class CombatController : MonoBehaviour
         DestroyRollDisplays(ref enemyRollDisplays);
         DestroyRollResultDisplays(ref rollResultDisplays);
         waitingForPlayerRoll = false;
+        blockChosenThisTurn = false;
+        player?.SetBlockingPose(false);
         diceRollUI?.SetRollButtonInteractable(false);
+        if (blockButton != null) blockButton.interactable = false;
         SetCombatUIVisible(false);
         activeEnemy = null;
         encounterCoroutine = null;
@@ -258,13 +297,47 @@ public sealed class CombatController : MonoBehaviour
 
     private void HandlePlayerDiceRolled(int[] results)
     {
-        if (!waitingForPlayerRoll)
+        if (!waitingForPlayerRoll || blockChosenThisTurn)
         {
             return;
         }
 
         lastDiceResults = results;
         waitingForPlayerRoll = false;
+    }
+
+    private void HandlePlayerRollStarted()
+    {
+        if (waitingForPlayerRoll && blockButton != null)
+        {
+            blockButton.interactable = false;
+        }
+    }
+
+    public void ChooseToBlock()
+    {
+        if (!waitingForPlayerRoll || blockChosenThisTurn || blockUsesRemaining <= 0
+            || diceRollUI == null || diceRollUI.IsRolling)
+        {
+            return;
+        }
+
+        blockChosenThisTurn = true;
+        blockUsesRemaining--;
+        UpdateBlockButtonLabel();
+        player.SetBlockingPose(true);
+        SetCanvasGroupVisibility(playerDiceCanvasGroup, false);
+        diceRollUI.SetRollButtonInteractable(false);
+        if (blockButton != null) blockButton.interactable = false;
+        waitingForPlayerRoll = false;
+    }
+
+    private void UpdateBlockButtonLabel()
+    {
+        if (blockUsageLabel != null)
+        {
+            blockUsageLabel.text = $"Uses: {blockUsesRemaining}";
+        }
     }
 
     private void CreateTurnTextIfNeeded()
@@ -307,11 +380,13 @@ public sealed class CombatController : MonoBehaviour
         playerStats?.SetCombatHeartsVisible(visible, combatUIFadeDuration);
         if (playerDice != null) playerDice.SetActive(visible);
         if (rollButton != null) rollButton.SetActive(visible);
+        if (blockButton != null) blockButton.gameObject.SetActive(visible);
 
         if (!visible)
         {
             SetCanvasGroupAlpha(playerDiceCanvasGroup, 0f);
             SetCanvasGroupAlpha(rollButtonCanvasGroup, 0f);
+            SetCanvasGroupAlpha(blockButtonCanvasGroup, 0f);
             if (turnTextCoroutine != null)
             {
                 StopCoroutine(turnTextCoroutine);
@@ -323,6 +398,7 @@ public sealed class CombatController : MonoBehaviour
 
         SetCanvasGroupAlpha(playerDiceCanvasGroup, 0f);
         SetCanvasGroupAlpha(rollButtonCanvasGroup, 0f);
+        SetCanvasGroupAlpha(blockButtonCanvasGroup, 0f);
         uiFadeCoroutine = StartCoroutine(FadeCombatUIIn());
     }
 
@@ -336,10 +412,12 @@ public sealed class CombatController : MonoBehaviour
             float alpha = Mathf.Clamp01(elapsed / duration);
             SetCanvasGroupAlpha(playerDiceCanvasGroup, alpha);
             SetCanvasGroupAlpha(rollButtonCanvasGroup, alpha);
+            SetCanvasGroupAlpha(blockButtonCanvasGroup, alpha);
             yield return null;
         }
         SetCanvasGroupAlpha(playerDiceCanvasGroup, 1f);
         SetCanvasGroupAlpha(rollButtonCanvasGroup, 1f);
+        SetCanvasGroupAlpha(blockButtonCanvasGroup, 1f);
         uiFadeCoroutine = null;
     }
 
@@ -395,11 +473,38 @@ public sealed class CombatController : MonoBehaviour
         return displays;
     }
 
+    private SpriteRenderer[] CreateBlockDisplay(Transform owner, string displayName)
+    {
+        if (owner == null) return null;
+
+        if (blockShieldSprite == null)
+        {
+            blockShieldSprite = Resources.Load<Sprite>(BlockShieldResourcePath);
+        }
+
+        if (blockShieldSprite == null)
+        {
+            Debug.LogError($"Could not load the SPUM block shield at Resources/{BlockShieldResourcePath}.png", this);
+            return null;
+        }
+
+        GameObject item = new GameObject(displayName);
+        SpriteRenderer renderer = item.AddComponent<SpriteRenderer>();
+        renderer.sortingOrder = 100;
+        renderer.sprite = blockShieldSprite;
+        renderer.transform.position = owner.position + rollDisplayOffset;
+        renderer.transform.localScale = Vector3.one * rollDisplayScale;
+        renderer.color = new Color(1f, 1f, 1f, 0f);
+        renderer.enabled = true;
+        return new[] { renderer };
+    }
+
     private TMP_Text[] CreateRollResultDisplays(
         int playerTotal,
         int enemyTotal,
         SpriteRenderer[] playerDisplays,
-        SpriteRenderer[] enemyDisplays)
+        SpriteRenderer[] enemyDisplays,
+        bool blockAction)
     {
         if (playerDisplays == null || playerDisplays.Length == 0
             || enemyDisplays == null || enemyDisplays.Length == 0)
@@ -418,12 +523,18 @@ public sealed class CombatController : MonoBehaviour
         Vector3 comparisonPosition = (playerTotalPosition + enemyTotalPosition) * 0.5f;
 
         TMP_Text[] resultDisplays = new TMP_Text[3];
-        resultDisplays[0] = CreateWorldResultText("Player Roll Total", playerTotal.ToString(), playerTotalPosition, playerInnerEdge);
+        if (!blockAction)
+        {
+            resultDisplays[0] = CreateWorldResultText("Player Roll Total", playerTotal.ToString(), playerTotalPosition, playerInnerEdge);
+        }
         resultDisplays[1] = CreateWorldResultText("Enemy Roll Total", enemyTotal.ToString(), enemyTotalPosition, enemyInnerEdge);
-        string comparison = playerTotal > enemyTotal ? ">" : playerTotal < enemyTotal ? "<" : "=";
-        resultDisplays[2] = CreateWorldResultText("Roll Comparison", comparison, comparisonPosition, playerInnerEdge);
+        if (!blockAction)
+        {
+            string comparison = playerTotal > enemyTotal ? ">" : playerTotal < enemyTotal ? "<" : "=";
+            resultDisplays[2] = CreateWorldResultText("Roll Comparison", comparison, comparisonPosition, playerInnerEdge);
+            resultDisplays[RollComparisonDisplayIndex].transform.localScale = Vector3.zero;
+        }
         rollResultsBackground = CreateRollResultsBackground(resultDisplays, playerInnerEdge);
-        resultDisplays[RollComparisonDisplayIndex].transform.localScale = Vector3.zero;
         return resultDisplays;
     }
 
@@ -437,7 +548,7 @@ public sealed class CombatController : MonoBehaviour
         text.text = value;
         text.fontSize = rollResultFontSize;
         text.alignment = TextAlignmentOptions.Center;
-        text.enableWordWrapping = false;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
         text.overflowMode = TextOverflowModes.Overflow;
         text.color = new Color(1f, 1f, 1f, 0f);
         if (rollResultFont != null)
@@ -459,7 +570,13 @@ public sealed class CombatController : MonoBehaviour
             return null;
         }
 
-        MeshRenderer firstLabelRenderer = labels[0] != null ? labels[0].GetComponent<MeshRenderer>() : null;
+        MeshRenderer firstLabelRenderer = null;
+        foreach (TMP_Text label in labels)
+        {
+            if (label == null) continue;
+            firstLabelRenderer = label.GetComponent<MeshRenderer>();
+            if (firstLabelRenderer != null) break;
+        }
         if (firstLabelRenderer == null)
         {
             return null;
@@ -858,5 +975,26 @@ public sealed class CombatController : MonoBehaviour
     private static void SetCanvasGroupAlpha(CanvasGroup group, float alpha)
     {
         if (group != null) group.alpha = alpha;
+    }
+
+    private static void SetCanvasGroupVisibility(CanvasGroup group, bool visible)
+    {
+        if (group == null) return;
+        group.alpha = visible ? 1f : 0f;
+        group.interactable = visible;
+        group.blocksRaycasts = visible;
+    }
+
+    private static UnityEngine.UI.Button FindButtonIncludingInactive(string buttonName)
+    {
+        foreach (UnityEngine.UI.Button button in FindObjectsByType<UnityEngine.UI.Button>(FindObjectsInactive.Include))
+        {
+            if (button != null && button.gameObject.name == buttonName)
+            {
+                return button;
+            }
+        }
+
+        return null;
     }
 }

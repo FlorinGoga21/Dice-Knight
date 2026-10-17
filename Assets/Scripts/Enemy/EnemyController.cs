@@ -176,16 +176,20 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
     }
 
-    public void PerformTurnAttack(int damageMultiplier = 1)
+    public void PerformTurnAttack(int damageMultiplier = 1, bool applyDamage = true)
     {
-        if (hasDied || targetDamageable == null || targetDamageable.IsDead)
+        if (hasDied)
         {
             return;
         }
 
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
-        targetDamageable.TakeDamage(attackDamage * Mathf.Max(1, damageMultiplier));
+
+        if (applyDamage && targetDamageable != null && !targetDamageable.IsDead)
+        {
+            targetDamageable.TakeDamage(attackDamage * Mathf.Max(1, damageMultiplier));
+        }
     }
 
     public void PlayAttackAnimation()

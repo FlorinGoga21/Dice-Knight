@@ -710,7 +710,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2000, y: 1000}
+  m_SizeDelta: {x: 1678, y: 937}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &199928949
 MonoBehaviour:
@@ -1155,7 +1155,7 @@ MonoBehaviour:
   logoBobSpeed: 0.25
   mainSceneName: MainScene
   transitionStyle: clouds
-  cameraOffsetDropSpeed: 3
+  cameraOffsetDropSpeed: 2
   cameraFollowOffsetAtMenu: 2.5
 --- !u!224 &448863873 stripped
 RectTransform:
@@ -1975,7 +1975,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2000, y: 1000}
+  m_SizeDelta: {x: 1678, y: 937}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1568433037
 MonoBehaviour:
