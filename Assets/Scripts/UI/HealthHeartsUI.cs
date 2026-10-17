@@ -23,6 +23,8 @@ public class HealthHeartsUI : MonoBehaviour
     [SerializeField] private Material heartDissolveMaterial;
     [SerializeField] private float heartDissolveDuration = 0.35f;
     [SerializeField] private Material heartOutlineMaterial;
+    [SerializeField, Min(0.01f)] private float healingStepDuration = 0.16f;
+    [SerializeField, Min(1f)] private float healingPulseScale = 1.25f;
 
     [Header("---Layout & Size---")]
     [SerializeField] private Vector2 heartSize = new Vector2(16f, 16f);
@@ -43,12 +45,16 @@ public class HealthHeartsUI : MonoBehaviour
     private HorizontalLayoutGroup layoutGroup;
 
     private readonly List<Image> heartIcons = new List<Image>();
+    private readonly List<RectTransform> heartSlotRects = new List<RectTransform>();
     private readonly List<Image> outlineIcons = new List<Image>();
     private readonly List<Material> dissolveMaterials = new List<Material>();
     private readonly List<Material> outlineMaterials = new List<Material>();
     private readonly List<Coroutine> dissolveCoroutines = new List<Coroutine>();
 
     private Coroutine fadeCoroutine;
+    private Coroutine healingCoroutine;
+    private int displayedHealth;
+    private bool hasDisplayedHealth;
     private bool isInitialized;
 
     public Transform FollowTarget
@@ -106,6 +112,12 @@ public class HealthHeartsUI : MonoBehaviour
         heartDissolveDuration = Mathf.Max(0.05f, dissolveDuration);
     }
 
+    public void ConfigureHealingAnimation(float stepDuration, float pulseScale)
+    {
+        healingStepDuration = Mathf.Max(0.01f, stepDuration);
+        healingPulseScale = Mathf.Max(1f, pulseScale);
+    }
+
     /// <summary>
     /// Sets the max health, dynamically generating or pruning heart icons
     /// (1 heart for every 20 HP), and updates current visual state.
@@ -125,6 +137,30 @@ public class HealthHeartsUI : MonoBehaviour
     /// Updates the fill of each heart based on the current health.
     /// </summary>
     public void UpdateHearts(int currentHealth, int maxHealth, bool animateEmptyHearts = true)
+    {
+        StopHealingAnimation();
+        RenderHearts(currentHealth, maxHealth, animateEmptyHearts);
+    }
+
+    /// <summary>
+    /// Gradually fills missing health in half-heart steps, briefly popping each heart as it fills.
+    /// Gameplay health is updated by the caller immediately; this only animates the display.
+    /// </summary>
+    public void AnimateHealing(int currentHealth, int maxHealth)
+    {
+        EnsureStructure();
+        StopHealingAnimation();
+
+        if (!hasDisplayedHealth || currentHealth <= displayedHealth || !gameObject.activeInHierarchy)
+        {
+            RenderHearts(currentHealth, maxHealth, animateEmptyHearts: false);
+            return;
+        }
+
+        healingCoroutine = StartCoroutine(HealingRoutine(currentHealth, maxHealth));
+    }
+
+    private void RenderHearts(int currentHealth, int maxHealth, bool animateEmptyHearts)
     {
         EnsureStructure();
 
@@ -164,6 +200,55 @@ public class HealthHeartsUI : MonoBehaviour
             }
 
             SyncOutline(i);
+        }
+
+        displayedHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        hasDisplayedHealth = true;
+    }
+
+    private IEnumerator HealingRoutine(int targetHealth, int maxHealth)
+    {
+        while (displayedHealth < targetHealth)
+        {
+            int nextHealth = Mathf.Min(targetHealth, displayedHealth + HealthPerHalfHeart);
+            RenderHearts(nextHealth, maxHealth, animateEmptyHearts: false);
+
+            int heartIndex = Mathf.Clamp((nextHealth - 1) / HealthPerFullHeart, 0, heartSlotRects.Count - 1);
+            RectTransform heartSlot = heartSlotRects[heartIndex];
+            float duration = Mathf.Max(0.01f, healingStepDuration);
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float progress = Mathf.Clamp01(elapsed / duration);
+                float pulse = progress < 0.4f
+                    ? Mathf.SmoothStep(0f, 1f, progress / 0.4f)
+                    : Mathf.SmoothStep(1f, 0f, (progress - 0.4f) / 0.6f);
+                heartSlot.localScale = Vector3.one * Mathf.Lerp(1f, healingPulseScale, pulse);
+                yield return null;
+            }
+
+            heartSlot.localScale = Vector3.one;
+        }
+
+        healingCoroutine = null;
+    }
+
+    private void StopHealingAnimation()
+    {
+        if (healingCoroutine != null)
+        {
+            StopCoroutine(healingCoroutine);
+            healingCoroutine = null;
+        }
+
+        for (int i = 0; i < heartSlotRects.Count; i++)
+        {
+            if (heartSlotRects[i] != null)
+            {
+                heartSlotRects[i].localScale = Vector3.one;
+            }
         }
     }
 
@@ -331,6 +416,7 @@ public class HealthHeartsUI : MonoBehaviour
 
         RectTransform slotRect = (RectTransform)slotObj.transform;
         slotRect.sizeDelta = heartSize;
+        heartSlotRects.Add(slotRect);
 
         // Main Heart Image
         GameObject heartObj = new GameObject("HeartIcon", typeof(RectTransform), typeof(Image));

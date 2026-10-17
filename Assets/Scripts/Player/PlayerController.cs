@@ -30,6 +30,7 @@ public partial class PlayerController : MonoBehaviour
 
     [Header("---Block---")]
     [SerializeField] private Vector3 blockShieldBlockingOffset = new Vector3(-0.4f, 0f, 0f);
+    [SerializeField, Min(0.01f)] private float blockShieldMoveDuration = 0.22f;
 
     [Header("---Damage Flash---")]
     [SerializeField] private Material damageFlashMaterial;
@@ -55,6 +56,7 @@ public partial class PlayerController : MonoBehaviour
     private SpriteRenderer[] spriteRenderers;
     private SpriteRenderer blockingShieldRenderer;
     private Vector3 blockingShieldRestPosition;
+    private Vector3 blockingShieldMoveVelocity;
     private bool blockingPoseActive;
     private Material[] damageFlashMaterials;
     private Coroutine damageFlashCoroutine;
@@ -137,10 +139,17 @@ public partial class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (blockingPoseActive && blockingShieldRenderer != null)
+        if (blockingShieldRenderer != null)
         {
-            blockingShieldRenderer.transform.localPosition = blockingShieldRestPosition
-                + blockShieldBlockingOffset;
+            Vector3 targetPosition = blockingShieldRestPosition
+                + (blockingPoseActive ? blockShieldBlockingOffset : Vector3.zero);
+            blockingShieldRenderer.transform.localPosition = Vector3.SmoothDamp(
+                blockingShieldRenderer.transform.localPosition,
+                targetPosition,
+                ref blockingShieldMoveVelocity,
+                blockShieldMoveDuration,
+                Mathf.Infinity,
+                Time.deltaTime);
         }
     }
 
@@ -199,12 +208,6 @@ public partial class PlayerController : MonoBehaviour
     public void SetBlockingPose(bool blocking)
     {
         blockingPoseActive = blocking && blockingShieldRenderer != null;
-        if (blockingShieldRenderer != null)
-        {
-            blockingShieldRenderer.transform.localPosition = blockingPoseActive
-                ? blockingShieldRestPosition + blockShieldBlockingOffset
-                : blockingShieldRestPosition;
-        }
     }
 
     private void CacheBlockingShield()

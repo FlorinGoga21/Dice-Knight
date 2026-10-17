@@ -24,6 +24,10 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     [SerializeField] private Material heartOutlineMaterial;
     [SerializeField] private Vector3 overheadOffset = new Vector3(0f, 1.4f, 0f);
 
+    [Header("---Healing Heart Animation---")]
+    [SerializeField, Min(0.01f)] private float healingHeartStepDuration = 0.16f;
+    [SerializeField, Min(1f)] private float healingHeartPulseScale = 1.25f;
+
     [Header("---Currency Settings---")]
     [SerializeField] private TextMeshProUGUI currencyText;
     [SerializeField] private Image currencyCoinImage;
@@ -120,6 +124,7 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
                 heartOutlineMaterial,
                 heartDissolveDuration
             );
+            healthHeartsUI.ConfigureHealingAnimation(healingHeartStepDuration, healingHeartPulseScale);
             healthHeartsUI.SetMaxHealth(MaxHealth, currentHealth);
         }
     }
@@ -161,6 +166,7 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
             heartOutlineMaterial,
             heartDissolveDuration
         );
+        healthHeartsUI.ConfigureHealingAnimation(healingHeartStepDuration, healingHeartPulseScale);
 
         healthHeartsUI.SetMaxHealth(MaxHealth, currentHealth);
     }
@@ -182,7 +188,7 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
 
             if (healthHeartsUI != null)
             {
-                healthHeartsUI.UpdateHearts(currentHealth, MaxHealth, animateEmptyHearts: false);
+                healthHeartsUI.AnimateHealing(currentHealth, MaxHealth);
             }
         }
     }

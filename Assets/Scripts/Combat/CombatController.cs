@@ -18,6 +18,8 @@ public sealed class CombatController : MonoBehaviour
     [SerializeField] private GameObject playerDice;
     [SerializeField] private GameObject rollButton;
     [SerializeField] private UnityEngine.UI.Button blockButton;
+    [SerializeField] private UnityEngine.UI.Button healingPotionButton;
+    [SerializeField, Min(0)] private int startingHealingPotionCount = 3;
     [SerializeField] private TMP_Text turnText;
     [SerializeField] private float combatUIFadeDuration = 0.35f;
     [SerializeField] private float turnTextDuration = 0.7f;
@@ -57,7 +59,17 @@ public sealed class CombatController : MonoBehaviour
     private CanvasGroup playerDiceCanvasGroup;
     private CanvasGroup rollButtonCanvasGroup;
     private CanvasGroup blockButtonCanvasGroup;
+    private CanvasGroup healingPotionCanvasGroup;
     private TMP_Text blockUsageLabel;
+    private TMP_Text healingUsageLabel;
+    private UnityEngine.UI.Graphic healingPotionButtonGraphic;
+    private UnityEngine.UI.Image healingPotionImage;
+    private UnityEngine.UI.Graphic healingPotionFocusGraphic;
+    private ButtonHoverFocus healingPotionHoverFocus;
+    private Color healingPotionBusyTint = new Color(0.7843f, 0.7843f, 0.7843f, 0.502f);
+    private Color healingPotionButtonEnabledColor = Color.white;
+    private Color healingPotionIconEnabledColor = Color.white;
+    private Color healingUsageEnabledColor = Color.white;
     private Vector2 turnTextStartPosition;
     private Color turnTextColor;
     private SpriteRenderer[] playerRollDisplays;
@@ -67,6 +79,7 @@ public sealed class CombatController : MonoBehaviour
     private bool waitingForPlayerRoll;
     private bool blockChosenThisTurn;
     private int blockUsesRemaining;
+    private int healingPotionsRemaining;
     private int[] lastDiceResults;
     private int turnNumber;
     private float encounterCheckTimer;
@@ -81,20 +94,68 @@ public sealed class CombatController : MonoBehaviour
         playerDice = playerDice != null ? playerDice : GameObject.Find("PlayerDice");
         rollButton = rollButton != null ? rollButton : GameObject.Find("RollButton");
         blockButton = blockButton != null ? blockButton : FindButtonIncludingInactive("BlockButton");
+        healingPotionButton = healingPotionButton != null
+            ? healingPotionButton
+            : FindButtonIncludingInactive("HealingPotion");
         blockUsageLabel = blockButton != null
             ? blockButton.transform.Find("UsageLabel")?.GetComponent<TMP_Text>()
             : null;
+        healingUsageLabel = healingPotionButton != null
+            ? healingPotionButton.transform.Find("HealingUsages")?.GetComponent<TMP_Text>()
+            : null;
+        healingPotionImage = healingPotionButton != null
+            ? healingPotionButton.transform.Find("HealingPotionImage")?.GetComponent<UnityEngine.UI.Image>()
+            : null;
+        healingPotionButtonGraphic = healingPotionButton != null ? healingPotionButton.targetGraphic : null;
+        if (healingPotionButton != null)
+        {
+            // Keep the icon's appearance under our control so full health does not gray it out.
+            healingPotionButton.transition = UnityEngine.UI.Selectable.Transition.None;
+        }
+        SetupHealingPotionFocus();
+        UnityEngine.UI.Button rollButtonComponent = rollButton != null
+            ? rollButton.GetComponent<UnityEngine.UI.Button>()
+            : null;
+        HeyHeyThere.PixelUIFree.PixelButton rollPixelButton = rollButtonComponent
+            as HeyHeyThere.PixelUIFree.PixelButton;
+        AttachButtonHoverFocus(
+            rollButtonComponent,
+            rollPixelButton != null ? rollPixelButton.focus : null);
+        HeyHeyThere.PixelUIFree.PixelButton blockPixelButton = blockButton
+            as HeyHeyThere.PixelUIFree.PixelButton;
+        AttachButtonHoverFocus(
+            blockButton,
+            blockPixelButton != null ? blockPixelButton.focus : null);
+        if (rollButtonComponent != null)
+        {
+            healingPotionBusyTint = rollButtonComponent.colors.disabledColor;
+        }
+        if (healingPotionButtonGraphic != null)
+        {
+            healingPotionButtonEnabledColor = healingPotionButtonGraphic.color;
+        }
+        if (healingPotionImage != null)
+        {
+            healingPotionIconEnabledColor = healingPotionImage.color;
+        }
+        if (healingUsageLabel != null)
+        {
+            healingUsageEnabledColor = healingUsageLabel.color;
+        }
+        healingPotionsRemaining = Mathf.Max(0, startingHealingPotionCount);
+        UpdateHealingUsageLabel();
         rollResultFont = ResolveRollResultFont();
         playerDiceCanvasGroup = GetOrAddCanvasGroup(playerDice);
         rollButtonCanvasGroup = GetOrAddCanvasGroup(rollButton);
         blockButtonCanvasGroup = GetOrAddCanvasGroup(blockButton != null ? blockButton.gameObject : null);
+        healingPotionCanvasGroup = GetOrAddCanvasGroup(healingPotionButton != null ? healingPotionButton.gameObject : null);
         CreateTurnTextIfNeeded();
         if (turnText != null)
         {
             turnTextStartPosition = turnText.rectTransform.anchoredPosition;
             turnTextColor = turnText.color;
         }
-        SetCombatUIVisible(false);
+        SetCombatUIVisible(false, instant: true);
     }
 
     private void OnEnable()
@@ -105,6 +166,11 @@ public sealed class CombatController : MonoBehaviour
             diceRollUI.RollStarted += HandlePlayerRollStarted;
         }
 
+        if (healingPotionButton != null)
+        {
+            healingPotionButton.onClick.AddListener(UseHealingPotion);
+        }
+
     }
 
     private void OnDisable()
@@ -113,6 +179,11 @@ public sealed class CombatController : MonoBehaviour
         {
             diceRollUI.DiceRolled -= HandlePlayerDiceRolled;
             diceRollUI.RollStarted -= HandlePlayerRollStarted;
+        }
+
+        if (healingPotionButton != null)
+        {
+            healingPotionButton.onClick.RemoveListener(UseHealingPotion);
         }
 
 
@@ -132,13 +203,14 @@ public sealed class CombatController : MonoBehaviour
         DestroyRollDisplays(ref enemyRollDisplays);
         DestroyRollResultDisplays(ref rollResultDisplays);
         player?.SetBlockingPose(false);
-        SetCombatUIVisible(false);
+        SetCombatUIVisible(false, instant: true);
         activeEnemy = null;
         waitingForPlayerRoll = false;
     }
 
     private void Update()
     {
+        UpdateHealingPotionButtonState();
         if (IsInCombat || player == null || !player.CanStartTurnCombat)
         {
             return;
@@ -308,6 +380,8 @@ public sealed class CombatController : MonoBehaviour
 
     private void HandlePlayerRollStarted()
     {
+        UpdateHealingPotionButtonState();
+
         if (waitingForPlayerRoll && blockButton != null)
         {
             blockButton.interactable = false;
@@ -330,6 +404,155 @@ public sealed class CombatController : MonoBehaviour
         diceRollUI.SetRollButtonInteractable(false);
         if (blockButton != null) blockButton.interactable = false;
         waitingForPlayerRoll = false;
+        UpdateHealingPotionButtonState();
+    }
+
+    private void UseHealingPotion()
+    {
+        if (!CanUseHealingPotion)
+        {
+            return;
+        }
+
+        int healthBefore = playerStats.CurrentHealth;
+        playerStats.Heal(HealthHeartsUI.HealthPerFullHeart);
+        if (playerStats.CurrentHealth == healthBefore)
+        {
+            return;
+        }
+
+        healingPotionsRemaining--;
+        UpdateHealingUsageLabel();
+        UpdateHealingPotionButtonState();
+    }
+
+    private void UpdateHealingUsageLabel()
+    {
+        if (healingUsageLabel != null)
+        {
+            healingUsageLabel.text = healingPotionsRemaining.ToString();
+        }
+    }
+
+    private void UpdateHealingPotionButtonState()
+    {
+        if (healingPotionButton == null)
+        {
+            return;
+        }
+
+        bool canUsePotion = CanUseHealingPotion;
+        healingPotionButton.interactable = canUsePotion;
+        healingPotionHoverFocus?.SetFocusAvailable(CanShowPotionFocus);
+        Color tint = IsPotionActionLocked ? healingPotionBusyTint : Color.white;
+        if (healingPotionButtonGraphic != null)
+        {
+            healingPotionButtonGraphic.color = MultiplyColor(healingPotionButtonEnabledColor, tint);
+        }
+        if (healingPotionImage != null)
+        {
+            healingPotionImage.color = MultiplyColor(healingPotionIconEnabledColor, tint);
+        }
+        if (healingUsageLabel != null)
+        {
+            healingUsageLabel.color = MultiplyColor(healingUsageEnabledColor, tint);
+        }
+    }
+
+    private bool IsPotionActionLocked => blockChosenThisTurn
+        || (diceRollUI != null && diceRollUI.IsRolling);
+
+    private bool CanUseHealingPotion => IsInCombat
+        && healingPotionsRemaining > 0
+        && playerStats != null
+        && !playerStats.IsDead
+        && playerStats.CurrentHealth < playerStats.MaxHealthValue
+        && !IsPotionActionLocked;
+
+    private bool CanShowPotionFocus => IsInCombat
+        && healingPotionsRemaining > 0
+        && playerStats != null
+        && !playerStats.IsDead
+        && !IsPotionActionLocked;
+
+    private static Color MultiplyColor(Color color, Color tint)
+    {
+        return new Color(
+            color.r * tint.r,
+            color.g * tint.g,
+            color.b * tint.b,
+            color.a * tint.a);
+    }
+
+    private void SetupHealingPotionFocus()
+    {
+        if (healingPotionButton == null)
+        {
+            return;
+        }
+
+        HeyHeyThere.PixelUIFree.PixelButton potionPixelButton = healingPotionButton
+            .GetComponent<HeyHeyThere.PixelUIFree.PixelButton>();
+        healingPotionFocusGraphic = potionPixelButton != null ? potionPixelButton.focus : null;
+
+        HeyHeyThere.PixelUIFree.PixelButton rollPixelButton = rollButton != null
+            ? rollButton.GetComponent<HeyHeyThere.PixelUIFree.PixelButton>()
+            : null;
+        if (healingPotionFocusGraphic == null && rollPixelButton != null && rollPixelButton.focus != null)
+        {
+            GameObject focusObject = Instantiate(rollPixelButton.focus.gameObject, healingPotionButton.transform, false);
+            focusObject.name = "PotionHoverFocus";
+            RectTransform focusRect = focusObject.transform as RectTransform;
+            if (focusRect != null)
+            {
+                focusRect.anchorMin = Vector2.zero;
+                focusRect.anchorMax = Vector2.one;
+                focusRect.offsetMin = Vector2.zero;
+                focusRect.offsetMax = Vector2.zero;
+                focusRect.localScale = Vector3.one;
+                focusRect.SetAsLastSibling();
+            }
+
+            healingPotionFocusGraphic = focusObject.GetComponent<UnityEngine.UI.Graphic>();
+        }
+
+        if (healingPotionFocusGraphic == null)
+        {
+            return;
+        }
+
+        healingPotionFocusGraphic.color = new Color(1f, 0.86f, 0.2f, 1f);
+        healingPotionFocusGraphic.raycastTarget = false;
+        healingPotionFocusGraphic.enabled = false;
+        if (potionPixelButton != null)
+        {
+            potionPixelButton.focus = healingPotionFocusGraphic;
+        }
+
+        healingPotionHoverFocus = AttachButtonHoverFocus(healingPotionButton, healingPotionFocusGraphic);
+    }
+
+    private static ButtonHoverFocus AttachButtonHoverFocus(
+        UnityEngine.UI.Button button,
+        UnityEngine.UI.Graphic focusGraphic)
+    {
+        if (button == null || focusGraphic == null)
+        {
+            return null;
+        }
+
+        focusGraphic.color = new Color(1f, 0.86f, 0.2f, 1f);
+        focusGraphic.raycastTarget = false;
+        focusGraphic.enabled = false;
+
+        ButtonHoverFocus hoverFocus = button.GetComponent<ButtonHoverFocus>();
+        if (hoverFocus == null)
+        {
+            hoverFocus = button.gameObject.AddComponent<ButtonHoverFocus>();
+        }
+
+        hoverFocus.Initialize(button, focusGraphic);
+        return hoverFocus;
     }
 
     private void UpdateBlockButtonLabel()
@@ -369,7 +592,7 @@ public sealed class CombatController : MonoBehaviour
         turnText.raycastTarget = false;
     }
 
-    private void SetCombatUIVisible(bool visible)
+    private void SetCombatUIVisible(bool visible, bool instant = false)
     {
         if (uiFadeCoroutine != null)
         {
@@ -378,15 +601,31 @@ public sealed class CombatController : MonoBehaviour
         }
 
         playerStats?.SetCombatHeartsVisible(visible, combatUIFadeDuration);
-        if (playerDice != null) playerDice.SetActive(visible);
-        if (rollButton != null) rollButton.SetActive(visible);
-        if (blockButton != null) blockButton.gameObject.SetActive(visible);
+        if (visible)
+        {
+            if (playerDice != null) playerDice.SetActive(true);
+            if (rollButton != null) rollButton.SetActive(true);
+            if (blockButton != null) blockButton.gameObject.SetActive(true);
+            if (healingPotionButton != null) healingPotionButton.gameObject.SetActive(true);
+        }
+        else if (instant)
+        {
+            if (playerDice != null) playerDice.SetActive(false);
+            if (rollButton != null) rollButton.SetActive(false);
+            if (blockButton != null) blockButton.gameObject.SetActive(false);
+            if (healingPotionButton != null) healingPotionButton.gameObject.SetActive(false);
+        }
 
-        if (!visible)
+        if (!visible && instant)
         {
             SetCanvasGroupAlpha(playerDiceCanvasGroup, 0f);
             SetCanvasGroupAlpha(rollButtonCanvasGroup, 0f);
             SetCanvasGroupAlpha(blockButtonCanvasGroup, 0f);
+            SetCanvasGroupAlpha(healingPotionCanvasGroup, 0f);
+            SetCanvasGroupVisibility(playerDiceCanvasGroup, false);
+            SetCanvasGroupVisibility(rollButtonCanvasGroup, false);
+            SetCanvasGroupVisibility(blockButtonCanvasGroup, false);
+            SetCanvasGroupVisibility(healingPotionCanvasGroup, false);
             if (turnTextCoroutine != null)
             {
                 StopCoroutine(turnTextCoroutine);
@@ -396,9 +635,32 @@ public sealed class CombatController : MonoBehaviour
             return;
         }
 
+        if (!visible)
+        {
+            if (healingPotionButton != null) healingPotionButton.interactable = false;
+            SetCanvasGroupInteractable(playerDiceCanvasGroup, false);
+            SetCanvasGroupInteractable(rollButtonCanvasGroup, false);
+            SetCanvasGroupInteractable(blockButtonCanvasGroup, false);
+            SetCanvasGroupInteractable(healingPotionCanvasGroup, false);
+            if (turnTextCoroutine != null)
+            {
+                StopCoroutine(turnTextCoroutine);
+                turnTextCoroutine = null;
+            }
+            if (turnText != null) turnText.gameObject.SetActive(false);
+            uiFadeCoroutine = StartCoroutine(FadeCombatUIOut());
+            return;
+        }
+
         SetCanvasGroupAlpha(playerDiceCanvasGroup, 0f);
         SetCanvasGroupAlpha(rollButtonCanvasGroup, 0f);
         SetCanvasGroupAlpha(blockButtonCanvasGroup, 0f);
+        SetCanvasGroupAlpha(healingPotionCanvasGroup, 0f);
+        SetCanvasGroupInteractable(playerDiceCanvasGroup, true);
+        SetCanvasGroupInteractable(rollButtonCanvasGroup, true);
+        SetCanvasGroupInteractable(blockButtonCanvasGroup, true);
+        SetCanvasGroupInteractable(healingPotionCanvasGroup, true);
+        UpdateHealingPotionButtonState();
         uiFadeCoroutine = StartCoroutine(FadeCombatUIIn());
     }
 
@@ -413,11 +675,44 @@ public sealed class CombatController : MonoBehaviour
             SetCanvasGroupAlpha(playerDiceCanvasGroup, alpha);
             SetCanvasGroupAlpha(rollButtonCanvasGroup, alpha);
             SetCanvasGroupAlpha(blockButtonCanvasGroup, alpha);
+            SetCanvasGroupAlpha(healingPotionCanvasGroup, alpha);
             yield return null;
         }
         SetCanvasGroupAlpha(playerDiceCanvasGroup, 1f);
         SetCanvasGroupAlpha(rollButtonCanvasGroup, 1f);
         SetCanvasGroupAlpha(blockButtonCanvasGroup, 1f);
+        SetCanvasGroupAlpha(healingPotionCanvasGroup, 1f);
+        uiFadeCoroutine = null;
+    }
+
+    private IEnumerator FadeCombatUIOut()
+    {
+        float duration = Mathf.Max(0.05f, combatUIFadeDuration);
+        float playerDiceAlpha = playerDiceCanvasGroup != null ? playerDiceCanvasGroup.alpha : 0f;
+        float rollAlpha = rollButtonCanvasGroup != null ? rollButtonCanvasGroup.alpha : 0f;
+        float blockAlpha = blockButtonCanvasGroup != null ? blockButtonCanvasGroup.alpha : 0f;
+        float potionAlpha = healingPotionCanvasGroup != null ? healingPotionCanvasGroup.alpha : 0f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float progress = Mathf.Clamp01(elapsed / duration);
+            SetCanvasGroupAlpha(playerDiceCanvasGroup, Mathf.Lerp(playerDiceAlpha, 0f, progress));
+            SetCanvasGroupAlpha(rollButtonCanvasGroup, Mathf.Lerp(rollAlpha, 0f, progress));
+            SetCanvasGroupAlpha(blockButtonCanvasGroup, Mathf.Lerp(blockAlpha, 0f, progress));
+            SetCanvasGroupAlpha(healingPotionCanvasGroup, Mathf.Lerp(potionAlpha, 0f, progress));
+            yield return null;
+        }
+
+        SetCanvasGroupAlpha(playerDiceCanvasGroup, 0f);
+        SetCanvasGroupAlpha(rollButtonCanvasGroup, 0f);
+        SetCanvasGroupAlpha(blockButtonCanvasGroup, 0f);
+        SetCanvasGroupAlpha(healingPotionCanvasGroup, 0f);
+        if (playerDice != null) playerDice.SetActive(false);
+        if (rollButton != null) rollButton.SetActive(false);
+        if (blockButton != null) blockButton.gameObject.SetActive(false);
+        if (healingPotionButton != null) healingPotionButton.gameObject.SetActive(false);
         uiFadeCoroutine = null;
     }
 
@@ -981,8 +1276,14 @@ public sealed class CombatController : MonoBehaviour
     {
         if (group == null) return;
         group.alpha = visible ? 1f : 0f;
-        group.interactable = visible;
-        group.blocksRaycasts = visible;
+        SetCanvasGroupInteractable(group, visible);
+    }
+
+    private static void SetCanvasGroupInteractable(CanvasGroup group, bool interactable)
+    {
+        if (group == null) return;
+        group.interactable = interactable;
+        group.blocksRaycasts = interactable;
     }
 
     private static UnityEngine.UI.Button FindButtonIncludingInactive(string buttonName)
