@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using HeyHeyThere.SceneTransitionsFree;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using RoomType = RunMapState.RoomType;
 
 /// <summary>Generates and manages the branching route shown in the MapScene Canvas.</summary>
 public sealed class RunMapController : MonoBehaviour
 {
     [Header("Scene UI")]
     [SerializeField] private RectTransform graphRoot;
-    [SerializeField] private Texture2D iconSource;
+
+    [Header("Room Sprites")]
+    [SerializeField] private Sprite playerSprite;
+    [SerializeField] private Sprite enemySprite;
+    [SerializeField] private Sprite shopSprite;
+    [SerializeField] private Sprite randomSprite;
+    [SerializeField] private Sprite treasureSprite;
 
     [Header("Map Generation (applied on the next run)")]
     [SerializeField, Range(2, 16)] private int columnCount = 8;
@@ -60,6 +68,23 @@ public sealed class RunMapController : MonoBehaviour
     [SerializeField, Min(0.01f)] private float maximumMoveDuration = 0.9f;
     [SerializeField] private AnimationCurve movementEasing = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
+    [Header("Player Sway")]
+    [Tooltip("Maximum Z rotation in either direction while idle, in degrees. Set to zero to disable idle sway.")]
+    [SerializeField, Range(0f, 90f)] private float idleSwayAngle = 30f;
+    [Tooltip("Full back-and-forth cycles per second while idle.")]
+    [SerializeField, Min(0f)] private float idleSwaySpeed = 0.5f;
+    [Tooltip("Maximum Z rotation in either direction while moving, in degrees.")]
+    [SerializeField, Range(0f, 90f)] private float movingSwayAngle = 45f;
+    [Tooltip("Full back-and-forth cycles per second while moving.")]
+    [SerializeField, Min(0f)] private float movingSwaySpeed = 2.5f;
+
+    [Header("Room Transition")]
+    [SerializeField] private string roomSceneName = "MainScene";
+    [Tooltip("Time to wait at a room node before covering the map with clouds.")]
+    [SerializeField, Min(0f)] private float roomArrivalDelay = 0.5f;
+    [SerializeField] private string transitionStyle = "clouds";
+    [SerializeField, Min(0.01f)] private float transitionDuration = 0.8f;
+
     [Header("Map Routes")]
     [SerializeField] private Color routeColor = Color.black;
     [SerializeField, Min(1f)] private float routeDotSize = 8f;
@@ -106,11 +131,6 @@ public sealed class RunMapController : MonoBehaviour
     private RectTransform legendRoot;
     private UnityEngine.UI.Image legendBackground;
     private TMP_Text legendTitle;
-    private Sprite playerSprite;
-    private Sprite enemySprite;
-    private Sprite shopSprite;
-    private Sprite randomSprite;
-    private Sprite treasureSprite;
     private Sprite nodeCircleSprite;
     private RectTransform canvasRoot;
     private int generatedColumnCount;
@@ -120,9 +140,13 @@ public sealed class RunMapController : MonoBehaviour
     private int startingRow;
     private bool runFinished;
     private bool isMoving;
+    private bool isEnteringRoom;
     private bool settingsDirty;
+    private float playerSwayPhase;
+    private float playerSwayAngle;
 
-    private enum RoomType { Enemy, Shop, Random, Treasure, Boss }
+    public bool IsBusy => isMoving || isEnteringRoom;
+
     private enum LegendCorner { TopLeft, TopRight, BottomLeft, BottomRight }
 
     private sealed class LegendEntry
@@ -163,18 +187,23 @@ public sealed class RunMapController : MonoBehaviour
         if (canvas != null)
             canvasRoot = canvas.GetComponent<RectTransform>();
         nodeCircleSprite = CreateNodeCircleSprite();
-        CreateRoomSprites();
     }
 
     private void Start()
     {
         BuildMapUI();
-        GenerateMap();
+        if (!RestoreMap())
+        {
+            GenerateMap();
+            SaveMapLayout();
+        }
         DrawConnections();
         DrawRooms();
         DrawStartOrigin();
         DrawPlayerMarker();
         UpdateAvailableRooms();
+        if (RunMapState.CurrentRoomIndex >= 0 && statusText != null)
+            statusText.text = runFinished ? "Run complete!" : "Room completed";
     }
 
     private void OnValidate()
@@ -193,6 +222,12 @@ public sealed class RunMapController : MonoBehaviour
         playerIconSize.y = Mathf.Max(4f, playerIconSize.y);
         minimumMoveDuration = Mathf.Max(0.01f, minimumMoveDuration);
         maximumMoveDuration = Mathf.Max(minimumMoveDuration, maximumMoveDuration);
+        idleSwayAngle = Mathf.Clamp(idleSwayAngle, 0f, 90f);
+        movingSwayAngle = Mathf.Clamp(movingSwayAngle, 0f, 90f);
+        idleSwaySpeed = Mathf.Max(0f, idleSwaySpeed);
+        movingSwaySpeed = Mathf.Max(0f, movingSwaySpeed);
+        roomArrivalDelay = Mathf.Max(0f, roomArrivalDelay);
+        transitionDuration = Mathf.Max(0.01f, transitionDuration);
         originDiameter = Mathf.Max(8f, originDiameter);
         legendWidth = Mathf.Max(140f, legendWidth);
         legendRowHeight = Mathf.Max(24f, legendRowHeight);
@@ -216,80 +251,18 @@ public sealed class RunMapController : MonoBehaviour
         ApplyTextAppearance();
     }
 
-    private void CreateRoomSprites()
+    private void LateUpdate()
     {
-        if (iconSource == null)
-        {
-            Debug.LogError("MapScene is missing the icon sheet reference.", this);
+        if (playerMarker == null || Time.timeScale <= 0f)
             return;
-        }
 
-        playerSprite = ExtractIcon("Player", 76, 369, 405, 752);
-        enemySprite = ExtractIcon("Enemy", 455, 386, 795, 741);
-        shopSprite = ExtractIcon("Shop", 845, 382, 1183, 748);
-        randomSprite = ExtractIcon("Random", 1255, 380, 1585, 751);
-        treasureSprite = ExtractIcon("Treasure", 1635, 386, 1988, 746);
-    }
-
-    private Sprite ExtractIcon(string name, int xMin, int yMin, int xMax, int yMax)
-    {
-        Color32[] sourcePixels = iconSource.GetPixels32();
-        int width = xMax - xMin;
-        int height = yMax - yMin;
-        Color32[] outputPixels = new Color32[width * height];
-        int left = width, right = 0, bottom = height, top = 0;
-        bool found = false;
-        Color32 key = sourcePixels[(iconSource.height - yMin - 1) * iconSource.width + xMin + 8];
-
-        for (int y = 0; y < height; y++)
-        {
-            // Screenshot crop coordinates start at the top; Unity texture rows start at the bottom.
-            int sourceY = iconSource.height - yMax + y;
-            for (int x = 0; x < width; x++)
-            {
-                Color32 color = sourcePixels[sourceY * iconSource.width + xMin + x];
-                int luma = (color.r * 30 + color.g * 59 + color.b * 11) / 100;
-                int keyDistance = Mathf.Abs(color.r - key.r) + Mathf.Abs(color.g - key.g) + Mathf.Abs(color.b - key.b);
-                bool darkOutline = color.r < 18 && color.g < 18 && color.b < 26;
-                bool ivoryArtwork = color.r > 175 && color.g > 170 && color.b > 135;
-                bool blueGrayBackdrop = color.b > color.r + 7 && color.g >= color.r - 3 && luma < 160;
-                bool background = (keyDistance < 54 && luma > 18) || blueGrayBackdrop ||
-                    (luma > 18 && luma < 130 && color.r < 105 && color.g < 110 && color.b < 125);
-
-                color.a = (byte)((darkOutline || ivoryArtwork || !background) ? 255 : 0);
-                outputPixels[y * width + x] = color;
-                if (color.a != 0)
-                {
-                    found = true;
-                    left = Mathf.Min(left, x);
-                    right = Mathf.Max(right, x);
-                    bottom = Mathf.Min(bottom, y);
-                    top = Mathf.Max(top, y);
-                }
-            }
-        }
-
-        if (!found)
-        {
-            Debug.LogError("Could not extract the " + name + " icon from the map icon sheet.", this);
-            return null;
-        }
-
-        int trimmedWidth = right - left + 1;
-        int trimmedHeight = top - bottom + 1;
-        Color32[] trimmed = new Color32[trimmedWidth * trimmedHeight];
-        for (int y = 0; y < trimmedHeight; y++)
-        {
-            for (int x = 0; x < trimmedWidth; x++)
-                trimmed[y * trimmedWidth + x] = outputPixels[(bottom + y) * width + left + x];
-        }
-
-        Texture2D texture = new Texture2D(trimmedWidth, trimmedHeight, TextureFormat.RGBA32, false, false);
-        texture.name = name + " Map Icon";
-        texture.filterMode = FilterMode.Point;
-        texture.SetPixels32(trimmed);
-        texture.Apply();
-        return Sprite.Create(texture, new Rect(0, 0, trimmedWidth, trimmedHeight), new Vector2(0.5f, 0.5f), 100, 0, SpriteMeshType.FullRect);
+        float deltaTime = Time.unscaledDeltaTime;
+        float targetAngle = isMoving ? movingSwayAngle : idleSwayAngle;
+        float speed = isMoving ? movingSwaySpeed : idleSwaySpeed;
+        // Keep the phase continuous and ease the amplitude when starting or stopping a walk.
+        playerSwayAngle = Mathf.Lerp(playerSwayAngle, targetAngle, 1f - Mathf.Exp(-12f * deltaTime));
+        playerSwayPhase = Mathf.Repeat(playerSwayPhase + speed * Mathf.PI * 2f * deltaTime, Mathf.PI * 2f);
+        playerMarker.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(playerSwayPhase) * playerSwayAngle);
     }
 
     private void BuildMapUI()
@@ -299,6 +272,8 @@ public sealed class RunMapController : MonoBehaviour
 
         UnityEngine.UI.Image statusPanel = CreatePanel("Room Status Panel", canvasRoot, new Color32(27, 24, 22, 215), new Vector2(0.32f, 0.052f), new Vector2(0.68f, 0.112f));
         statusText = CreateText("Room Status", statusPanel.transform, "Choose a connected room", statusFont, statusFontSize, TextAlignmentOptions.Center);
+        // Pixel fonts can trigger TMP's ellipsis recursion when a status message is too wide.
+        statusText.overflowMode = TextOverflowModes.Truncate;
 
         legendBackground = CreatePanel("Map Legend", canvasRoot, legendBackgroundColor, Vector2.one, Vector2.one);
         legendRoot = legendBackground.rectTransform;
@@ -399,6 +374,48 @@ public sealed class RunMapController : MonoBehaviour
         }
     }
 
+    private bool RestoreMap()
+    {
+        if (RunMapState.Rooms.Count == 0)
+            return false;
+
+        generatedColumnCount = RunMapState.ColumnCount;
+        generatedRowCount = RunMapState.RowCount;
+        startingRow = RunMapState.StartingRow;
+        foreach (RunMapState.RoomData room in RunMapState.Rooms)
+            nodes.Add(new RoomNode { column = room.column, row = room.row, type = room.type });
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            foreach (int next in RunMapState.Rooms[i].next)
+                nodes[i].next.Add(nodes[next]);
+        }
+
+        currentRow = startingRow;
+        if (RunMapState.CurrentRoomIndex >= 0)
+        {
+            RoomNode current = nodes[RunMapState.CurrentRoomIndex];
+            currentColumn = current.column;
+            currentRow = current.row;
+            runFinished = current.type == RoomType.Boss && RunMapState.Rooms[RunMapState.CurrentRoomIndex].completed;
+        }
+        return true;
+    }
+
+    private void SaveMapLayout()
+    {
+        RunMapState.ResetRun();
+        RunMapState.ColumnCount = generatedColumnCount;
+        RunMapState.RowCount = generatedRowCount;
+        RunMapState.StartingRow = startingRow;
+        foreach (RoomNode node in nodes)
+        {
+            var room = new RunMapState.RoomData { column = node.column, row = node.row, type = node.type };
+            foreach (RoomNode next in node.next)
+                room.next.Add(nodes.IndexOf(next));
+            RunMapState.Rooms.Add(room);
+        }
+    }
+
     private void GenerateMap()
     {
         nodes.Clear();
@@ -484,7 +501,7 @@ public sealed class RunMapController : MonoBehaviour
 
     private void RefreshConnection(RoomConnection connection)
     {
-        bool available = showAvailableRoutes && !isMoving && !runFinished && IsReachable(connection.to) &&
+        bool available = showAvailableRoutes && !isMoving && !isEnteringRoom && !RunMapState.RoomInProgress && !runFinished && IsReachable(connection.to) &&
             (currentColumn < 0 ? connection.from == null :
                 connection.from != null && connection.from.column == currentColumn && connection.from.row == currentRow);
         Vector2 from = connection.from == null ? StartPosition() : PositionFor(connection.from);
@@ -639,8 +656,13 @@ public sealed class RunMapController : MonoBehaviour
 
     private void SelectRoom(RoomNode node)
     {
-        if (runFinished || isMoving || !IsReachable(node))
+        if (runFinished || isMoving || isEnteringRoom || RunMapState.RoomInProgress || SceneTransition.IsPlaying || !IsReachable(node))
             return;
+        if (!Application.CanStreamedLevelBeLoaded(roomSceneName))
+        {
+            Debug.LogError($"RunMapController: Scene '{roomSceneName}' is not in Build Settings.", this);
+            return;
+        }
 
         isMoving = true;
         UpdateAvailableRooms();
@@ -671,9 +693,16 @@ public sealed class RunMapController : MonoBehaviour
         currentRow = node.row;
         if (statusText != null)
             statusText.text = node.type == RoomType.Boss ? "The Boss awaits..." : "You entered a " + node.type + " room";
-        runFinished = node.type == RoomType.Boss;
         isMoving = false;
+        isEnteringRoom = true;
+        RunMapState.CurrentRoomIndex = nodes.IndexOf(node);
+        RunMapState.RoomInProgress = true;
         UpdateAvailableRooms();
+        yield return new WaitForSecondsRealtime(roomArrivalDelay);
+        while (SceneTransition.IsPlaying)
+            yield return null;
+        yield return SceneTransition.ChangeScene(roomSceneName, transitionStyle,
+            new SceneTransition.Options { Duration = transitionDuration });
     }
 
     private bool IsReachable(RoomNode node)
@@ -689,7 +718,7 @@ public sealed class RunMapController : MonoBehaviour
     private void UpdateAvailableRooms()
     {
         foreach (RoomNode node in nodes)
-            node.button.interactable = !runFinished && !isMoving && IsReachable(node);
+            node.button.interactable = !runFinished && !isMoving && !isEnteringRoom && !RunMapState.RoomInProgress && IsReachable(node);
         foreach (RoomConnection connection in connections)
             RefreshConnection(connection);
     }

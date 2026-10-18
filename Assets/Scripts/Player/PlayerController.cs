@@ -72,6 +72,15 @@ public partial class PlayerController : MonoBehaviour
     public int AttackDamage => attackDamage;
     public float AttackHitDelay => attackHitDelay;
     public float AttackCooldown => attackCooldown;
+    public bool IsFacingRight => isFacingRight;
+
+    public void RestoreSaveTransform(PlayerSaveData data)
+    {
+        transform.SetPositionAndRotation(data.position, data.rotation);
+        isFacingRight = data.facingRight;
+        rb.position = data.position;
+        rb.linearVelocity = data.velocity;
+    }
 
     private void Awake()
     {
@@ -122,7 +131,7 @@ public partial class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (hasDied || !gameplayEnabled || (combatController != null && combatController.IsInCombat))
+        if (Time.timeScale <= 0f || hasDied || !gameplayEnabled || (combatController != null && combatController.IsInCombat))
         {
             return;
         }

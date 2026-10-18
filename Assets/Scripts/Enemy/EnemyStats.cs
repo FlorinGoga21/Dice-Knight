@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class EnemyStats : MonoBehaviour, IDamageable
 {
+    [SerializeField] private string persistentSaveId;
     [Header("---Health Settings---")]
     [SerializeField] private int maxHealth = 40;
     [SerializeField] private int currentHealth = 40;
@@ -43,6 +44,32 @@ public class EnemyStats : MonoBehaviour, IDamageable
     public bool IsDead => isDead || currentHealth <= 0;
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
+    public string SaveId
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(persistentSaveId)) return persistentSaveId;
+            string path = "";
+            for (Transform item = transform; item != null; item = item.parent)
+                path = item.name + "[" + item.GetSiblingIndex() + "]/" + path;
+            return path;
+        }
+    }
+
+    public void RestoreSave(EnemySaveData data)
+    {
+        maxHealth = data.maxHealth;
+        currentHealth = data.health;
+        isDead = data.defeated || currentHealth <= 0;
+        transform.SetPositionAndRotation(data.position, data.rotation);
+        if (TryGetComponent(out Rigidbody2D body)) { body.position = data.position; body.linearVelocity = Vector2.zero; }
+        healthHeartsUI?.SetMaxHealth(maxHealth, currentHealth);
+        if (isDead)
+        {
+            if (healthHeartsUI != null) healthHeartsUI.gameObject.SetActive(false);
+            gameObject.SetActive(false); // Restoring a defeat must not drop the reward again.
+        }
+    }
 
     private void Awake()
     {

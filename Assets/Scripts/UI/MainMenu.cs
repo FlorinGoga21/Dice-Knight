@@ -10,12 +10,14 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private RectTransform logo;
     [SerializeField] private Button startButton;
     [SerializeField] private Button exitButton;
+    [SerializeField] private SaveSlotPanel saveSlots;
+    [SerializeField] private CanvasGroup mainButtons;
+    [SerializeField, Min(0f)] private float buttonSwapDuration = 0.25f;
     [SerializeField, Min(0f)] private float fadeDuration = 1.3f;
     [SerializeField, Min(0f)] private float logoBobHeight = 8f;
     [SerializeField, Min(0.01f)] private float logoBobSpeed = 0.55f;
 
     [Header("Start transition")]
-    [SerializeField] private string mainSceneName = "MainScene";
     [SerializeField] private string transitionStyle = "clouds";
     [SerializeField, Min(0.01f)] private float cameraOffsetDropSpeed = 3f;
     [SerializeField, Min(0f)] private float cameraFollowOffsetAtMenu = 2.5f;
@@ -24,6 +26,8 @@ public class MainMenu : MonoBehaviour
     private Camera menuCamera;
     private Vector3 logoStartPosition;
     private bool isLeavingMenu;
+    private bool isSwitchingButtons;
+    private bool choosingSlot;
 
     private void Awake()
     {
@@ -63,6 +67,7 @@ public class MainMenu : MonoBehaviour
         uiGroup.alpha = 0f;
         uiGroup.interactable = false;
         uiGroup.blocksRaycasts = false;
+        if (saveSlots != null) saveSlots.Closed += OnSlotsClosed;
     }
 
     private void Start()
@@ -84,6 +89,7 @@ public class MainMenu : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (saveSlots != null) saveSlots.Closed -= OnSlotsClosed;
         if (startButton != null)
             startButton.onClick.RemoveListener(OnStartPressed);
         if (exitButton != null)
@@ -92,12 +98,65 @@ public class MainMenu : MonoBehaviour
 
     private void OnStartPressed()
     {
-        if (isLeavingMenu)
+        if (isLeavingMenu || isSwitchingButtons || choosingSlot)
             return;
 
+        if (saveSlots == null) { Debug.LogError("MainMenu: Save slot panel is not assigned.", this); return; }
+        StartCoroutine(ShowSaveSlots());
+    }
+
+    private void OnSlotsClosed()
+    {
+        if (!isLeavingMenu) StartCoroutine(RestoreMainButtons());
+    }
+
+    private IEnumerator ShowSaveSlots()
+    {
+        isSwitchingButtons = true;
+        choosingSlot = true;
+        yield return FadeButtons(0f);
+        mainButtons.gameObject.SetActive(false);
+        saveSlots.ShowStart(SelectSaveSlot);
+        while (saveSlots.IsTransitioning) yield return null;
+        isSwitchingButtons = false;
+    }
+
+    private IEnumerator RestoreMainButtons()
+    {
+        isSwitchingButtons = true;
+        mainButtons.gameObject.SetActive(true);
+        yield return FadeButtons(1f);
+        choosingSlot = false;
+        isSwitchingButtons = false;
+        startButton.Select();
+    }
+
+    private IEnumerator FadeButtons(float target)
+    {
+        mainButtons.interactable = false;
+        mainButtons.blocksRaycasts = false;
+        float initial = mainButtons.alpha;
+        for (float elapsed = 0f; elapsed < buttonSwapDuration; elapsed += Time.unscaledDeltaTime)
+        {
+            mainButtons.alpha = Mathf.Lerp(initial, target, Mathf.SmoothStep(0f, 1f, elapsed / buttonSwapDuration));
+            yield return null;
+        }
+        mainButtons.alpha = target;
+        mainButtons.interactable = target > 0f;
+        mainButtons.blocksRaycasts = target > 0f;
+    }
+
+    private void SelectSaveSlot(int slot)
+    {
+        if (!SaveManager.Instance.TryStartSlot(slot, out string scene, out string error))
+        {
+            saveSlots.ShowMessage(error);
+            return;
+        }
         isLeavingMenu = true;
+        saveSlots.CloseImmediately();
         SetButtonsInteractable(false);
-        StartCoroutine(LeaveMenuForMainScene());
+        StartCoroutine(LeaveMenuForMainScene(scene));
     }
 
     private void OnExitPressed()
@@ -110,7 +169,7 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(FadeOutAndExit());
     }
 
-    private IEnumerator LeaveMenuForMainScene()
+    private IEnumerator LeaveMenuForMainScene(string destination)
     {
         Coroutine fadeOut = StartCoroutine(FadeUI(0f));
 
@@ -132,16 +191,16 @@ public class MainMenu : MonoBehaviour
         if (fadeOut != null)
             yield return fadeOut;
 
-        if (!Application.CanStreamedLevelBeLoaded(mainSceneName))
+        if (!Application.CanStreamedLevelBeLoaded(destination))
         {
-            Debug.LogError($"MainMenu: Scene '{mainSceneName}' is not in Build Settings.", this);
+            Debug.LogError($"MainMenu: Scene '{destination}' is not in Build Settings.", this);
             isLeavingMenu = false;
             yield break;
         }
 
         // ChangeScene covers with Cloud, loads the scene while covered, then reveals backwards.
         yield return SceneTransition.ChangeScene(
-            mainSceneName,
+            destination,
             transitionStyle,
             new SceneTransition.Options { Duration = 0.8f });
     }

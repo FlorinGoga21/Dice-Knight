@@ -62,6 +62,17 @@ public class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     public int MaxHealthValue => MaxHealth;
     public int Currency => currency;
 
+    public void RestoreSave(PlayerSaveData data)
+    {
+        MaxHealth = data.maxHealth;
+        currentHealth = data.health;
+        currency = data.gold;
+        healthHeartsUI?.SetMaxHealth(MaxHealth, currentHealth);
+        if (currencyAnimationCoroutine != null) StopCoroutine(currencyAnimationCoroutine);
+        currencyAnimationCoroutine = null;
+        if (currencyText != null) currencyText.text = currency.ToString();
+    }
+
     public Sprite FullHeartSprite => fullHeartSprite;
     public Sprite HalfHeartSprite => halfHeartSprite;
     public Sprite EmptyHeartSprite => emptyHeartSprite;

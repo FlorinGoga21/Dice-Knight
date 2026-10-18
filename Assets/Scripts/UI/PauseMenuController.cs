@@ -10,6 +10,13 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Material pauseBlurMaterial;
     [SerializeField, Min(0f)] private float fadeDuration = 0.25f;
+    [SerializeField] private SaveSlotPanel saveSlots;
+    [SerializeField] private CanvasGroup primaryActions;
+    [SerializeField] private CanvasGroup saveLoadActions;
+    [SerializeField] private UnityEngine.UI.Button saveLoadButton;
+    [SerializeField] private TMPro.TMP_Text feedback;
+    [SerializeField] private float primaryHeight = 78.03f;
+    [SerializeField] private float saveLoadHeight = 58.02f;
 
     private PlayerInputActions inputActions;
     private UnityEngine.UI.RawImage blurImage;
@@ -20,6 +27,11 @@ public class PauseMenuController : MonoBehaviour
     private int originalSortingOrder;
     private float originalCanvasAlpha;
     private bool pauseTransitionPending;
+    private bool showingSaveLoad;
+    private bool leavingScene;
+    private bool saveBeforeExit;
+
+    private bool InCombat => FindAnyObjectByType<CombatController>() is CombatController combat && combat.IsInCombat;
 
     private void Awake()
     {
@@ -38,6 +50,9 @@ public class PauseMenuController : MonoBehaviour
             originalSortingOrder = menuCanvas.sortingOrder;
         }
         CreateBlurImage();
+        ResetActions();
+        saveSlots.Closed += OnSlotsClosed;
+        saveSlots.Saved += OnSlotSaved;
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
     }
@@ -56,6 +71,7 @@ public class PauseMenuController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (saveSlots != null) { saveSlots.Closed -= OnSlotsClosed; saveSlots.Saved -= OnSlotSaved; }
         inputActions.Dispose();
         ReleasePausedScreenTexture();
     }
@@ -67,19 +83,154 @@ public class PauseMenuController : MonoBehaviour
 
     public void ExitGame()
     {
+        if (pauseTransitionPending || leavingScene) return;
+        if (!InCombat)
+        {
+            var manager = SaveManager.Instance;
+            if (manager.ActiveSlot == 0)
+            {
+                saveBeforeExit = true;
+                StartCoroutine(OpenSlots(save: true));
+                return;
+            }
+            if (!manager.TrySave(manager.ActiveSlot, out string error)) { ShowFeedback(error); return; }
+        }
+        leavingScene = true;
         StartResume(quitAfterResume: true);
+    }
+
+    private void Update()
+    {
+        saveLoadButton.interactable = !InCombat && !pauseTransitionPending;
+    }
+
+    public void ShowSaveLoad()
+    {
+        if (InCombat || pauseTransitionPending) return;
+        StartCoroutine(SwitchActions(true));
+    }
+
+    public void SaveGame()
+    {
+        if (InCombat || pauseTransitionPending) return;
+        StartCoroutine(OpenSlots(save: true));
+    }
+
+    public void LoadGame()
+    {
+        if (InCombat || pauseTransitionPending) return;
+        StartCoroutine(OpenSlots(save: false));
+    }
+
+    private IEnumerator SwitchActions(bool showSaveLoad)
+    {
+        pauseTransitionPending = true;
+        CanvasGroup from = showingSaveLoad ? saveLoadActions : primaryActions;
+        CanvasGroup to = showSaveLoad ? saveLoadActions : primaryActions;
+        from.interactable = false;
+        from.blocksRaycasts = false;
+        yield return FadeGroup(from, 0f);
+        from.gameObject.SetActive(false);
+        showingSaveLoad = showSaveLoad;
+        ((RectTransform)pauseMenu.transform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, showSaveLoad ? saveLoadHeight : primaryHeight);
+        to.interactable = false;
+        to.blocksRaycasts = false;
+        to.gameObject.SetActive(true);
+        to.alpha = 0f;
+        yield return FadeGroup(to, 1f);
+        to.interactable = true;
+        to.blocksRaycasts = true;
+        SelectFirst(to);
+        feedback.gameObject.SetActive(false);
+        pauseTransitionPending = false;
+    }
+
+    private IEnumerator OpenSlots(bool save)
+    {
+        pauseTransitionPending = true;
+        CanvasGroup actions = showingSaveLoad ? saveLoadActions : primaryActions;
+        actions.interactable = false;
+        actions.blocksRaycasts = false;
+        yield return FadeGroup(actions, 0f);
+        pauseMenu.SetActive(false);
+        if (save) saveSlots.ShowSave(this); else saveSlots.ShowLoad(this);
+        while (saveSlots.IsTransitioning) yield return null;
+        pauseTransitionPending = false;
+    }
+
+    private void OnSlotsClosed()
+    {
+        saveBeforeExit = false;
+        if (leavingScene || Time.timeScale > 0f) return;
+        StartCoroutine(RestoreActions());
+    }
+
+    private IEnumerator RestoreActions()
+    {
+        pauseTransitionPending = true;
+        pauseMenu.SetActive(true);
+        CanvasGroup actions = showingSaveLoad ? saveLoadActions : primaryActions;
+        yield return FadeGroup(actions, 1f);
+        actions.interactable = true;
+        actions.blocksRaycasts = true;
+        SelectFirst(actions);
+        pauseTransitionPending = false;
+    }
+
+    private void OnSlotSaved(int slot)
+    {
+        if (!saveBeforeExit) return;
+        leavingScene = true;
+        saveSlots.CloseImmediately();
+        pauseMenu.SetActive(true);
+        StartResume(quitAfterResume: true);
+    }
+
+    private void ResetActions()
+    {
+        showingSaveLoad = false;
+        primaryActions.gameObject.SetActive(true);
+        primaryActions.alpha = 1f;
+        primaryActions.interactable = true;
+        primaryActions.blocksRaycasts = true;
+        saveLoadActions.gameObject.SetActive(false);
+        saveLoadActions.alpha = 0f;
+        ((RectTransform)pauseMenu.transform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, primaryHeight);
+        feedback.gameObject.SetActive(false);
+    }
+
+    private void ShowFeedback(string message)
+    {
+        feedback.text = message;
+        feedback.gameObject.SetActive(true);
+    }
+
+    private static void SelectFirst(CanvasGroup group)
+    {
+        foreach (var button in group.GetComponentsInChildren<UnityEngine.UI.Button>())
+            if (button.interactable) { button.Select(); return; }
+    }
+
+    public void PrepareForSceneLoad()
+    {
+        StopAllCoroutines();
+        leavingScene = true;
+        saveSlots?.CloseImmediately();
+        SetPaused(false);
+        pauseTransitionPending = false;
     }
 
     private void OnPausePerformed(InputAction.CallbackContext context)
     {
-        if (pauseTransitionPending)
-        {
-            return;
-        }
-
+        if (pauseTransitionPending || leavingScene) return;
+        if (saveSlots != null && saveSlots.IsOpen) { saveSlots.Back(); return; }
+        if (HeyHeyThere.SceneTransitionsFree.SceneTransition.IsPlaying || (SaveManager.Instance != null && SaveManager.Instance.IsLoading)) return;
+        var map = FindAnyObjectByType<RunMapController>();
+        if (map != null && map.IsBusy) return;
         if (pauseMenu.activeSelf)
         {
-            StartResume(quitAfterResume: false);
+            if (showingSaveLoad) StartCoroutine(SwitchActions(false));
+            else StartResume(quitAfterResume: false);
         }
         else
         {
@@ -103,7 +254,7 @@ public class PauseMenuController : MonoBehaviour
             if (paused)
             {
                 menuCanvas.overrideSorting = true;
-                menuCanvas.sortingOrder = short.MaxValue;
+                menuCanvas.sortingOrder = 900;
             }
             else
             {
@@ -125,12 +276,14 @@ public class PauseMenuController : MonoBehaviour
 
         CapturePausedScreen();
         menuCanvasGroup.alpha = 0f;
+        ResetActions();
         SetPaused(true);
         menuCanvasGroup.interactable = false;
         menuCanvasGroup.blocksRaycasts = false;
         yield return FadeCanvasGroup(originalCanvasAlpha);
         menuCanvasGroup.interactable = true;
         menuCanvasGroup.blocksRaycasts = true;
+        SelectFirst(primaryActions);
         pauseTransitionPending = false;
     }
 
@@ -166,10 +319,15 @@ public class PauseMenuController : MonoBehaviour
 
     private IEnumerator FadeCanvasGroup(float targetAlpha)
     {
-        float startAlpha = menuCanvasGroup.alpha;
+        yield return FadeGroup(menuCanvasGroup, targetAlpha);
+    }
+
+    private IEnumerator FadeGroup(CanvasGroup group, float targetAlpha)
+    {
+        float startAlpha = group.alpha;
         if (fadeDuration <= 0f)
         {
-            menuCanvasGroup.alpha = targetAlpha;
+            group.alpha = targetAlpha;
             yield break;
         }
 
@@ -177,11 +335,11 @@ public class PauseMenuController : MonoBehaviour
         while (elapsed < fadeDuration)
         {
             elapsed += Time.unscaledDeltaTime;
-            menuCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / fadeDuration);
+            group.alpha = Mathf.Lerp(startAlpha, targetAlpha, Mathf.SmoothStep(0f, 1f, elapsed / fadeDuration));
             yield return null;
         }
 
-        menuCanvasGroup.alpha = targetAlpha;
+        group.alpha = targetAlpha;
     }
 
     private void CreateBlurImage()

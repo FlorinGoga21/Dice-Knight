@@ -85,6 +85,24 @@ public sealed class CombatController : MonoBehaviour
     private float encounterCheckTimer;
 
     public bool IsInCombat => encounterCoroutine != null;
+    public int HealingPotionsRemaining => healingPotionsRemaining;
+    public bool CanSave => !IsInCombat || (waitingForPlayerRoll && !blockChosenThisTurn && (diceRollUI == null || !diceRollUI.IsRolling));
+    private RoomSaveData pendingRoomSave;
+
+    public void CaptureRoomSave(RoomSaveData data)
+    {
+        data.inCombat = IsInCombat;
+        data.combatEnemyId = activeEnemy != null ? activeEnemy.Stats.SaveId : null;
+        data.turn = turnNumber;
+        data.blocks = blockUsesRemaining;
+    }
+
+    public void RestoreRoomSave(int potions, RoomSaveData data)
+    {
+        healingPotionsRemaining = Mathf.Max(0, potions);
+        pendingRoomSave = data != null && data.inCombat ? data : null;
+        UpdateHealingUsageLabel();
+    }
 
     private void Awake()
     {
@@ -210,6 +228,7 @@ public sealed class CombatController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0f) return;
         UpdateHealingPotionButtonState();
         if (IsInCombat || player == null || !player.CanStartTurnCombat)
         {
@@ -230,6 +249,12 @@ public sealed class CombatController : MonoBehaviour
             if (enemy == null || enemy.IsDead)
             {
                 continue;
+            }
+
+            if (pendingRoomSave != null && enemy.Stats.SaveId == pendingRoomSave.combatEnemyId)
+            {
+                nearestEnemy = enemy;
+                break;
             }
 
             float distance = Mathf.Abs(enemy.transform.position.x - transform.position.x);
@@ -255,6 +280,12 @@ public sealed class CombatController : MonoBehaviour
         player.PrepareForTurnCombat();
         turnNumber = 0;
         blockUsesRemaining = BlocksPerEncounter;
+        if (pendingRoomSave != null && nearestEnemy.Stats.SaveId == pendingRoomSave.combatEnemyId)
+        {
+            turnNumber = Mathf.Max(0, pendingRoomSave.turn - 1);
+            blockUsesRemaining = Mathf.Clamp(pendingRoomSave.blocks, 0, BlocksPerEncounter);
+        }
+        pendingRoomSave = null;
         UpdateBlockButtonLabel();
         SetCombatUIVisible(true);
         encounterCoroutine = StartCoroutine(RunEncounter());
