@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Animator))]
 [RequireComponent(typeof(EnemyStats))]
-public class EnemyController : MonoBehaviour, IDamageable
+public partial class EnemyController : MonoBehaviour, IDamageable
 {
     [Header("---Stats---")]
     [SerializeField] private EnemyStats stats;
@@ -68,7 +68,6 @@ public class EnemyController : MonoBehaviour, IDamageable
     private bool isGrounded;
     private bool hasDied;
     private bool turnBasedCombat;
-    private Vector3 damageShakeOffset;
 
     private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
@@ -148,10 +147,6 @@ public class EnemyController : MonoBehaviour, IDamageable
         CleanupDamageFlashMaterials();
     }
 
-    // ==========================================
-    // IDamageable Implementation & Forwarding
-    // ==========================================
-
     /// <summary>
     /// Forwards damage taking to EnemyStats.
     /// </summary>
@@ -162,10 +157,6 @@ public class EnemyController : MonoBehaviour, IDamageable
             stats.TakeDamage(damage);
         }
     }
-
-    // ==========================================
-    // Combat & Turn-Based Combat
-    // ==========================================
 
     public void SetTurnBasedCombat(bool enabled)
     {
@@ -223,10 +214,6 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         attackDamageCoroutine = null;
     }
-
-    // ==========================================
-    // AI, Movement & Targeting
-    // ==========================================
 
     public bool IsWithinDetectionRange(Transform targetTransform)
     {
@@ -306,148 +293,11 @@ public class EnemyController : MonoBehaviour, IDamageable
         isGrounded = Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundLayer);
     }
 
-    // ==========================================
-    // Visuals, Animations & Effects
-    // ==========================================
-
     private void HandleAnimation()
     {
         animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
         animator.SetBool("Grounded", isGrounded);
     }
-
-    public void ShakeWhenDamaged()
-    {
-        if (hasDied || playerCamera == null || damageShakeDuration <= 0f || damageShakeMagnitude <= 0f)
-        {
-            return;
-        }
-
-        if (damageShakeCoroutine != null)
-        {
-            StopCoroutine(damageShakeCoroutine);
-        }
-
-        damageShakeCoroutine = StartCoroutine(DamageShake());
-    }
-
-    private IEnumerator DamageShake()
-    {
-        if (playerCamera == null)
-        {
-            damageShakeCoroutine = null;
-            yield break;
-        }
-
-        // Cache the original camera position.
-        Vector3 originalCamPos = playerCamera.transform.position;
-        float elapsed = 0f;
-
-        while (elapsed < damageShakeDuration)
-        {
-            float strength = Mathf.Lerp(
-                damageShakeMagnitude,
-                0f,
-                elapsed / damageShakeDuration
-            );
-            // Apply a random offset to the camera's position.
-            Vector2 offset2D = Random.insideUnitCircle * strength;
-            playerCamera.transform.position = originalCamPos + new Vector3(offset2D.x, offset2D.y, 0f);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        // Restore the original camera position.
-        playerCamera.transform.position = originalCamPos;
-        damageShakeCoroutine = null;
-    }
-
-    public void PlayDamageAnimation()
-    {
-        if (hasDied)
-        {
-            return;
-        }
-
-        animator.ResetTrigger("TakeDamage");
-        animator.SetTrigger("TakeDamage");
-    }
-
-    public void FlashWhenDamaged()
-    {
-        if (hasDied || damageFlashMaterials == null)
-        {
-            return;
-        }
-
-        if (damageFlashCoroutine != null)
-        {
-            StopCoroutine(damageFlashCoroutine);
-        }
-
-        damageFlashCoroutine = StartCoroutine(DamageFlash());
-        ShakeWhenDamaged();
-    }
-
-    private IEnumerator DamageFlash()
-    {
-        SetFlashAmount(1f);
-        yield return new WaitForSeconds(damageFlashDuration);
-        SetFlashAmount(0f);
-        damageFlashCoroutine = null;
-    }
-
-    private void SetFlashAmount(float amount)
-    {
-        if (damageFlashMaterials == null)
-        {
-            return;
-        }
-
-        foreach (Material material in damageFlashMaterials)
-        {
-            if (material != null)
-            {
-                material.SetFloat(FlashAmount, amount);
-            }
-        }
-    }
-
-    private void SetupDamageFlashMaterials()
-    {
-        if (damageFlashMaterial == null || spriteRenderers == null)
-        {
-            return;
-        }
-
-        damageFlashMaterials = new Material[spriteRenderers.Length];
-        for (int i = 0; i < spriteRenderers.Length; i++)
-        {
-            Material material = new Material(damageFlashMaterial);
-            spriteRenderers[i].material = material;
-            damageFlashMaterials[i] = material;
-        }
-    }
-
-    private void CleanupDamageFlashMaterials()
-    {
-        if (damageFlashMaterials == null)
-        {
-            return;
-        }
-
-        foreach (Material material in damageFlashMaterials)
-        {
-            if (material != null)
-            {
-                Destroy(material);
-            }
-        }
-    }
-
-    // ==========================================
-    // Death Handling
-    // ==========================================
 
     /// <summary>
     /// Disables enemy controls, collider, and physics, and begins death animation.

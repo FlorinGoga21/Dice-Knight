@@ -29,31 +29,17 @@ public sealed class DamageNumber : MonoBehaviour
     /// </summary>
     public void ShowDamage(int damage)
     {
-        GameObject damageNumberObject = new GameObject("Damage Number");
-        damageNumberObject.transform.position = transform.position + Vector3.up * verticalOffset;
-
-        TextMeshPro text = damageNumberObject.AddComponent<TextMeshPro>();
-        text.text = $"-{damage}";
-        if (font != null)
-        {
-            text.font = font;
-        }
-
-        text.color = color;
-        text.alignment = TextAlignmentOptions.Center;
-        text.fontSize = fontSize;
-        text.fontStyle = FontStyles.Bold;
-        text.sortingOrder = sortingOrder;
-
-        Vector3 startPosition = damageNumberObject.transform.position;
+        TextMeshPro text = FloatingNumberVisuals.Create(
+            "Damage Number", $"-{damage}", transform.position + Vector3.up * verticalOffset,
+            font, fontSize, color, sortingOrder);
+        Vector3 startPosition = text.transform.position;
         float horizontalDirection = Random.value < 0.5f ? -1f : 1f;
         Vector3 endPosition = startPosition + Vector3.right * horizontalDirection * horizontalDistance;
 
-        StartCoroutine(Animate(damageNumberObject, text, startPosition, endPosition));
+        StartCoroutine(Animate(text, startPosition, endPosition));
     }
 
     private IEnumerator Animate(
-        GameObject damageNumberObject,
         TextMeshPro text,
         Vector3 startPosition,
         Vector3 endPosition)
@@ -64,18 +50,10 @@ public sealed class DamageNumber : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float progress = Mathf.Clamp01(elapsed / lifetime);
-            float smoothProgress = Mathf.SmoothStep(0f, 1f, progress);
-            float arcHeight = Mathf.Sin(progress * Mathf.PI) * jumpHeight;
-
-            damageNumberObject.transform.position =
-                Vector3.Lerp(startPosition, endPosition, smoothProgress) + Vector3.up * arcHeight;
-
-            Color textColor = text.color;
-            textColor.a = 1f - progress;
-            text.color = textColor;
+            FloatingNumberVisuals.AnimateFrame(text, startPosition, endPosition, progress, jumpHeight);
             yield return null;
         }
 
-        Destroy(damageNumberObject);
+        Destroy(text.gameObject);
     }
 }
