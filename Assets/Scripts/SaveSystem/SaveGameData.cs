@@ -60,6 +60,11 @@ public sealed class RoomSaveData
 public sealed class EnemySaveData
 {
     public string id;
+    public string spawnerId;
+    public string prefabId;
+    public string weaponId;
+    public bool hasFlightState;
+    public float flightCenterY, flightPhase;
     public int health, maxHealth;
     public bool defeated;
     public Vector3 position;

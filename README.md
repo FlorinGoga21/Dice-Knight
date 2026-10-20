@@ -16,10 +16,22 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - Cloud transitions between the main menu, map, and gameplay rooms.
 - Player movement, jumping, and animated characters.
 - Turn-based dice combat, enemy encounters, blocking, and healing potions.
+- Animated slimes, skeletons, and a hovering DiceDemon with fireball attacks. Combat rooms spawn enemies from an editable pool, with enemy dice matching the player's available dice.
+- Random SPUM melee weapons for skeletons, preserved with the room's saved enemy lineup. See [enemy spawning](ENEMY_SPAWNING.md) for Inspector setup.
 - Player health, gold, enemy health, and coin pickups.
 - Three JSON save slots with manual save/load, backups, and autosave roughly every two minutes of active gameplay.
 - Pause menus in both the map and gameplay scenes, with save details and confirmed save deletion.
 - Pixel-style menus with fades, hover effects, and a blurred pause background.
+
+### Development update — 20 October 2026
+
+- Split large gameplay and UI scripts into focused files, shared the floating-number visuals, and grouped save code into its own folder.
+- Replaced hand-placed combat enemies with a configurable spawner. The prefab defaults to 2–3 enemies per combat room; the scene can override the pool, count, and spacing.
+- Added the animated **Slime** and **DiceDemon**. DiceDemon hovers, shoots animated fireballs, has three hearts, and lands before its death animation. Its palette, outline, size, and idle eye animation have also been refined.
+- Added **19 random SPUM melee weapon variants** for skeletons, excluding spears. Weapon selection changes appearance while keeping the existing attack behavior.
+- Extended saves to retain the enemy lineup, weapons, health, defeated state, and DiceDemon's hover position. Fixed player targeting after loading so every enemy matches the player's current dice count.
+- Improved spacing for combat roll totals, including two-digit results, and addressed input and health-display initialization issues.
+- Replaced the static main-menu header image with a **60 FPS animated WebP**.
 
 ### Still in progress
 
@@ -30,7 +42,19 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 
 Room types are already represented on the map, but currently lead into the shared gameplay scene rather than fully distinct room experiences.
 
-## Screenshots
+## Screenshots and sprite previews
+
+**New enemies: DiceDemon and Slime**
+
+<img src="docs/screenshots/enemy-sprites.png" alt="DiceDemon and Slime using their existing pixel-art sprite frames" width="420">
+
+Sprite previews from the game assets. DiceDemon also uses a palette and outline material in game.
+
+**Skeleton weapon variety**
+
+![Skeletons equipped with all 19 currently allowed SPUM melee weapons](docs/screenshots/skeleton-weapons.png)
+
+The current weapon pool includes swords, axes, daggers, a hammer, and a mace. Weapons are chosen on spawn and restored when loading a saved room. See [enemy spawning](ENEMY_SPAWNING.md) for setup and tuning.
 
 **Run map**
 

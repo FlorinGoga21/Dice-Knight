@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8151336011222270951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 123519307761256284}
+  - component: {fileID: 7309604404091995848}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &123519307761256284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8151336011222270951}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10, y: -1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7309604404091995848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8151336011222270951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48f3b359deae1be4699891b3c45db877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  enemyPool:
+  - id: slime
+    prefab: {fileID: 5788070678420168343, guid: f8b1336b55d1efb4081bc20508848968, type: 3}
+  - id: skeleton
+    prefab: {fileID: 1649910359410038134, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
+  - id: dice-demon
+    prefab: {fileID: 5177458355116526714, guid: 09d2c1772f9095740a4931dcd36a6bb9, type: 3}
+  spawnerId: main-room
+  legacyEnemyId: skeleton
+  minimumEnemies: 2
+  maximumEnemies: 3
+  combatRoomsOnly: 1
+  enemySpacing: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  groundProbeHeight: 5
+  groundProbeDistance: 15

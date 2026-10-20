@@ -43,6 +43,7 @@ public partial class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     [SerializeField] private int currency = 0;
 
     private HealthHeartsUI healthHeartsUI;
+    private bool refreshHearts;
 
     public bool IsDead => currentHealth <= 0;
     public bool CanReceiveCurrency => !IsDead;
@@ -113,6 +114,14 @@ public partial class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     {
         MaxHealth = Mathf.Max(HealthHeartsUI.HealthPerFullHeart, MaxHealth);
         currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
+
+        refreshHearts = true;
+    }
+
+    private void LateUpdate()
+    {
+        if (!refreshHearts) return;
+        refreshHearts = false;
 
         if (healthHeartsUI != null)
         {

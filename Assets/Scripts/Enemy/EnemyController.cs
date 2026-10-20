@@ -27,12 +27,20 @@ public partial class EnemyController : MonoBehaviour, IDamageable
     [SerializeField] private float attackHitDelay = 0.25f;
 
     [Header("---Dice---")]
+    [Tooltip("Fallback when no player is available. In combat, enemies match the player's available dice.")]
     [SerializeField, Range(1, 3)] private int diceCount = 1;
 
     /// <summary>
-    /// Number of dice this enemy rolls during turn-based combat. Editable in the Inspector.
+    /// Matches the player's available dice, including dice gained after this enemy spawned.
     /// </summary>
-    public int DiceCount => diceCount;
+    public int DiceCount
+    {
+        get
+        {
+            if (targetCombat == null) ResolveTarget();
+            return targetCombat != null ? targetCombat.PlayerDiceCount : Mathf.Max(1, diceCount);
+        }
+    }
 
     [Header("---Ground Check---")]
     [SerializeField] private LayerMask groundLayer;
@@ -58,6 +66,8 @@ public partial class EnemyController : MonoBehaviour, IDamageable
     private Rigidbody2D rb;
     private Collider2D col;
     private IDamageable targetDamageable;
+    private CombatController targetCombat;
+    private EnemyProjectileAttack projectileAttack;
     private SpriteRenderer[] spriteRenderers;
     private Material[] damageFlashMaterials;
     private Coroutine damageFlashCoroutine;
@@ -73,13 +83,16 @@ public partial class EnemyController : MonoBehaviour, IDamageable
 
     public bool IsDead => (stats != null && stats.IsDead) || hasDied;
     public EnemyStats Stats => stats;
+    public bool IsAttackInProgress => projectileAttack != null && projectileAttack.IsAttacking;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        projectileAttack = GetComponent<EnemyProjectileAttack>();
         animator = animator != null ? animator : GetComponent<Animator>();
         visuals = visuals != null ? visuals : transform;
+        playerCamera = playerCamera != null ? playerCamera : Camera.main;
 
         if (stats == null)
         {
@@ -94,21 +107,28 @@ public partial class EnemyController : MonoBehaviour, IDamageable
         SetupDamageFlashMaterials();
     }
 
-    private void Start()
+    private void OnEnable()
+    {
+        ResolveTarget();
+    }
+
+    private void ResolveTarget()
     {
         if (target == null)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            PlayerController player = FindAnyObjectByType<PlayerController>();
             target = player != null ? player.transform : null;
         }
 
         targetDamageable = target != null ? target.GetComponentInParent<IDamageable>() : null;
+        targetCombat = target != null ? target.GetComponentInParent<CombatController>() : null;
 
         // Prevent target damageable from matching this enemy's own damageable
         if (ReferenceEquals(targetDamageable, this) || (stats != null && ReferenceEquals(targetDamageable, stats)))
         {
             target = null;
             targetDamageable = null;
+            targetCombat = null;
         }
     }
 
@@ -119,7 +139,10 @@ public partial class EnemyController : MonoBehaviour, IDamageable
             return;
         }
 
-        if (turnBasedCombat)
+        if (target == null || targetCombat == null) ResolveTarget();
+        if (target != null) FaceTarget(target.position.x - transform.position.x);
+
+        if (turnBasedCombat || (targetCombat != null && targetCombat.IsInCombat))
         {
             rb.linearVelocity = Vector2.zero;
             HandleAnimation();
@@ -134,7 +157,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
-        if (hasDied || turnBasedCombat)
+        if (hasDied || turnBasedCombat || (targetCombat != null && targetCombat.IsInCombat))
         {
             return;
         }
@@ -158,12 +181,15 @@ public partial class EnemyController : MonoBehaviour, IDamageable
         }
     }
 
-    public void SetTurnBasedCombat(bool enabled)
+    public void SetTurnBasedCombat(bool enabled, CombatController opponent = null)
     {
         turnBasedCombat = enabled;
         if (enabled)
         {
+            if (opponent != null) target = opponent.transform;
+            ResolveTarget();
             rb.linearVelocity = Vector2.zero;
+            if (target != null) FaceTarget(target.position.x - transform.position.x);
         }
     }
 
@@ -177,10 +203,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
 
-        if (applyDamage && targetDamageable != null && !targetDamageable.IsDead)
-        {
-            targetDamageable.TakeDamage(attackDamage * Mathf.Max(1, damageMultiplier));
-        }
+        ResolveAttack(attackDamage * Mathf.Max(1, damageMultiplier), applyDamage);
     }
 
     public void PlayAttackAnimation()
@@ -200,7 +223,8 @@ public partial class EnemyController : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(attackHitDelay);
 
-        if (hasDied || target == null || targetDamageable == null || targetDamageable.IsDead)
+        if (hasDied || turnBasedCombat || (targetCombat != null && targetCombat.IsInCombat)
+            || target == null || targetDamageable == null || targetDamageable.IsDead)
         {
             attackDamageCoroutine = null;
             yield break;
@@ -209,10 +233,18 @@ public partial class EnemyController : MonoBehaviour, IDamageable
         float horizontalDistance = Mathf.Abs(target.position.x - transform.position.x);
         if (horizontalDistance <= attackRange)
         {
-            targetDamageable.TakeDamage(attackDamage);
+            ResolveAttack(attackDamage, applyDamage: true);
         }
 
         attackDamageCoroutine = null;
+    }
+
+    private void ResolveAttack(int damage, bool applyDamage)
+    {
+        if (projectileAttack != null)
+            projectileAttack.Fire(target, targetDamageable, damage, applyDamage);
+        else if (applyDamage && targetDamageable != null && !targetDamageable.IsDead)
+            targetDamageable.TakeDamage(damage);
     }
 
     public bool IsWithinDetectionRange(Transform targetTransform)
@@ -232,8 +264,6 @@ public partial class EnemyController : MonoBehaviour, IDamageable
 
         float horizontalDistance = target.position.x - transform.position.x;
         float absoluteDistance = Mathf.Abs(horizontalDistance);
-
-        FaceTarget(horizontalDistance);
 
         if (absoluteDistance > detectionRange)
         {
@@ -271,7 +301,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
             return;
         }
 
-        bool shouldFaceRight = horizontalDistance > 0f;
+        bool shouldFaceRight = transform.InverseTransformVector(Vector3.right * horizontalDistance).x > 0f;
         float facingSign = shouldFaceRight == spriteFacesRight ? 1f : -1f;
         Vector3 scale = visuals.localScale;
         scale.x = Mathf.Abs(scale.x) * facingSign;
@@ -321,8 +351,14 @@ public partial class EnemyController : MonoBehaviour, IDamageable
             attackDamageCoroutine = null;
         }
 
+        StartCoroutine(PlayDeathSequence());
+    }
+
+    private IEnumerator PlayDeathSequence()
+    {
+        if (TryGetComponent<EnemyFlight>(out var flight)) yield return flight.LandForDeath();
         animator.SetBool("hasDied", true);
-        StartCoroutine(HideAfterDeathAnimation());
+        yield return HideAfterDeathAnimation();
     }
 
     private IEnumerator HideAfterDeathAnimation()

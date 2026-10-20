@@ -7454,7 +7454,7 @@ SpriteRenderer:
   m_SortingOrder: 20
   m_MaskInteraction: 0
   m_Sprite: {fileID: 5223213533427645220, guid: d24756e433435b249be5737019648d69, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.21568629, g: 0.1254902, b: 0.03529412, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -7626,6 +7626,8 @@ MonoBehaviour:
   attackHitDelay: 0.25
   attackCooldown: 0.5
   attackMovementThreshold: 0.01
+  blockShieldBlockingOffset: {x: -0.4, y: 0, z: 0}
+  blockShieldMoveDuration: 0.22
   damageFlashMaterial: {fileID: 2100000, guid: bef7e6d07e25823419becbe99854e4b3, type: 2}
   damageFlashDuration: 0.05
   playerCamera: {fileID: 0}
@@ -7652,8 +7654,10 @@ MonoBehaviour:
   emptyHeartSprite: {fileID: 21300000, guid: f03b01720fa59e8152f7c773f585d8f7, type: 3}
   heartDissolveMaterial: {fileID: 2100000, guid: a841624804e5b984895171be57e2a9e9, type: 2}
   heartDissolveDuration: 0.5
-  heartOutlineMaterial: {fileID: 2100000, guid: 445e2f2ae0a6b404995d36e89771930a, type: 2}
+  heartOutlineMaterial: {fileID: 2100000, guid: 415db1f7c8fe32447be48456a75c7796, type: 2}
   overheadOffset: {x: 0, y: 1, z: 0}
+  healingHeartStepDuration: 0.25
+  healingHeartPulseScale: 1.75
   currencyText: {fileID: 0}
   currencyCoinImage: {fileID: 0}
   coinShineMaterial: {fileID: 2100000, guid: 9fb6d87593e17b646a440cc1836022d2, type: 2}
@@ -7682,6 +7686,9 @@ MonoBehaviour:
   diceRollUI: {fileID: 0}
   playerDice: {fileID: 0}
   rollButton: {fileID: 0}
+  blockButton: {fileID: 0}
+  healingPotionButton: {fileID: 0}
+  startingHealingPotionCount: 3
   turnText: {fileID: 0}
   combatUIFadeDuration: 0.35
   turnTextDuration: 0.7
@@ -7693,6 +7700,10 @@ MonoBehaviour:
   rollDisplayAppearDuration: 0.35
   rollDisplayDuration: 1.5
   rollDisplayFadeDuration: 0.35
+  rollResultFont: {fileID: 11400000, guid: b6442d2bdb14527f403091eca8d72618, type: 2}
+  rollResultFontSize: 5
+  rollResultTextScale: 1
+  rollResultPadding: 1
 --- !u!114 &4296657186505820701
 MonoBehaviour:
   m_ObjectHideFlags: 0

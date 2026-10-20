@@ -141,10 +141,16 @@ public static class SaveFileStore
         if (data.sceneName == "MainScene" && (player == null || data.room == null)) throw new InvalidDataException("Missing room state.");
         if (data.room != null)
         {
-            if (data.room.mapRoom != map.currentRoom || data.room.enemies == null) throw new InvalidDataException("Room progress does not match the map.");
+            if (data.room.mapRoom != map.currentRoom || data.room.enemies == null || data.room.enemies.Count > 256) throw new InvalidDataException("Room progress does not match the map.");
             var identities = new HashSet<string>();
             foreach (var enemy in data.room.enemies)
+            {
                 if (enemy == null || string.IsNullOrEmpty(enemy.id) || !identities.Add(enemy.id) || enemy.health < 0 || enemy.maxHealth <= 0 || enemy.health > enemy.maxHealth || !Finite(enemy.position) || !Finite(enemy.rotation)) throw new InvalidDataException("Invalid enemy state.");
+                if (string.IsNullOrEmpty(enemy.spawnerId) != string.IsNullOrEmpty(enemy.prefabId))
+                    throw new InvalidDataException("Incomplete spawned enemy identity.");
+                if (enemy.hasFlightState && !Finite(new Vector3(enemy.flightCenterY, enemy.flightPhase, 0f)))
+                    throw new InvalidDataException("Invalid enemy flight state.");
+            }
         }
     }
 

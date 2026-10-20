@@ -38,12 +38,17 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [SerializeField] private float coinFlightDuration = 0.5f;
 
     private bool isDead;
+    private string spawnerId;
+    private string prefabId;
     private ICurrencyReceiver currencyTarget;
     private HealthHeartsUI healthHeartsUI;
+    private bool refreshHearts;
 
     public bool IsDead => isDead || currentHealth <= 0;
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
+    public string SpawnerId => spawnerId;
+    public string PrefabId => prefabId;
     public string SaveId
     {
         get
@@ -56,6 +61,13 @@ public class EnemyStats : MonoBehaviour, IDamageable
         }
     }
 
+    public void SetSpawnIdentity(string saveId, string sourceSpawnerId, string sourcePrefabId)
+    {
+        persistentSaveId = saveId;
+        spawnerId = sourceSpawnerId;
+        prefabId = sourcePrefabId;
+    }
+
     public void RestoreSave(EnemySaveData data)
     {
         maxHealth = data.maxHealth;
@@ -63,6 +75,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         isDead = data.defeated || currentHealth <= 0;
         transform.SetPositionAndRotation(data.position, data.rotation);
         if (TryGetComponent(out Rigidbody2D body)) { body.position = data.position; body.linearVelocity = Vector2.zero; }
+        GetComponent<EnemyFlight>()?.RestoreSave(data);
         healthHeartsUI?.SetMaxHealth(maxHealth, currentHealth);
         if (isDead)
         {
@@ -101,6 +114,14 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         maxHealth = Mathf.Max(HealthHeartsUI.HealthPerFullHeart, maxHealth);
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        refreshHearts = true;
+    }
+
+    private void LateUpdate()
+    {
+        if (!refreshHearts) return;
+        refreshHearts = false;
 
         if (healthHeartsUI != null)
         {
@@ -231,12 +252,21 @@ public class EnemyStats : MonoBehaviour, IDamageable
             healthHeartsUI.SetVisible(false);
         }
 
-        SpawnCoins();
-
         if (enemyController != null)
         {
             enemyController.Die();
         }
+
+        if (TryGetComponent<EnemyFlight>(out var flight))
+            StartCoroutine(SpawnCoinsAfterLanding(flight));
+        else
+            SpawnCoins();
+    }
+
+    private System.Collections.IEnumerator SpawnCoinsAfterLanding(EnemyFlight flight)
+    {
+        while (flight != null && !flight.DeathLandingComplete) yield return null;
+        SpawnCoins();
     }
 
     private void ResolveCurrencyTarget()

@@ -36,7 +36,6 @@ public class PauseMenuController : MonoBehaviour
     private void Awake()
     {
         pauseMenu = pauseMenu != null ? pauseMenu : gameObject;
-        inputActions = new PlayerInputActions();
         menuCanvas = GetComponent<Canvas>();
         menuCanvasGroup = GetComponent<CanvasGroup>();
         if (menuCanvasGroup == null)
@@ -59,12 +58,14 @@ public class PauseMenuController : MonoBehaviour
 
     private void OnEnable()
     {
+        inputActions ??= new PlayerInputActions();
         inputActions.Player.Pause.performed += OnPausePerformed;
         inputActions.Enable();
     }
 
     private void OnDisable()
     {
+        if (inputActions == null) return;
         inputActions.Player.Pause.performed -= OnPausePerformed;
         inputActions.Disable();
     }
@@ -72,7 +73,7 @@ public class PauseMenuController : MonoBehaviour
     private void OnDestroy()
     {
         if (saveSlots != null) { saveSlots.Closed -= OnSlotsClosed; saveSlots.Saved -= OnSlotSaved; }
-        inputActions.Dispose();
+        inputActions?.Dispose();
         ReleasePausedScreenTexture();
     }
 

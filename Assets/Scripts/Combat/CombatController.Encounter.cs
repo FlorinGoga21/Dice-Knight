@@ -71,7 +71,7 @@ public sealed partial class CombatController
 
     private IEnumerator RunEncounter()
     {
-        activeEnemy.SetTurnBasedCombat(true);
+        activeEnemy.SetTurnBasedCombat(true, this);
         activeEnemy.Stats?.SetCombatHeartsVisible(true, combatUIFadeDuration);
 
         while (player != null && player.CanStartTurnCombat && activeEnemy != null && !activeEnemy.IsDead)
@@ -144,6 +144,8 @@ public sealed partial class CombatController
                 yield return EnlargeDisplays(enemyRollDisplays, rollResultDisplays != null ? rollResultDisplays[1] : null);
                 activeEnemy.PerformTurnAttack(enemyMultiplier);
             }
+
+            while (activeEnemy != null && activeEnemy.IsAttackInProgress) yield return null;
 
             yield return AnimateDisplaysOut(playerRollDisplays, enemyRollDisplays, rollResultDisplays);
             DestroyRollDisplays(ref playerRollDisplays);

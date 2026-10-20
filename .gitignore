@@ -115,3 +115,7 @@ InitTestScene*.unity*
 
 # Local development notes
 /SAVE_SYSTEM.md
+
+# Local asset collection for evaluating possible additions
+/Assets/External Assets/PossibleAdditions/
+/Assets/External Assets/PossibleAdditions.meta

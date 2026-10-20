@@ -25,6 +25,7 @@ public sealed class SaveManager : MonoBehaviour
     private float playSeconds;
     private float autosaveElapsed;
     private bool worldReady;
+    private bool sceneInitialized;
     private bool saveOnReady;
     private readonly List<TrackedEnemy> enemies = new List<TrackedEnemy>();
 
@@ -51,6 +52,12 @@ public sealed class SaveManager : MonoBehaviour
         if (instance != this) return;
         SceneManager.sceneLoaded -= OnSceneLoaded;
         instance = null;
+    }
+
+    private void Start()
+    {
+        // Entering Play mode directly in a room may load it before our scene callback is registered.
+        if (!sceneInitialized) OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
     private void Update()
@@ -197,12 +204,17 @@ public sealed class SaveManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (mode != LoadSceneMode.Single) return;
+        sceneInitialized = true;
         bool resumeAfterLoad = IsLoading;
         if (resumeAfterLoad) Time.timeScale = 0f;
         worldReady = false;
         enemies.Clear();
         if (scene.name == "MainScene")
         {
+            foreach (var root in scene.GetRootGameObjects())
+                foreach (var spawner in root.GetComponentsInChildren<EnemySpawner>())
+                    if (spawner.isActiveAndEnabled) spawner.SpawnRoom(pendingLoad?.room);
+
             foreach (var root in scene.GetRootGameObjects())
                 foreach (var enemy in root.GetComponentsInChildren<EnemyStats>(true))
                     enemies.Add(new TrackedEnemy { stats = enemy, original = CaptureEnemy(enemy) });
@@ -243,10 +255,17 @@ public sealed class SaveManager : MonoBehaviour
         }
     }
 
-    private static EnemySaveData CaptureEnemy(EnemyStats enemy) => new EnemySaveData
+    private static EnemySaveData CaptureEnemy(EnemyStats enemy)
     {
-        id = enemy.SaveId, health = enemy.CurrentHealth, maxHealth = enemy.MaxHealth,
-        defeated = enemy.IsDead || !enemy.gameObject.activeSelf,
-        position = enemy.transform.position, rotation = enemy.transform.rotation
-    };
+        var data = new EnemySaveData
+        {
+            id = enemy.SaveId, spawnerId = enemy.SpawnerId, prefabId = enemy.PrefabId,
+            weaponId = enemy.GetComponent<EnemyWeaponVariation>()?.WeaponId,
+            health = enemy.CurrentHealth, maxHealth = enemy.MaxHealth,
+            defeated = enemy.IsDead || !enemy.gameObject.activeSelf,
+            position = enemy.transform.position, rotation = enemy.transform.rotation
+        };
+        enemy.GetComponent<EnemyFlight>()?.CaptureSave(data);
+        return data;
+    }
 }

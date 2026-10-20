@@ -19,8 +19,11 @@ public sealed partial class CombatController
             SpriteRenderer renderer = item.AddComponent<SpriteRenderer>();
             renderer.sortingOrder = 100;
             renderer.sprite = diceRollUI.GetPipSprite(0, results[i]);
-            renderer.transform.position = owner.position + rollDisplayOffset
+            Vector3 displayPosition = owner.position + rollDisplayOffset
                 + new Vector3(startX + i * DiceDisplaySpacing, 0f, 0f);
+            if (owner.TryGetComponent<EnemyFlight>(out _))
+                displayPosition.y = transform.position.y + rollDisplayOffset.y;
+            renderer.transform.position = displayPosition;
             renderer.transform.localScale = Vector3.one * rollDisplayScale;
             renderer.color = new Color(1f, 1f, 1f, 0f);
             renderer.enabled = renderer.sprite != null;

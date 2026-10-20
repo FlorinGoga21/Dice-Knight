@@ -93,15 +93,18 @@ public partial class PlayerController : MonoBehaviour
         CacheBlockingShield();
         SetupDamageFlashMaterials();
         playerCamera = playerCamera != null ? playerCamera : Camera.main;
-        inputActions = new PlayerInputActions();
         UpdateGroundedState();
         wasGrounded = isGrounded;
     }
 
-    private void OnEnable() => inputActions.Enable();
+    private void OnEnable()
+    {
+        inputActions ??= new PlayerInputActions();
+        inputActions.Enable();
+    }
     private void OnDisable()
     {
-        inputActions.Disable();
+        inputActions?.Disable();
 
         if (damageShakeCoroutine != null)
         {
@@ -113,7 +116,7 @@ public partial class PlayerController : MonoBehaviour
     }
     private void OnDestroy()
     {
-        inputActions.Dispose();
+        inputActions?.Dispose();
 
         if (damageFlashMaterials == null)
         {
