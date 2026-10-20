@@ -4,7 +4,7 @@ A 2D pixel-art adventure prototype built in Unity, combining a branching run map
 
 Choose a route, enter rooms, fight enemies, and continue your adventure across saved sessions.
 
-![Dice Knight main menu](docs/screenshots/main-menu.png)
+![Dice Knight main menu in motion](docs/screenshots/main-menu.webp)
 
 ## Current status
 
