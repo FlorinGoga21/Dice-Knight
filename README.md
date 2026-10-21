@@ -15,13 +15,24 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - A branching map with room icons, connected routes, and persistent run progress.
 - Cloud transitions between the main menu, map, and gameplay rooms.
 - Player movement, jumping, and animated characters.
+- Layered forest parallax with seamless infinite scrolling in the menu and gameplay. See [background tuning](docs/BACKGROUND_PARALLAX.md).
+- Room camera limits and walk-off exits; combat exits unlock after defeating all enemies, and empty rooms stay within their initial screen. See [room boundaries](docs/COMBAT_ROOM_BOUNDARIES.md).
 - Turn-based dice combat, enemy encounters, blocking, and healing potions.
-- Animated slimes, skeletons, and a hovering DiceDemon with fireball attacks. Combat rooms spawn enemies from an editable pool, with enemy dice matching the player's available dice.
-- Random SPUM melee weapons for skeletons, preserved with the room's saved enemy lineup. See [enemy spawning](ENEMY_SPAWNING.md) for Inspector setup.
+- Animated slimes, skeletons, zombies, and a hovering DiceDemon with fireball attacks. Combat rooms spawn enemies from an editable pool, with enemy dice matching the player's available dice.
+- Random SPUM melee weapons for skeletons and zombies, preserved with the room's saved enemy lineup. See [enemy spawning](ENEMY_SPAWNING.md) for Inspector setup.
 - Player health, gold, enemy health, and coin pickups.
 - Three JSON save slots with manual save/load, backups, and autosave roughly every two minutes of active gameplay.
 - Pause menus in both the map and gameplay scenes, with save details and confirmed save deletion.
 - Pixel-style menus with fades, hover effects, and a blurred pause background.
+
+### Development update — 21 October 2026
+
+- Added the **Zombie** enemy with **40 HP (two full hearts)**, shared SPUM melee weapons, and idle, movement, attack, hurt, and death animations. Its custom artwork, proportions, hands, feet, and painted sleeve pixels match the existing character style. Skeleton health remains 20 HP.
+- Added depth-based **forest parallax** in the menu and gameplay, keeping the ground anchored and light shafts aligned with their tree layers. Infinite scrolling supports reverse movement, camera jumps, and wider views. See [background tuning](docs/BACKGROUND_PARALLAX.md).
+- Added **MainScene room boundaries** with a stable invisible left wall and camera limits. Combat rooms unlock their exit after all enemies are defeated; the camera stops at the right edge while the player walks fully off screen to return to the map.
+- Gave the currently empty shop, random, and treasure rooms boundaries at their initial screen edges and an immediately available walk-off exit. Their individual content and interactions are still to come. MainMenu has no room boundaries.
+- Extended room saves to preserve boundary positions and restore cleared exits. Room completion waits for combat cleanup and coin rewards, and holding movement against the left wall stops the walking animation and dust without jitter. See [room boundaries](docs/COMBAT_ROOM_BOUNDARIES.md).
+- Added [project contribution instructions](AGENTS.md), including Inspector header conventions, plus reusable Unity configuration and verification tools under `Tools/Unity/`.
 
 ### Development update — 20 October 2026
 
@@ -37,12 +48,18 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 
 - Shops, treasure chests, and distinct behavior for each room type.
 - More backgrounds and room variety.
-- Proper room-completion objectives. **Q currently acts as a temporary shortcut to complete a room and return to the map.**
+- Distinct objectives for other room types. Rooms finish when the player walks off the unlocked right screen edge; Q remains a development shortcut.
 - Combat balancing, additional content, code cleanup, and visual polish.
 
 Room types are already represented on the map, but currently lead into the shared gameplay scene rather than fully distinct room experiences.
 
 ## Screenshots and sprite previews
+
+**New enemy: Zombie**
+
+<img src="docs/screenshots/zombie.gif" alt="Zombie enemy preview showing idle, movement, attack, hurt, and death animations" width="240">
+
+The zombie shares the skeleton's animation rig and melee weapon pool, with custom artwork and two full hearts. The hammer is one of its weapon variants.
 
 **New enemies: DiceDemon and Slime**
 

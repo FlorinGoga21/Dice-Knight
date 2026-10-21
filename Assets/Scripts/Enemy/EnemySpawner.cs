@@ -20,8 +20,8 @@ public sealed class EnemySpawner : MonoBehaviour
     [SerializeField] private string legacyEnemyId = "skeleton";
 
     [Header("Room Size")]
-    [SerializeField, Range(1, 20)] private int minimumEnemies = 2;
-    [SerializeField, Range(1, 20)] private int maximumEnemies = 3;
+    [SerializeField, Range(0, 20)] private int minimumEnemies = 2;
+    [SerializeField, Range(0, 20)] private int maximumEnemies = 3;
     [Tooltip("Skip shops, treasure rooms, and random rooms. Opening the scene directly still spawns enemies.")]
     [SerializeField] private bool combatRoomsOnly = true;
 
@@ -143,7 +143,7 @@ public sealed class EnemySpawner : MonoBehaviour
 
     private void OnValidate()
     {
-        minimumEnemies = Mathf.Clamp(minimumEnemies, 1, 20);
+        minimumEnemies = Mathf.Clamp(minimumEnemies, 0, 20);
         maximumEnemies = Mathf.Clamp(maximumEnemies, minimumEnemies, 20);
         enemySpacing = Mathf.Max(1f, enemySpacing);
     }

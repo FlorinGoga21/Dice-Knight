@@ -104,10 +104,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.8
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.38
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &799125701832406096
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,10 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.8
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.38
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &1709021030252375220
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,10 +421,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -1.2
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &3221299473625271871
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,10 +529,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -1.1
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &3462569396880432230
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,10 +637,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.2
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.78
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &3945935982853633866
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,10 +745,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -1
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.12
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &3997385144865815629
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,6 +759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8061142739828726691}
   - component: {fileID: 5202572540688636278}
+  - component: {fileID: 815488532677537693}
   m_Layer: 0
   m_Name: Layer_0011_0
   m_TagString: Untagged
@@ -840,6 +841,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &815488532677537693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997385144865815629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyGame.Environment.Background
+  playerCamera: {fileID: 0}
+  parallaxFactor: 1
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &4324124173197105291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,10 +1060,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -1
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.12
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &4863872331010564242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,10 +1168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.5
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.58
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &5468022299041034512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,10 +1309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -1.2
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &5690264408586331681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,10 +1417,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.5
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.58
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &5979044236848699156
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,10 +1566,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.7
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.38
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &6178996253262939522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,6 +1580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1933494108411999648}
   - component: {fileID: 1694386418718778655}
+  - component: {fileID: 699082224977735968}
   m_Layer: 0
   m_Name: Layer_0009_2 (2)
   m_TagString: Untagged
@@ -1644,6 +1662,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &699082224977735968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6178996253262939522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyGame.Environment.Background
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.9
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &6416270306411810914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1748,10 +1782,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -1.1
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &6670876518855228063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,10 +1923,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.35
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.58
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &7603456136821034628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1903,6 +1937,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3310589941003248778}
   - component: {fileID: 1731692470804764619}
+  - component: {fileID: 576252839391411989}
   m_Layer: 0
   m_Name: Layer_0009_2 (1)
   m_TagString: Untagged
@@ -1984,6 +2019,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &576252839391411989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7603456136821034628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyGame.Environment.Background
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.9
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &7705601960589954385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,6 +2045,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1763396118322902608}
   - component: {fileID: 3056381922282937651}
+  - component: {fileID: 6753934368532128780}
   m_Layer: 0
   m_Name: Layer_0009_2
   m_TagString: Untagged
@@ -2075,6 +2127,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &6753934368532128780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7705601960589954385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyGame.Environment.Background
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.9
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &7708563980758519476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2259,10 +2327,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.2
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.78
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &7919337035227414603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2367,10 +2435,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.9
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.12
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &8543798388209880717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2508,10 +2576,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.7
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.38
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &9131927821613845106
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,10 +2684,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.35
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.58
+  useSpriteWidth: 1
+  chunkWidth: 20
 --- !u!1 &9168334159084625545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2724,7 +2792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9e32b7281e96947899f72129830dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -0.9
-  isMoving: 0
-  destinationPoint: -19.2
-  originalPoint: 19.2
+  playerCamera: {fileID: 0}
+  parallaxFactor: 0.12
+  useSpriteWidth: 1
+  chunkWidth: 20

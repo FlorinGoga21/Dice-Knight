@@ -9,6 +9,10 @@ using UnityEngine.InputSystem;
 /// </summary>
 public partial class PlayerController
 {
+    private CombatRoomBounds roomCameraBounds;
+
+    public void SetRoomCameraBounds(CombatRoomBounds bounds) => roomCameraBounds = bounds;
+
     private void HandleInput()
     {
         moveInput = inputActions.Player.Move.ReadValue<Vector2>().x;
@@ -16,7 +20,15 @@ public partial class PlayerController
 
     private void HandleMovement()
     {
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(GetHorizontalMovementVelocity(), rb.linearVelocity.y);
+    }
+
+    private float GetHorizontalMovementVelocity()
+    {
+        float velocity = moveInput * moveSpeed;
+        return roomCameraBounds != null
+            ? roomCameraBounds.ClampMovementVelocity(velocity, col, Time.fixedDeltaTime)
+            : velocity;
     }
 
     private void HandleCameraFollow()
@@ -29,12 +41,17 @@ public partial class PlayerController
         Vector3 cameraPositionWithoutShake = playerCamera.transform.position - damageShakeOffset;
         Vector3 targetPosition = cameraPositionWithoutShake;
         targetPosition.x = transform.position.x + cameraFollowOffset;
+        if (roomCameraBounds != null)
+            targetPosition.x = roomCameraBounds.ClampCameraX(targetPosition.x);
 
-        playerCamera.transform.position = Vector3.Lerp(
+        Vector3 nextPosition = Vector3.Lerp(
             cameraPositionWithoutShake,
             targetPosition,
             cameraFollowSpeed * Time.deltaTime
         ) + damageShakeOffset;
+        if (roomCameraBounds != null)
+            nextPosition.x = roomCameraBounds.ClampCameraX(nextPosition.x);
+        playerCamera.transform.position = nextPosition;
     }
 
     private void HandleRotation()
@@ -121,7 +138,7 @@ public partial class PlayerController
 
     private void HandleAnimation()
     {
-        animator.SetFloat("Speed", Mathf.Abs(moveInput));
+        animator.SetFloat("Speed", Mathf.Abs(GetHorizontalMovementVelocity()) / Mathf.Max(0.01f, moveSpeed));
         animator.SetBool("Grounded", isGrounded);
     }
 
@@ -135,7 +152,7 @@ public partial class PlayerController
 
     private void HandleMovementDust()
     {
-        bool isMoving = !Mathf.Approximately(moveInput, 0f);
+        bool isMoving = Mathf.Abs(GetHorizontalMovementVelocity()) > 0.01f;
 
         if (movementDust == null)
         {

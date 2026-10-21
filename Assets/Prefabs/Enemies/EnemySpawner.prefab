@@ -51,6 +51,8 @@ MonoBehaviour:
     prefab: {fileID: 1649910359410038134, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
   - id: dice-demon
     prefab: {fileID: 5177458355116526714, guid: 09d2c1772f9095740a4931dcd36a6bb9, type: 3}
+  - id: zombie
+    prefab: {fileID: 6927698637438844585, guid: 3fadfe91327d8b144ae4d4543106ff48, type: 3}
   spawnerId: main-room
   legacyEnemyId: skeleton
   minimumEnemies: 2

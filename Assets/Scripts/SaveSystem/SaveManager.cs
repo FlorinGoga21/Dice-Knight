@@ -162,6 +162,7 @@ public sealed class SaveManager : MonoBehaviour
                 data.room.enemies.Add(state);
             }
             FindAnyObjectByType<CombatController>()?.CaptureRoomSave(data.room);
+            FindAnyObjectByType<CombatRoomBounds>()?.CaptureSave(data.room);
         }
         if (!SaveFileStore.TryWrite(SaveDirectory, data, out message)) return false;
         ActiveSlot = slot;
@@ -235,6 +236,7 @@ public sealed class SaveManager : MonoBehaviour
             if (pendingLoad?.room != null)
                 foreach (var saved in pendingLoad.room.enemies)
                     enemies.Find(e => e.original.id == saved.id)?.stats?.RestoreSave(saved);
+            FindAnyObjectByType<CombatRoomBounds>()?.Initialize(pendingLoad?.room);
         }
         pendingLoad = null;
         StartCoroutine(SceneReady(scene, resumeAfterLoad));

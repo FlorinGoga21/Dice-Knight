@@ -50,6 +50,8 @@ public sealed class PlayerSaveData
 public sealed class RoomSaveData
 {
     public int mapRoom = -1;
+    public bool hasCombatBounds;
+    public float combatLeftEdge, combatRightEdge;
     public List<EnemySaveData> enemies = new List<EnemySaveData>();
     public bool inCombat;
     public string combatEnemyId;

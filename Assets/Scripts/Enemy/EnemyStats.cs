@@ -45,6 +45,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
     private bool refreshHearts;
 
     public bool IsDead => isDead || currentHealth <= 0;
+    public bool DeathRewardsPending { get; private set; }
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
     public string SpawnerId => spawnerId;
@@ -70,6 +71,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
     public void RestoreSave(EnemySaveData data)
     {
+        DeathRewardsPending = false;
         maxHealth = data.maxHealth;
         currentHealth = data.health;
         isDead = data.defeated || currentHealth <= 0;
@@ -257,16 +259,21 @@ public class EnemyStats : MonoBehaviour, IDamageable
             enemyController.Die();
         }
 
+        DeathRewardsPending = true;
         if (TryGetComponent<EnemyFlight>(out var flight))
             StartCoroutine(SpawnCoinsAfterLanding(flight));
         else
+        {
             SpawnCoins();
+            DeathRewardsPending = false;
+        }
     }
 
     private System.Collections.IEnumerator SpawnCoinsAfterLanding(EnemyFlight flight)
     {
         while (flight != null && !flight.DeathLandingComplete) yield return null;
         SpawnCoins();
+        DeathRewardsPending = false;
     }
 
     private void ResolveCurrencyTarget()

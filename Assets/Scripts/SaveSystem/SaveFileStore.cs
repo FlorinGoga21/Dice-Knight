@@ -142,6 +142,9 @@ public static class SaveFileStore
         if (data.room != null)
         {
             if (data.room.mapRoom != map.currentRoom || data.room.enemies == null || data.room.enemies.Count > 256) throw new InvalidDataException("Room progress does not match the map.");
+            if (data.room.hasCombatBounds && (!Finite(new Vector3(data.room.combatLeftEdge, data.room.combatRightEdge, 0f))
+                || data.room.combatRightEdge <= data.room.combatLeftEdge))
+                throw new InvalidDataException("Invalid combat room boundaries.");
             var identities = new HashSet<string>();
             foreach (var enemy in data.room.enemies)
             {

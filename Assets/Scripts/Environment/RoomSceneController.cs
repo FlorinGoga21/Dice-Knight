@@ -2,7 +2,7 @@ using HeyHeyThere.SceneTransitionsFree;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>Temporary room completion shortcut until individual room objectives are implemented.</summary>
+/// <summary>Shared room-completion transition, also accessible through the Q development shortcut.</summary>
 public sealed class RoomSceneController : MonoBehaviour
 {
     [SerializeField] private string mapSceneName = "MapScene";
@@ -10,6 +10,8 @@ public sealed class RoomSceneController : MonoBehaviour
     [SerializeField, Min(0.01f)] private float transitionDuration = 0.8f;
 
     private bool isReturningToMap;
+
+    public bool IsReturningToMap => isReturningToMap;
 
     private void Update()
     {

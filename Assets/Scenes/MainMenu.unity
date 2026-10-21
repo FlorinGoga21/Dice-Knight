@@ -295,6 +295,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyGame.Environment.Background
   playerCamera: {fileID: 165845062}
+  parallaxFactor: 0.9
+  useSpriteWidth: 1
   chunkWidth: 20
 --- !u!1 &103913806
 GameObject:
@@ -528,6 +530,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyGame.Environment.Background
   playerCamera: {fileID: 165845062}
+  parallaxFactor: 0.9
+  useSpriteWidth: 1
   chunkWidth: 20
 --- !u!1 &165845061
 GameObject:
@@ -1537,7 +1541,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 79833181028649850, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 236436262558962528, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: m_LocalScale.x
@@ -1597,7 +1601,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 2547663770250869361, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 2893292809078882382, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: m_LocalScale.x
@@ -1609,7 +1613,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 3145467494604671967, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 3161248166588450599, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: m_LocalScale.x
@@ -1637,7 +1641,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 5757019447736725445, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 5979044236848699156, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: m_Name
@@ -1649,7 +1653,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 6287636909886395380, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.58
       objectReference: {fileID: 0}
     - target: {fileID: 6612081258130802940, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1657,7 +1661,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 6612081258130802940, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.58
       objectReference: {fileID: 0}
     - target: {fileID: 6722590929238520156, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1665,7 +1669,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 6722590929238520156, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.78
       objectReference: {fileID: 0}
     - target: {fileID: 7089235134105104161, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1673,7 +1677,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 7089235134105104161, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 7114869954664825550, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1681,7 +1685,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 7114869954664825550, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7669806713604710172, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1689,7 +1693,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 7669806713604710172, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.58
       objectReference: {fileID: 0}
     - target: {fileID: 7699995783307404322, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: m_Size.x
@@ -1717,7 +1721,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 8149475182855993949, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 8213059587605180556, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1725,7 +1729,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 8213059587605180556, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 8469873085280551778, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1733,7 +1737,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 8469873085280551778, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 8687755379878810908, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1741,7 +1745,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 8687755379878810908, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 8917757706155288649, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1749,7 +1753,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 8917757706155288649, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.78
       objectReference: {fileID: 0}
     - target: {fileID: 8925292508234086007, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1757,7 +1761,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 8925292508234086007, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9183852711553656421, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1765,7 +1769,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 9183852711553656421, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0.58
       objectReference: {fileID: 0}
     - target: {fileID: 9196378270466395299, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: playerCamera
@@ -1773,7 +1777,7 @@ PrefabInstance:
       objectReference: {fileID: 165845062}
     - target: {fileID: 9196378270466395299, guid: cd14e92a5659b1c4bac0383a9614e135, type: 3}
       propertyPath: parallaxFactor
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1825,6 +1829,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyGame.Environment.Background
   playerCamera: {fileID: 165845062}
+  parallaxFactor: 0.9
+  useSpriteWidth: 1
   chunkWidth: 20
 --- !u!1 &991451727 stripped
 GameObject:
@@ -1844,6 +1850,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyGame.Environment.Background
   playerCamera: {fileID: 165845062}
+  parallaxFactor: 1
+  useSpriteWidth: 1
   chunkWidth: 20
 --- !u!1 &1041619588
 GameObject:
@@ -2671,6 +2679,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 165845062}
+  parallaxFactor: 0
+  useSpriteWidth: 1
   chunkWidth: 20
 --- !u!212 &1589343237
 SpriteRenderer:
@@ -3056,6 +3066,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 165845062}
+  parallaxFactor: 0
+  useSpriteWidth: 1
   chunkWidth: 20
 --- !u!212 &1886748477
 SpriteRenderer:
@@ -3339,6 +3351,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyGame.Environment.Background
   playerCamera: {fileID: 165845062}
+  parallaxFactor: 0
+  useSpriteWidth: 1
   chunkWidth: 20
 --- !u!1 &2090303491
 GameObject:
