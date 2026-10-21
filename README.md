@@ -88,7 +88,9 @@ Screenshots show the current development build; visuals and gameplay may change.
 | Input | Action |
 | --- | --- |
 | A / D | Move left / right |
-| Space | Jump |
+| Space | Jump while exploring; roll dice during combat |
+| H | Use a healing potion during combat |
+| B | Block during combat (one use per encounter) |
 | Mouse | Navigate menus, select connected map nodes, and use combat buttons |
 | Esc | Pause, resume, or go back through pause-menu screens |
 | Q | Complete the current room and return to the map (temporary development shortcut) |

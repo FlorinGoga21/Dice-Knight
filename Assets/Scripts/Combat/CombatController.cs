@@ -92,6 +92,8 @@ public sealed partial class CombatController : MonoBehaviour
 
     private void OnEnable()
     {
+        combatInputActions ??= new PlayerInputActions();
+
         if (diceRollUI != null)
         {
             diceRollUI.DiceRolled += HandlePlayerDiceRolled;
@@ -106,6 +108,8 @@ public sealed partial class CombatController : MonoBehaviour
 
     private void OnDisable()
     {
+        combatInputActions?.Combat.Disable();
+
         if (diceRollUI != null)
         {
             diceRollUI.DiceRolled -= HandlePlayerDiceRolled;
@@ -136,5 +140,10 @@ public sealed partial class CombatController : MonoBehaviour
         SetCombatUIVisible(false, instant: true);
         activeEnemy = null;
         waitingForPlayerRoll = false;
+    }
+
+    private void OnDestroy()
+    {
+        combatInputActions?.Dispose();
     }
 }

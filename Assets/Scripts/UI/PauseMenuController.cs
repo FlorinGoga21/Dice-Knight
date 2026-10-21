@@ -60,14 +60,14 @@ public class PauseMenuController : MonoBehaviour
     {
         inputActions ??= new PlayerInputActions();
         inputActions.Player.Pause.performed += OnPausePerformed;
-        inputActions.Enable();
+        inputActions.Player.Enable();
     }
 
     private void OnDisable()
     {
         if (inputActions == null) return;
         inputActions.Player.Pause.performed -= OnPausePerformed;
-        inputActions.Disable();
+        inputActions.Player.Disable();
     }
 
     private void OnDestroy()

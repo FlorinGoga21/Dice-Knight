@@ -7,6 +7,7 @@ public sealed partial class CombatController
     private void Update()
     {
         if (Time.timeScale <= 0f) return;
+        HandleCombatInput();
         UpdateHealingPotionButtonState();
         if (IsInCombat || player == null || !player.CanStartTurnCombat)
         {
@@ -67,6 +68,7 @@ public sealed partial class CombatController
         UpdateBlockButtonLabel();
         SetCombatUIVisible(true);
         encounterCoroutine = StartCoroutine(RunEncounter());
+        combatInputActions.Combat.Enable();
     }
 
     private IEnumerator RunEncounter()
@@ -159,6 +161,8 @@ public sealed partial class CombatController
 
     private void FinishEncounter()
     {
+        combatInputActions.Combat.Disable();
+
         if (activeEnemy != null)
         {
             activeEnemy.Stats?.SetCombatHeartsVisible(false, combatUIFadeDuration);

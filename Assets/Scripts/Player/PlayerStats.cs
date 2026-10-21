@@ -259,15 +259,5 @@ public partial class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
         {
             TakeDamage(10);
         }
-        if (Keyboard.current.bKey.wasPressedThisFrame)
-        {
-            Heal(10);
-        }
-        if (Keyboard.current.spaceKey.wasPressedThisFrame &&
-            RollButton.gameObject.activeInHierarchy &&
-            RollButton.IsInteractable())
-        {
-            RollButton.onClick.Invoke();
-        }
     }
 }

@@ -100,11 +100,11 @@ public partial class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         inputActions ??= new PlayerInputActions();
-        inputActions.Enable();
+        inputActions.Player.Enable();
     }
     private void OnDisable()
     {
-        inputActions?.Disable();
+        inputActions?.Player.Disable();
 
         if (damageShakeCoroutine != null)
         {
