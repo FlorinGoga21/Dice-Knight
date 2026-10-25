@@ -30,6 +30,9 @@ public class PauseMenuController : MonoBehaviour
     private bool showingSaveLoad;
     private bool leavingScene;
     private bool saveBeforeExit;
+    private UnityEngine.UI.Selectable[] primaryChoices;
+    private UnityEngine.UI.Selectable[] saveLoadChoices;
+    private GameObject selectionBeforePause;
 
     private bool InCombat => FindAnyObjectByType<CombatController>() is CombatController combat && combat.IsInCombat;
 
@@ -49,6 +52,8 @@ public class PauseMenuController : MonoBehaviour
             originalSortingOrder = menuCanvas.sortingOrder;
         }
         CreateBlurImage();
+        primaryChoices = primaryActions.GetComponentsInChildren<UnityEngine.UI.Selectable>(true);
+        saveLoadChoices = saveLoadActions.GetComponentsInChildren<UnityEngine.UI.Selectable>(true);
         ResetActions();
         saveSlots.Closed += OnSlotsClosed;
         saveSlots.Saved += OnSlotSaved;
@@ -59,15 +64,15 @@ public class PauseMenuController : MonoBehaviour
     private void OnEnable()
     {
         inputActions ??= new PlayerInputActions();
-        inputActions.Player.Pause.performed += OnPausePerformed;
-        inputActions.Player.Enable();
+        inputActions.Player.Pause.Enable();
+        inputActions.UI.Cancel.Enable();
     }
 
     private void OnDisable()
     {
         if (inputActions == null) return;
-        inputActions.Player.Pause.performed -= OnPausePerformed;
-        inputActions.Player.Disable();
+        inputActions.Player.Pause.Disable();
+        inputActions.UI.Cancel.Disable();
     }
 
     private void OnDestroy()
@@ -103,6 +108,14 @@ public class PauseMenuController : MonoBehaviour
     private void Update()
     {
         saveLoadButton.interactable = !InCombat && !pauseTransitionPending;
+        // Slot panels own Cancel, so one press cannot close two menu levels.
+        if ((inputActions.Player.Pause.WasPressedThisFrame() && !inputActions.UI.Cancel.WasPressedThisFrame())
+            || (inputActions.UI.Cancel.WasPressedThisFrame() && pauseMenu.activeSelf
+                && (saveSlots == null || !saveSlots.IsOpen)))
+            HandlePauseInput();
+        if (!pauseTransitionPending && pauseMenu.activeSelf && (saveSlots == null || !saveSlots.IsOpen))
+            UISelection.Ensure(showingSaveLoad ? saveLoadActions.transform : primaryActions.transform,
+                showingSaveLoad ? saveLoadChoices : primaryChoices);
     }
 
     public void ShowSaveLoad()
@@ -221,7 +234,7 @@ public class PauseMenuController : MonoBehaviour
         pauseTransitionPending = false;
     }
 
-    private void OnPausePerformed(InputAction.CallbackContext context)
+    private void HandlePauseInput()
     {
         if (pauseTransitionPending || leavingScene) return;
         if (saveSlots != null && saveSlots.IsOpen) { saveSlots.Back(); return; }
@@ -273,6 +286,8 @@ public class PauseMenuController : MonoBehaviour
     private IEnumerator PauseAfterEndOfFrame()
     {
         pauseTransitionPending = true;
+        selectionBeforePause = UnityEngine.EventSystems.EventSystem.current != null
+            ? UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject : null;
         yield return new WaitForEndOfFrame();
 
         CapturePausedScreen();
@@ -306,6 +321,9 @@ public class PauseMenuController : MonoBehaviour
         yield return FadeCanvasGroup(0f);
 
         SetPaused(false);
+        if (UnityEngine.EventSystems.EventSystem.current != null)
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
+                selectionBeforePause != null && selectionBeforePause.activeInHierarchy ? selectionBeforePause : null);
         pauseTransitionPending = false;
 
         if (quitAfterResume)

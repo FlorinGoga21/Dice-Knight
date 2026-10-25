@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-/// <summary>Controls the authored three-slot dialog; no UI objects are generated at runtime.</summary>
+/// <summary>Controls the authored three-slot dialog and its controller selection highlights.</summary>
 public sealed class SaveSlotPanel : MonoBehaviour
 {
     [SerializeField] private GameObject panelRoot;
@@ -26,7 +26,7 @@ public sealed class SaveSlotPanel : MonoBehaviour
     [SerializeField, Min(0f)] private float fadeDuration = 0.2f;
     [SerializeField] private bool inlineStartMenu;
 
-    [Header("Slot Text")]
+    [Header("---Slot Text---")]
     [SerializeField] private string newSlotAction = "New Game";
     [SerializeField] private string loadSlotAction = "Load";
     [SerializeField] private string unavailableSlotAction = "Unavailable";
@@ -46,6 +46,9 @@ public sealed class SaveSlotPanel : MonoBehaviour
     private bool pendingDelete;
     private GameObject previousSelection;
     private string[] labelTemplates;
+    private PlayerInputActions inputActions;
+    private UnityEngine.UI.Selectable[] panelChoices;
+    private UnityEngine.UI.Selectable[] confirmationChoices;
     public bool IsOpen => panelRoot != null && panelRoot.activeSelf;
     public bool IsTransitioning { get; private set; }
     public event Action Closed;
@@ -62,16 +65,64 @@ public sealed class SaveSlotPanel : MonoBehaviour
             int slot = i + 1;
             slotButtons[i].onClick.AddListener(() => SelectSlot(slot));
             deleteButtons[i].onClick.AddListener(() => RequestDelete(slot));
+            SetupDeleteFocus(slotButtons[i], deleteButtons[i]);
         }
         backButton.onClick.AddListener(Close);
         confirmButton.onClick.AddListener(ConfirmOverwrite);
         cancelButton.onClick.AddListener(HideConfirmation);
+        panelChoices = panelRoot.GetComponentsInChildren<UnityEngine.UI.Selectable>(true);
+        confirmationChoices = new UnityEngine.UI.Selectable[] { cancelButton, confirmButton };
+        var confirmNavigation = new UnityEngine.UI.Navigation { mode = UnityEngine.UI.Navigation.Mode.Explicit,
+            selectOnLeft = cancelButton, selectOnRight = cancelButton, selectOnUp = cancelButton, selectOnDown = cancelButton };
+        confirmButton.navigation = confirmNavigation;
+        confirmNavigation.selectOnLeft = confirmNavigation.selectOnRight = confirmNavigation.selectOnUp = confirmNavigation.selectOnDown = confirmButton;
+        cancelButton.navigation = confirmNavigation;
         panelRoot.SetActive(false);
     }
 
+    private static void SetupDeleteFocus(UnityEngine.UI.Button slot, UnityEngine.UI.Button delete)
+    {
+        var colors = delete.colors;
+        colors.selectedColor = colors.highlightedColor = new Color32(255, 75, 85, 255);
+        delete.colors = colors;
+        var pixelSlot = slot as HeyHeyThere.PixelUIFree.PixelButton;
+        var template = pixelSlot != null ? pixelSlot.focus as UnityEngine.UI.Image : null;
+        if (template == null) return;
+
+        var focusObject = new GameObject("Delete Selection Outline", typeof(RectTransform), typeof(UnityEngine.UI.Image));
+        focusObject.transform.SetParent(delete.transform, false);
+        var outline = focusObject.GetComponent<UnityEngine.UI.Image>();
+        outline.sprite = template.sprite;
+        outline.type = template.type;
+        outline.pixelsPerUnitMultiplier = template.pixelsPerUnitMultiplier;
+        outline.color = new Color32(255, 220, 60, 255);
+        outline.raycastTarget = false;
+        outline.rectTransform.anchorMin = Vector2.zero;
+        outline.rectTransform.anchorMax = Vector2.one;
+        outline.rectTransform.offsetMin = Vector2.zero;
+        outline.rectTransform.offsetMax = Vector2.zero;
+        outline.enabled = false;
+        var focus = delete.GetComponent<ButtonHoverFocus>();
+        if (focus == null) focus = delete.gameObject.AddComponent<ButtonHoverFocus>();
+        focus.Initialize(delete, outline);
+    }
+
+    private void OnEnable()
+    {
+        inputActions ??= new PlayerInputActions();
+        inputActions.UI.Cancel.Enable();
+    }
+
+    private void OnDisable() => inputActions?.UI.Cancel.Disable();
+
+    private void OnDestroy() => inputActions?.Dispose();
+
     private void Update()
     {
-        if (IsOpen && pauseOwner == null && Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (!IsOpen || IsTransitioning) return;
+        UISelection.Ensure(confirmationRoot.activeSelf ? confirmationRoot.transform : panelRoot.transform,
+            confirmationRoot.activeSelf ? confirmationChoices : panelChoices);
+        if (inputActions.UI.Cancel.WasPressedThisFrame())
             Back();
     }
 
@@ -114,6 +165,31 @@ public sealed class SaveSlotPanel : MonoBehaviour
             bool inCombat = FindAnyObjectByType<CombatController>() is CombatController combat && combat.IsInCombat;
             slotButtons[i].interactable = mode == Mode.Save ? manager.CanSave(out _) : mode == Mode.Start ? !occupied || valid : valid && !inCombat;
         }
+        for (int i = 0; i < slotButtons.Length; i++)
+        {
+            var navigation = new UnityEngine.UI.Navigation { mode = UnityEngine.UI.Navigation.Mode.Explicit };
+            navigation.selectOnUp = FindRowChoice(i - 1, -1, false);
+            navigation.selectOnDown = FindRowChoice(i + 1, 1, false);
+            navigation.selectOnRight = deleteButtons[i].isActiveAndEnabled && deleteButtons[i].interactable ? deleteButtons[i] : null;
+            slotButtons[i].navigation = navigation;
+            navigation.selectOnLeft = slotButtons[i].interactable ? slotButtons[i] : null;
+            navigation.selectOnRight = null;
+            navigation.selectOnUp = FindRowChoice(i - 1, -1, true);
+            navigation.selectOnDown = FindRowChoice(i + 1, 1, true);
+            deleteButtons[i].navigation = navigation;
+        }
+    }
+
+    private UnityEngine.UI.Selectable FindRowChoice(int row, int direction, bool preferDelete)
+    {
+        for (int i = row; i >= 0 && i < slotButtons.Length; i += direction)
+        {
+            bool canDelete = deleteButtons[i].gameObject.activeSelf && deleteButtons[i].interactable;
+            if (preferDelete && canDelete) return deleteButtons[i];
+            if (slotButtons[i].interactable) return slotButtons[i];
+            if (canDelete) return deleteButtons[i];
+        }
+        return null;
     }
 
     private string SlotText(string template, int slot, bool occupied, SaveGameData data, string detail)

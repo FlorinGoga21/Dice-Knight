@@ -211,6 +211,10 @@ public sealed partial class RunMapController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale > 0f && !IsBusy && !HeyHeyThere.SceneTransitionsFree.SceneTransition.IsPlaying
+            && mapChoices != null)
+            UISelection.Ensure(graphRoot, mapChoices);
+
         if (!settingsDirty || playerMarker == null)
             return;
 

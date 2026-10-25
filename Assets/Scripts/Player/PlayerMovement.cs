@@ -82,7 +82,7 @@ public partial class PlayerController
 
     private void HandleAttack()
     {
-        if (Mouse.current != null
+        if (inputActions.Player.Attack.activeControl?.device is Mouse && Mouse.current != null
             && EventSystem.current != null
             && EventSystem.current.IsPointerOverGameObject(Mouse.current.deviceId))
         {

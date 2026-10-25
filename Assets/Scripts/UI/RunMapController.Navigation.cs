@@ -5,6 +5,7 @@ using RoomType = RunMapState.RoomType;
 
 public sealed partial class RunMapController
 {
+    private UnityEngine.UI.Selectable[] mapChoices;
     private void SelectRoom(RoomNode node)
     {
         if (runFinished || isMoving || isEnteringRoom || RunMapState.RoomInProgress || SceneTransition.IsPlaying || !IsReachable(node))
@@ -70,6 +71,16 @@ public sealed partial class RunMapController
     {
         foreach (RoomNode node in nodes)
             node.button.interactable = !runFinished && !isMoving && !isEnteringRoom && !RunMapState.RoomInProgress && IsReachable(node);
+        // Only the next reachable column participates in directional navigation.
+        var available = nodes.FindAll(node => node.button.interactable);
+        available.Sort((a, b) => a.row.CompareTo(b.row));
+        for (int i = 0; i < available.Count; i++)
+        {
+            var navigation = new UnityEngine.UI.Navigation { mode = UnityEngine.UI.Navigation.Mode.Explicit };
+            navigation.selectOnDown = i > 0 ? available[i - 1].button : null;
+            navigation.selectOnUp = i + 1 < available.Count ? available[i + 1].button : null;
+            available[i].button.navigation = navigation;
+        }
         foreach (RoomConnection connection in connections)
             RefreshConnection(connection);
     }

@@ -83,11 +83,12 @@ public sealed partial class RunMapController
             ApplyNodeAppearance(node);
 
             room.GetComponent<UnityEngine.UI.Button>().targetGraphic = background;
-            room.GetComponent<UnityEngine.UI.Button>().transition = UnityEngine.UI.Selectable.Transition.None;
+            room.GetComponent<UnityEngine.UI.Button>().transition = UnityEngine.UI.Selectable.Transition.ColorTint;
             node.button = room.GetComponent<UnityEngine.UI.Button>();
             node.button.onClick.AddListener(() => SelectRoom(node));
 
         }
+        mapChoices = nodes.ConvertAll(node => (UnityEngine.UI.Selectable)node.button).ToArray();
     }
 
     private void ApplyNodeAppearance(RoomNode node)
@@ -96,7 +97,14 @@ public sealed partial class RunMapController
         float iconSize = node.type == RoomType.Boss ? bossIconSize : nodeIconSize;
         node.rect.sizeDelta = Vector2.one * diameter;
         node.rect.anchoredPosition = PositionFor(node);
-        node.rect.GetComponent<UnityEngine.UI.Image>().color = nodeBackgroundColor;
+        node.rect.GetComponent<UnityEngine.UI.Image>().color = Color.white;
+        var colors = node.rect.GetComponent<UnityEngine.UI.Button>().colors;
+        colors.normalColor = nodeBackgroundColor;
+        colors.disabledColor = nodeBackgroundColor;
+        colors.highlightedColor = colors.selectedColor = new Color32(255, 215, 64, 255);
+        colors.pressedColor = new Color32(255, 240, 160, 255);
+        colors.fadeDuration = 0.08f;
+        node.rect.GetComponent<UnityEngine.UI.Button>().colors = colors;
         node.icon.rectTransform.sizeDelta = Vector2.one * iconSize;
         node.icon.color = roomIconColor;
     }

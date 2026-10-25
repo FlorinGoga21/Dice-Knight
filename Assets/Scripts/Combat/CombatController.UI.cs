@@ -51,6 +51,13 @@ public sealed partial class CombatController
         UnityEngine.UI.Button rollButtonComponent = rollButton != null
             ? rollButton.GetComponent<UnityEngine.UI.Button>()
             : null;
+        // Combat uses direct Roll/Heal/Block actions. Keeping these out of Submit
+        // navigation prevents South from submitting a different, previously clicked action.
+        foreach (var button in new[] { rollButtonComponent, blockButton, healingPotionButton })
+        {
+            if (button == null) continue;
+            button.navigation = new UnityEngine.UI.Navigation { mode = UnityEngine.UI.Navigation.Mode.None };
+        }
         HeyHeyThere.PixelUIFree.PixelButton rollPixelButton = rollButtonComponent
             as HeyHeyThere.PixelUIFree.PixelButton;
         AttachButtonHoverFocus(

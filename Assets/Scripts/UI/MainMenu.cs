@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [Header("Menu")]
+    [Header("---Menu---")]
     [SerializeField] private CanvasGroup uiGroup;
     [SerializeField] private RectTransform logo;
     [SerializeField] private Button startButton;
@@ -28,6 +28,7 @@ public class MainMenu : MonoBehaviour
     private bool isLeavingMenu;
     private bool isSwitchingButtons;
     private bool choosingSlot;
+    private UnityEngine.UI.Selectable[] menuChoices;
 
     private void Awake()
     {
@@ -44,6 +45,7 @@ public class MainMenu : MonoBehaviour
             startButton = FindInChildren<Button>("StartButton");
         if (exitButton == null)
             exitButton = FindInChildren<Button>("ExitButton");
+        menuChoices = new UnityEngine.UI.Selectable[] { startButton, exitButton };
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
@@ -80,6 +82,9 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
+        if (!isLeavingMenu && !isSwitchingButtons && !choosingSlot && uiGroup.interactable)
+            UISelection.Ensure(mainButtons.transform, menuChoices);
+
         if (logo == null || isLeavingMenu)
             return;
 
