@@ -1,0 +1,826 @@
+{
+  "sampleRate": 44100,
+  "music": [
+    {
+      "field": "mainMenuMusic",
+      "path": "Assets/Audio/Music/MUS_MainMenu_KnightsFortune.wav",
+      "bpm": 96,
+      "bars": 16
+    },
+    {
+      "field": "mapMusic",
+      "path": "Assets/Audio/Music/MUS_Map_ForkedPaths.wav",
+      "bpm": 104,
+      "bars": 16
+    },
+    {
+      "field": "roomMusic",
+      "path": "Assets/Audio/Music/MUS_Forest_WhisperingBoughs.wav",
+      "bpm": 84,
+      "bars": 16
+    },
+    {
+      "field": "combatMusic",
+      "path": "Assets/Audio/Music/MUS_Combat_RollOfSteel.wav",
+      "bpm": 136,
+      "bars": 16
+    },
+    {
+      "field": "bossMusic",
+      "path": "Assets/Audio/Music/MUS_Boss_DemonsWager.wav",
+      "bpm": 148,
+      "bars": 16
+    },
+    {
+      "field": "shopMusic",
+      "path": "Assets/Audio/Music/MUS_Shop_CopperAndCloth.wav",
+      "bpm": 112,
+      "bars": 16
+    },
+    {
+      "field": "treasureMusic",
+      "path": "Assets/Audio/Music/MUS_Treasure_GlimmeringChest.wav",
+      "bpm": 88,
+      "bars": 16
+    },
+    {
+      "field": "eventMusic",
+      "path": "Assets/Audio/Music/MUS_Event_StrangeCrossroads.wav",
+      "bpm": 108,
+      "bars": 16
+    }
+  ],
+  "shared": [
+    {
+      "field": "uiFocus",
+      "path": "Assets/Audio/SFX/UI/SFX_Focus.wav"
+    },
+    {
+      "field": "uiConfirm",
+      "path": "Assets/Audio/SFX/UI/SFX_Confirm.wav"
+    },
+    {
+      "field": "uiBack",
+      "path": "Assets/Audio/SFX/UI/SFX_Back.wav"
+    },
+    {
+      "field": "settingChanged",
+      "path": "Assets/Audio/SFX/UI/SFX_SettingTick.wav"
+    },
+    {
+      "field": "pause",
+      "path": "Assets/Audio/SFX/UI/SFX_Pause.wav"
+    },
+    {
+      "field": "resume",
+      "path": "Assets/Audio/SFX/UI/SFX_Resume.wav"
+    },
+    {
+      "field": "saveSuccess",
+      "path": "Assets/Audio/SFX/UI/SFX_SaveSuccess.wav"
+    },
+    {
+      "field": "loadSuccess",
+      "path": "Assets/Audio/SFX/UI/SFX_LoadSuccess.wav"
+    },
+    {
+      "field": "deleteSave",
+      "path": "Assets/Audio/SFX/UI/SFX_DeleteSave.wav"
+    },
+    {
+      "field": "encounterStarted",
+      "path": "Assets/Audio/SFX/Combat/SFX_EncounterStart.wav"
+    },
+    {
+      "field": "encounterWon",
+      "path": "Assets/Audio/SFX/Combat/SFX_EncounterVictory.wav"
+    },
+    {
+      "field": "turnStarted",
+      "path": "Assets/Audio/SFX/Combat/SFX_YourTurn.wav"
+    },
+    {
+      "field": "diceRoll",
+      "path": "Assets/Audio/SFX/Combat/SFX_DiceWoodRattle.wav"
+    },
+    {
+      "field": "diceSettled",
+      "path": "Assets/Audio/SFX/Combat/SFX_DiceSettle.wav"
+    },
+    {
+      "field": "rollWin",
+      "path": "Assets/Audio/SFX/Combat/SFX_RollWin.wav"
+    },
+    {
+      "field": "rollLose",
+      "path": "Assets/Audio/SFX/Combat/SFX_RollLose.wav"
+    },
+    {
+      "field": "rollTie",
+      "path": "Assets/Audio/SFX/Combat/SFX_RollTie.wav"
+    },
+    {
+      "field": "blockRaised",
+      "path": "Assets/Audio/SFX/Combat/SFX_ShieldRaise.wav"
+    },
+    {
+      "field": "blockImpact",
+      "path": "Assets/Audio/SFX/Combat/SFX_ShieldImpact.wav"
+    },
+    {
+      "field": "healingPotion",
+      "path": "Assets/Audio/SFX/Combat/SFX_PotionBubbles.wav"
+    },
+    {
+      "field": "coinPickup",
+      "path": "Assets/Audio/SFX/World/SFX_CoinPickup.wav"
+    },
+    {
+      "field": "mapTravel",
+      "path": "Assets/Audio/SFX/World/SFX_MapTravel.wav"
+    },
+    {
+      "field": "roomEntered",
+      "path": "Assets/Audio/SFX/World/SFX_RoomEntered.wav"
+    },
+    {
+      "field": "roomCompleted",
+      "path": "Assets/Audio/SFX/World/SFX_RoomComplete.wav"
+    }
+  ],
+  "characters": [
+    {
+      "prefab": "Assets/Art/Player/Knight.prefab",
+      "fields": {
+        "footsteps": [
+          "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_01.wav",
+          "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_02.wav",
+          "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_03.wav",
+          "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_04.wav"
+        ],
+        "jump": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Jump.wav",
+        "land": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Land.wav",
+        "attack": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Attack.wav",
+        "hurt": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Hurt.wav",
+        "death": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Death.wav"
+      }
+    },
+    {
+      "prefab": "Assets/Prefabs/Enemies/Skeleton.prefab",
+      "fields": {
+        "footsteps": [
+          "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_01.wav",
+          "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_02.wav",
+          "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_03.wav",
+          "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_04.wav"
+        ],
+        "attack": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Attack.wav",
+        "hurt": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Hurt.wav",
+        "death": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Death.wav"
+      }
+    },
+    {
+      "prefab": "Assets/Prefabs/Enemies/Zombie.prefab",
+      "fields": {
+        "footsteps": [
+          "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_01.wav",
+          "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_02.wav",
+          "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_03.wav",
+          "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_04.wav"
+        ],
+        "attack": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Attack.wav",
+        "hurt": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Hurt.wav",
+        "death": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Death.wav"
+      }
+    },
+    {
+      "prefab": "Assets/Prefabs/Enemies/Slime.prefab",
+      "fields": {
+        "footsteps": [
+          "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_01.wav",
+          "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_02.wav",
+          "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_03.wav",
+          "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_04.wav"
+        ],
+        "attack": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Attack.wav",
+        "hurt": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Hurt.wav",
+        "death": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Death.wav"
+      }
+    },
+    {
+      "prefab": "Assets/Prefabs/Enemies/DiceDemon.prefab",
+      "fields": {
+        "attack": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Attack.wav",
+        "hurt": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Hurt.wav",
+        "death": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Death.wav",
+        "projectileLaunch": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_ProjectileLaunch.wav",
+        "projectileImpact": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_ProjectileImpact.wav"
+      }
+    }
+  ],
+  "assets": [
+    {
+      "path": "Assets/Audio/Music/MUS_MainMenu_KnightsFortune.wav",
+      "category": "Music",
+      "loop": true,
+      "duration": 40.0,
+      "peak": 0.51613,
+      "rms": 0.105,
+      "channels": 2
+    },
+    {
+      "path": "Assets/Audio/Music/MUS_Map_ForkedPaths.wav",
+      "category": "Music",
+      "loop": true,
+      "duration": 36.9231,
+      "peak": 0.56139,
+      "rms": 0.105,
+      "channels": 2
+    },
+    {
+      "path": "Assets/Audio/Music/MUS_Forest_WhisperingBoughs.wav",
+      "category": "Music",
+      "loop": true,
+      "duration": 45.7143,
+      "peak": 0.55117,
+      "rms": 0.105,
+      "channels": 2
+    },
+    {
+      "path": "Assets/Audio/Music/MUS_Combat_RollOfSteel.wav",
+      "category": "Music",
+      "loop": true,
+      "duration": 28.2353,
+      "peak": 0.82,
+      "rms": 0.10978,
+      "channels": 2
+    },
+    {
+      "path": "Assets/Audio/Music/MUS_Boss_DemonsWager.wav",
+      "category": "Music",
+      "loop": true,
+      "duration": 25.9459,
+      "peak": 0.82,
+      "rms": 0.11519,
+      "channels": 2
+    },
+    {
+      "path": "Assets/Audio/Music/MUS_Shop_CopperAndCloth.wav",
+      "category": "Music",
+      "loop": true,
+      "duration": 34.2857,
+      "peak": 0.60968,
+      "rms": 0.105,
+      "channels": 2
+    },
+    {
+      "path": "Assets/Audio/Music/MUS_Treasure_GlimmeringChest.wav",
+      "category": "Music",
+      "loop": true,
+      "duration": 43.6364,
+      "peak": 0.60628,
+      "rms": 0.105,
+      "channels": 2
+    },
+    {
+      "path": "Assets/Audio/Music/MUS_Event_StrangeCrossroads.wav",
+      "category": "Music",
+      "loop": true,
+      "duration": 35.5556,
+      "peak": 0.54096,
+      "rms": 0.105,
+      "channels": 2
+    },
+    {
+      "path": "Assets/Audio/SFX/UI/SFX_Focus.wav",
+      "category": "UI",
+      "loop": false,
+      "duration": 0.085,
+      "peak": 0.17922,
+      "rms": 0.065,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/UI/SFX_Confirm.wav",
+      "category": "UI",
+      "loop": false,
+      "duration": 0.245,
+      "peak": 0.30618,
+      "rms": 0.1,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/UI/SFX_Back.wav",
+      "category": "UI",
+      "loop": false,
+      "duration": 0.225,
+      "peak": 0.27188,
+      "rms": 0.085,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/UI/SFX_SettingTick.wav",
+      "category": "UI",
+      "loop": false,
+      "duration": 0.035,
+      "peak": 0.13273,
+      "rms": 0.055,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/UI/SFX_Pause.wav",
+      "category": "UI",
+      "loop": false,
+      "duration": 0.33,
+      "peak": 0.31871,
+      "rms": 0.09,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/UI/SFX_Resume.wav",
+      "category": "UI",
+      "loop": false,
+      "duration": 0.33,
+      "peak": 0.33044,
+      "rms": 0.09,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/UI/SFX_SaveSuccess.wav",
+      "category": "UI",
+      "loop": false,
+      "duration": 0.65,
+      "peak": 0.52196,
+      "rms": 0.11,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/UI/SFX_LoadSuccess.wav",
+      "category": "UI",
+      "loop": false,
+      "duration": 0.73,
+      "peak": 0.55066,
+      "rms": 0.11,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/UI/SFX_DeleteSave.wav",
+      "category": "UI",
+      "loop": false,
+      "duration": 0.42,
+      "peak": 0.43163,
+      "rms": 0.1,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_EncounterStart.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.69,
+      "peak": 0.82,
+      "rms": 0.11104,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_EncounterVictory.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 1.11,
+      "peak": 0.62736,
+      "rms": 0.14,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_YourTurn.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.285,
+      "peak": 0.38759,
+      "rms": 0.095,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_DiceWoodRattle.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.65,
+      "peak": 0.82,
+      "rms": 0.12731,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_DiceSettle.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.24,
+      "peak": 0.82,
+      "rms": 0.11841,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_RollWin.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.4,
+      "peak": 0.47531,
+      "rms": 0.12,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_RollLose.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.4,
+      "peak": 0.4574,
+      "rms": 0.12,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_RollTie.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.31,
+      "peak": 0.32097,
+      "rms": 0.1,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_ShieldRaise.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.23,
+      "peak": 0.82,
+      "rms": 0.13984,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_ShieldImpact.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.48,
+      "peak": 0.82,
+      "rms": 0.0869,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Combat/SFX_PotionBubbles.wav",
+      "category": "Combat",
+      "loop": false,
+      "duration": 0.8,
+      "peak": 0.70966,
+      "rms": 0.13,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/World/SFX_CoinPickup.wav",
+      "category": "World",
+      "loop": false,
+      "duration": 0.265,
+      "peak": 0.28945,
+      "rms": 0.09,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/World/SFX_MapTravel.wav",
+      "category": "World",
+      "loop": false,
+      "duration": 0.47,
+      "peak": 0.34032,
+      "rms": 0.1,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/World/SFX_RoomEntered.wav",
+      "category": "World",
+      "loop": false,
+      "duration": 0.7,
+      "peak": 0.42241,
+      "rms": 0.11,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/World/SFX_RoomComplete.wav",
+      "category": "World",
+      "loop": false,
+      "duration": 0.875,
+      "peak": 0.57872,
+      "rms": 0.13,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_01.wav",
+      "category": "Knight",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.75153,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_02.wav",
+      "category": "Knight",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.75493,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_03.wav",
+      "category": "Knight",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.78309,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_04.wav",
+      "category": "Knight",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.82,
+      "rms": 0.09287,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Jump.wav",
+      "category": "Knight",
+      "loop": false,
+      "duration": 0.22,
+      "peak": 0.50627,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Land.wav",
+      "category": "Knight",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.82,
+      "rms": 0.11645,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Attack.wav",
+      "category": "Knight",
+      "loop": false,
+      "duration": 0.32,
+      "peak": 0.82,
+      "rms": 0.13358,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Hurt.wav",
+      "category": "Knight",
+      "loop": false,
+      "duration": 0.27,
+      "peak": 0.62294,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Death.wav",
+      "category": "Knight",
+      "loop": false,
+      "duration": 0.7,
+      "peak": 0.82,
+      "rms": 0.14562,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_01.wav",
+      "category": "Skeleton",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.38301,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_02.wav",
+      "category": "Skeleton",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.43752,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_03.wav",
+      "category": "Skeleton",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.38595,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_04.wav",
+      "category": "Skeleton",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.44183,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Attack.wav",
+      "category": "Skeleton",
+      "loop": false,
+      "duration": 0.29,
+      "peak": 0.82,
+      "rms": 0.13022,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Hurt.wav",
+      "category": "Skeleton",
+      "loop": false,
+      "duration": 0.23,
+      "peak": 0.80341,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Death.wav",
+      "category": "Skeleton",
+      "loop": false,
+      "duration": 0.8,
+      "peak": 0.82,
+      "rms": 0.14278,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_01.wav",
+      "category": "Zombie",
+      "loop": false,
+      "duration": 0.24,
+      "peak": 0.60604,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_02.wav",
+      "category": "Zombie",
+      "loop": false,
+      "duration": 0.24,
+      "peak": 0.68304,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_03.wav",
+      "category": "Zombie",
+      "loop": false,
+      "duration": 0.24,
+      "peak": 0.71893,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_04.wav",
+      "category": "Zombie",
+      "loop": false,
+      "duration": 0.24,
+      "peak": 0.704,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Attack.wav",
+      "category": "Zombie",
+      "loop": false,
+      "duration": 0.45,
+      "peak": 0.67526,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Hurt.wav",
+      "category": "Zombie",
+      "loop": false,
+      "duration": 0.42,
+      "peak": 0.6696,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Death.wav",
+      "category": "Zombie",
+      "loop": false,
+      "duration": 1.05,
+      "peak": 0.82,
+      "rms": 0.1552,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_01.wav",
+      "category": "Slime",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.55673,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_02.wav",
+      "category": "Slime",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.57038,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_03.wav",
+      "category": "Slime",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.49881,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_04.wav",
+      "category": "Slime",
+      "loop": false,
+      "duration": 0.17,
+      "peak": 0.53558,
+      "rms": 0.105,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Attack.wav",
+      "category": "Slime",
+      "loop": false,
+      "duration": 0.3,
+      "peak": 0.6465,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Hurt.wav",
+      "category": "Slime",
+      "loop": false,
+      "duration": 0.24,
+      "peak": 0.65359,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Death.wav",
+      "category": "Slime",
+      "loop": false,
+      "duration": 0.7,
+      "peak": 0.74872,
+      "rms": 0.17,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Attack.wav",
+      "category": "DiceDemon",
+      "loop": false,
+      "duration": 0.42,
+      "peak": 0.69277,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Hurt.wav",
+      "category": "DiceDemon",
+      "loop": false,
+      "duration": 0.37,
+      "peak": 0.7207,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Death.wav",
+      "category": "DiceDemon",
+      "loop": false,
+      "duration": 1.25,
+      "peak": 0.82,
+      "rms": 0.13925,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_ProjectileLaunch.wav",
+      "category": "DiceDemon",
+      "loop": false,
+      "duration": 0.48,
+      "peak": 0.8068,
+      "rms": 0.15,
+      "channels": 1
+    },
+    {
+      "path": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_ProjectileImpact.wav",
+      "category": "DiceDemon",
+      "loop": false,
+      "duration": 0.65,
+      "peak": 0.7928,
+      "rms": 0.15,
+      "channels": 1
+    }
+  ]
+}

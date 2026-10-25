@@ -176,39 +176,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c5d6387f524a44496651c715006074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameAudio
-  mainMenuMusic: {fileID: 0}
-  mapMusic: {fileID: 0}
-  roomMusic: {fileID: 0}
-  combatMusic: {fileID: 0}
-  bossMusic: {fileID: 0}
-  shopMusic: {fileID: 0}
-  treasureMusic: {fileID: 0}
-  eventMusic: {fileID: 0}
+  mainMenuMusic: {fileID: 8300000, guid: 1d83fede8724f7b48ac5e6e4a3f04127, type: 3}
+  mapMusic: {fileID: 8300000, guid: 0fcd108ec4038d440864d553dac8a255, type: 3}
+  roomMusic: {fileID: 8300000, guid: 56810f6babb62754c8fd852970dad0f7, type: 3}
+  combatMusic: {fileID: 8300000, guid: b2d619e573f1dbe41aedc537f5ad9351, type: 3}
+  bossMusic: {fileID: 8300000, guid: 1fc607668afe983458c0c1ae1e489f0d, type: 3}
+  shopMusic: {fileID: 8300000, guid: 699c8e3980f431f44a3a5ecfbb767da3, type: 3}
+  treasureMusic: {fileID: 8300000, guid: a0e2a0349b110804580b1b7fd0e3eefd, type: 3}
+  eventMusic: {fileID: 8300000, guid: af7b3efcf62551a4e9581a458f6943b8, type: 3}
   musicFadeDuration: 0.4
-  uiFocus: {fileID: 0}
-  uiConfirm: {fileID: 0}
-  uiBack: {fileID: 0}
-  settingChanged: {fileID: 0}
-  pause: {fileID: 0}
-  resume: {fileID: 0}
-  saveSuccess: {fileID: 0}
-  loadSuccess: {fileID: 0}
-  deleteSave: {fileID: 0}
-  encounterStarted: {fileID: 0}
-  encounterWon: {fileID: 0}
-  turnStarted: {fileID: 0}
-  diceRoll: {fileID: 0}
-  diceSettled: {fileID: 0}
-  rollWin: {fileID: 0}
-  rollLose: {fileID: 0}
-  rollTie: {fileID: 0}
-  blockRaised: {fileID: 0}
-  blockImpact: {fileID: 0}
-  healingPotion: {fileID: 0}
-  coinPickup: {fileID: 0}
-  mapTravel: {fileID: 0}
-  roomEntered: {fileID: 0}
-  roomCompleted: {fileID: 0}
+  uiFocus: {fileID: 8300000, guid: cad32853ecd0cde47bbb55ea18f42f35, type: 3}
+  uiConfirm: {fileID: 8300000, guid: 2e686b980b9360345ae99c1b715993bd, type: 3}
+  uiBack: {fileID: 8300000, guid: 4c7387462131d4144bf744fbea5f61fc, type: 3}
+  settingChanged: {fileID: 8300000, guid: 005fbef71b21baf43a922288d3f9e8d0, type: 3}
+  pause: {fileID: 8300000, guid: aa2864a272c24ae4baf7df4046ab19b7, type: 3}
+  resume: {fileID: 8300000, guid: 2e8949729f74c814c985a48a85592884, type: 3}
+  saveSuccess: {fileID: 8300000, guid: c56cac791d39dad42ab1b5291311d2b1, type: 3}
+  loadSuccess: {fileID: 8300000, guid: e04d5caa611c3cc4da7a8b734de1c05a, type: 3}
+  deleteSave: {fileID: 8300000, guid: 4b601b179f09f1e4581b541cc3c7b3ff, type: 3}
+  encounterStarted: {fileID: 8300000, guid: 2abdb9af1f911904eb98e40a9997ab72, type: 3}
+  encounterWon: {fileID: 8300000, guid: cb1915eec99690845852307a4cf5d5c5, type: 3}
+  turnStarted: {fileID: 8300000, guid: ea43284852afff74aaa9d7c26286654c, type: 3}
+  diceRoll: {fileID: 8300000, guid: a71714e5834b73f4a8dbb18acf42a5ae, type: 3}
+  diceSettled: {fileID: 8300000, guid: a7ae9dd917e30a1419ff89680ffcfb62, type: 3}
+  rollWin: {fileID: 8300000, guid: 265f2895eba02cb49b1acafdfb1301e4, type: 3}
+  rollLose: {fileID: 8300000, guid: 51fdadba79b2ebc42b59aab5b06c2b65, type: 3}
+  rollTie: {fileID: 8300000, guid: fc4311352f0534b44a0292283dd4cfe3, type: 3}
+  blockRaised: {fileID: 8300000, guid: 1a0888c0f52c6e5428a3f4cc5f164ac7, type: 3}
+  blockImpact: {fileID: 8300000, guid: f7379acaf17b89f43a4ba86485ed3923, type: 3}
+  healingPotion: {fileID: 8300000, guid: c2a9e5273559ce84b97195e5d3a14a3b, type: 3}
+  coinPickup: {fileID: 8300000, guid: d2e724aa9abd46e42843e1533d8d54f0, type: 3}
+  mapTravel: {fileID: 8300000, guid: c0bcf3c8145eeaf46a15f5ebb933d7a7, type: 3}
+  roomEntered: {fileID: 8300000, guid: c970143c30e31a84a8c687eef6e50505, type: 3}
+  roomCompleted: {fileID: 8300000, guid: db4303b01fb8e5a4ba550b008ff5a43f, type: 3}
   musicSource: {fileID: 1658005659828418885}
   gameplaySource: {fileID: 105168692348000185}
   uiSource: {fileID: 9094805376901590160}

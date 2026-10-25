@@ -393,11 +393,11 @@ MonoBehaviour:
   footsteps: []
   jump: {fileID: 0}
   land: {fileID: 0}
-  attack: {fileID: 0}
-  hurt: {fileID: 0}
-  death: {fileID: 0}
-  projectileLaunch: {fileID: 0}
-  projectileImpact: {fileID: 0}
+  attack: {fileID: 8300000, guid: 8190f5d33097d9643bdfeb9a49975a25, type: 3}
+  hurt: {fileID: 8300000, guid: 86b245bbb6e144542be720e2ddd1e20e, type: 3}
+  death: {fileID: 8300000, guid: 247f8902bee8ac5469548088f7dbf0d5, type: 3}
+  projectileLaunch: {fileID: 8300000, guid: b5d3c9feb9eced741b14c9f0c2d297a6, type: 3}
+  projectileImpact: {fileID: 8300000, guid: 16d8b4ba8d382304298d950937a5abd3, type: 3}
   volume: 1
   footstepVolume: 0.45
   footstepInterval: 0.28

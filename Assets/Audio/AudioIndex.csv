@@ -1,0 +1,68 @@
+Category,Inspector field,Audio file
+Music,mainMenuMusic,Assets/Audio/Music/MUS_MainMenu_KnightsFortune.wav
+Music,mapMusic,Assets/Audio/Music/MUS_Map_ForkedPaths.wav
+Music,roomMusic,Assets/Audio/Music/MUS_Forest_WhisperingBoughs.wav
+Music,combatMusic,Assets/Audio/Music/MUS_Combat_RollOfSteel.wav
+Music,bossMusic,Assets/Audio/Music/MUS_Boss_DemonsWager.wav
+Music,shopMusic,Assets/Audio/Music/MUS_Shop_CopperAndCloth.wav
+Music,treasureMusic,Assets/Audio/Music/MUS_Treasure_GlimmeringChest.wav
+Music,eventMusic,Assets/Audio/Music/MUS_Event_StrangeCrossroads.wav
+UI,uiFocus,Assets/Audio/SFX/UI/SFX_Focus.wav
+UI,uiConfirm,Assets/Audio/SFX/UI/SFX_Confirm.wav
+UI,uiBack,Assets/Audio/SFX/UI/SFX_Back.wav
+UI,settingChanged,Assets/Audio/SFX/UI/SFX_SettingTick.wav
+UI,pause,Assets/Audio/SFX/UI/SFX_Pause.wav
+UI,resume,Assets/Audio/SFX/UI/SFX_Resume.wav
+UI,saveSuccess,Assets/Audio/SFX/UI/SFX_SaveSuccess.wav
+UI,loadSuccess,Assets/Audio/SFX/UI/SFX_LoadSuccess.wav
+UI,deleteSave,Assets/Audio/SFX/UI/SFX_DeleteSave.wav
+Combat,encounterStarted,Assets/Audio/SFX/Combat/SFX_EncounterStart.wav
+Combat,encounterWon,Assets/Audio/SFX/Combat/SFX_EncounterVictory.wav
+Combat,turnStarted,Assets/Audio/SFX/Combat/SFX_YourTurn.wav
+Combat,diceRoll,Assets/Audio/SFX/Combat/SFX_DiceWoodRattle.wav
+Combat,diceSettled,Assets/Audio/SFX/Combat/SFX_DiceSettle.wav
+Combat,rollWin,Assets/Audio/SFX/Combat/SFX_RollWin.wav
+Combat,rollLose,Assets/Audio/SFX/Combat/SFX_RollLose.wav
+Combat,rollTie,Assets/Audio/SFX/Combat/SFX_RollTie.wav
+Combat,blockRaised,Assets/Audio/SFX/Combat/SFX_ShieldRaise.wav
+Combat,blockImpact,Assets/Audio/SFX/Combat/SFX_ShieldImpact.wav
+Combat,healingPotion,Assets/Audio/SFX/Combat/SFX_PotionBubbles.wav
+World,coinPickup,Assets/Audio/SFX/World/SFX_CoinPickup.wav
+World,mapTravel,Assets/Audio/SFX/World/SFX_MapTravel.wav
+World,roomEntered,Assets/Audio/SFX/World/SFX_RoomEntered.wav
+World,roomCompleted,Assets/Audio/SFX/World/SFX_RoomComplete.wav
+Knight,Knight.prefab: footsteps,Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_01.wav
+Knight,Knight.prefab: footsteps,Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_02.wav
+Knight,Knight.prefab: footsteps,Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_03.wav
+Knight,Knight.prefab: footsteps,Assets/Audio/SFX/Characters/Knight/SFX_Knight_Footstep_04.wav
+Knight,Knight.prefab: jump,Assets/Audio/SFX/Characters/Knight/SFX_Knight_Jump.wav
+Knight,Knight.prefab: land,Assets/Audio/SFX/Characters/Knight/SFX_Knight_Land.wav
+Knight,Knight.prefab: attack,Assets/Audio/SFX/Characters/Knight/SFX_Knight_Attack.wav
+Knight,Knight.prefab: hurt,Assets/Audio/SFX/Characters/Knight/SFX_Knight_Hurt.wav
+Knight,Knight.prefab: death,Assets/Audio/SFX/Characters/Knight/SFX_Knight_Death.wav
+Skeleton,Skeleton.prefab: footsteps,Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_01.wav
+Skeleton,Skeleton.prefab: footsteps,Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_02.wav
+Skeleton,Skeleton.prefab: footsteps,Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_03.wav
+Skeleton,Skeleton.prefab: footsteps,Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Footstep_04.wav
+Skeleton,Skeleton.prefab: attack,Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Attack.wav
+Skeleton,Skeleton.prefab: hurt,Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Hurt.wav
+Skeleton,Skeleton.prefab: death,Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Death.wav
+Zombie,Zombie.prefab: footsteps,Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_01.wav
+Zombie,Zombie.prefab: footsteps,Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_02.wav
+Zombie,Zombie.prefab: footsteps,Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_03.wav
+Zombie,Zombie.prefab: footsteps,Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Footstep_04.wav
+Zombie,Zombie.prefab: attack,Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Attack.wav
+Zombie,Zombie.prefab: hurt,Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Hurt.wav
+Zombie,Zombie.prefab: death,Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Death.wav
+Slime,Slime.prefab: footsteps,Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_01.wav
+Slime,Slime.prefab: footsteps,Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_02.wav
+Slime,Slime.prefab: footsteps,Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_03.wav
+Slime,Slime.prefab: footsteps,Assets/Audio/SFX/Characters/Slime/SFX_Slime_Footstep_04.wav
+Slime,Slime.prefab: attack,Assets/Audio/SFX/Characters/Slime/SFX_Slime_Attack.wav
+Slime,Slime.prefab: hurt,Assets/Audio/SFX/Characters/Slime/SFX_Slime_Hurt.wav
+Slime,Slime.prefab: death,Assets/Audio/SFX/Characters/Slime/SFX_Slime_Death.wav
+DiceDemon,DiceDemon.prefab: attack,Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Attack.wav
+DiceDemon,DiceDemon.prefab: hurt,Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Hurt.wav
+DiceDemon,DiceDemon.prefab: death,Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Death.wav
+DiceDemon,DiceDemon.prefab: projectileLaunch,Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_ProjectileLaunch.wav
+DiceDemon,DiceDemon.prefab: projectileImpact,Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_ProjectileImpact.wav

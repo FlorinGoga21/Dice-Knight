@@ -700,6 +700,34 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9167729644338005454, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
+      propertyPath: hurt
+      value: 
+      objectReference: {fileID: 8300000, guid: ec00249603514054887fbdf943cc2c07, type: 3}
+    - target: {fileID: 9167729644338005454, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
+      propertyPath: death
+      value: 
+      objectReference: {fileID: 8300000, guid: 6fcfb5427d557634f8a24d455b0ef7f2, type: 3}
+    - target: {fileID: 9167729644338005454, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
+      propertyPath: attack
+      value: 
+      objectReference: {fileID: 8300000, guid: e82720cfb0c3478419a85c4eeec03f0f, type: 3}
+    - target: {fileID: 9167729644338005454, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
+      propertyPath: 'footsteps.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e40e23f6641572b41b57a2b3ab1b2e89, type: 3}
+    - target: {fileID: 9167729644338005454, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
+      propertyPath: 'footsteps.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3e535758adcb91441a3457e7c5b78295, type: 3}
+    - target: {fileID: 9167729644338005454, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
+      propertyPath: 'footsteps.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 78101c4b9c92e2547819e56d2fa7c4fd, type: 3}
+    - target: {fileID: 9167729644338005454, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
+      propertyPath: 'footsteps.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 29a49b0c2be9f47448a618be9e997438, type: 3}
     - target: {fileID: 9198790409114295938, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
       propertyPath: m_Size.y
       value: 0.21875

@@ -1,6 +1,6 @@
 # Sound assignment checklist
 
-All clip fields start empty. Empty fields are silent and safe. Drag imported AudioClip assets into the fields below; do not assign clips to the Audio Sources directly.
+A complete original synthesized pack is now generated under `Assets/Audio/` and assigned to every used clip field. You can replace any assignment with your own AudioClip. Empty fields for unused character actions remain silent and safe. Assign clips to the fields below, rather than directly to the Audio Sources. See `Assets/Audio/AudioIndex.csv` for the generated file assigned to each field.
 
 ## Shared music and effects
 
@@ -91,4 +91,4 @@ The main menu's top-right round gear opens the PixelUIFree settings overlay. Mus
 
 Preferences use `DiceKnight.Settings.*` PlayerPrefs keys, independent of run saves. Changes apply immediately and are saved when closing settings or pausing/quitting the app. Music continues through pause; current gameplay effects pause, and UI sounds remain available. Both gameplay and UI sounds follow SFX volume.
 
-Unity compilation and the authored settings preview were checked. No Play mode or audible verification was run; clips remain unassigned for the user to choose and test.
+The generated pack contains 8 music loops and 59 sound effects. All 67 WAV files passed format, non-silence, and individual clipping checks, and all 67 Inspector references were assigned through Unity APIs. Play mode and audible balancing are left to the user.

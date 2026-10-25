@@ -234,12 +234,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833ce4cdf151dde4580644ba2b97ed15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAudio
-  footsteps: []
+  footsteps:
+  - {fileID: 8300000, guid: 1300935b8f7ce5840980ca3118979ab1, type: 3}
+  - {fileID: 8300000, guid: 54a152ad832a8f6469814291fe208462, type: 3}
+  - {fileID: 8300000, guid: b5eb1f073bfc4f04baa6efa41ed44471, type: 3}
+  - {fileID: 8300000, guid: dd622ae99d26cef4c93ecea26426b98e, type: 3}
   jump: {fileID: 0}
   land: {fileID: 0}
-  attack: {fileID: 0}
-  hurt: {fileID: 0}
-  death: {fileID: 0}
+  attack: {fileID: 8300000, guid: df34100e10c0f7b4c8bb5ca5ed63ceeb, type: 3}
+  hurt: {fileID: 8300000, guid: 67337873479693a42ba2482337dbe3bf, type: 3}
+  death: {fileID: 8300000, guid: ebebff6deaf0a204d82583add2efff28, type: 3}
   projectileLaunch: {fileID: 0}
   projectileImpact: {fileID: 0}
   volume: 1

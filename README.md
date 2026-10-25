@@ -24,6 +24,19 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - Three JSON save slots with manual save/load, backups, and autosave roughly every two minutes of active gameplay.
 - Pause menus in both the map and gameplay scenes, with save details and confirmed save deletion.
 - Pixel-style menus with fades, hover effects, and a blurred pause background.
+- Controller navigation for menus, save slots, the run map, pause screens, and combat actions. See [controller support](docs/CONTROLLER_SUPPORT.md).
+- A main-menu settings overlay, opened from the round gear in the top-right corner, with saved Music/SFX volume and fullscreen preferences.
+- An original retro-fantasy audio pack: **8 looping music tracks and 59 sound effects**, assigned to the shared audio and character prefabs.
+- Consistent full-strength white damage flashes for the player and every enemy, matching DiceDemon. See [damage flash](docs/DAMAGE_FLASH.md).
+
+### Development update — 25 October 2026
+
+- Added controller menu focus, explicit save-slot/Delete navigation, highlighted reachable map nodes, and Back handling through settings and pause dialogs. Combat keeps direct Roll/Heal/Block shortcuts without duplicate UI submission.
+- Added the PixelUIFree-style **Settings** overlay with continuous volume sliders, percentage readouts, a fullscreen checkbox, and controller navigation. Preferences persist independently of run saves; fullscreen changes apply in a built player.
+- Added independent music, gameplay SFX, and UI SFX playback. Music transitions between menu, map, room, combat, and boss contexts, while UI sounds remain available during pause.
+- Generated and assigned **67 original synthesized clips** under `Assets/Audio/`, including separate character effects and four movement variations each for Knight, Skeleton, Zombie, and Slime. Zombie overrides Skeleton's inherited audio fields.
+- Added a [sound assignment checklist](docs/SOUND_ASSIGNMENTS.md), an [audio file index](Assets/Audio/AudioIndex.csv), and reproducible generation/import tools under `Tools/Audio/` and `Tools/Unity/`.
+- Checked Unity compilation during implementation, the settings layout in a disposable preview scene, WAV file integrity, and all 67 saved audio references. Play mode and listening/balance checks remain for manual testing.
 
 ### Development update — 21 October 2026
 
@@ -89,13 +102,40 @@ Screenshots show the current development build; visuals and gameplay may change.
 | --- | --- |
 | A / D | Move left / right |
 | Space | Jump while exploring; roll dice during combat |
+| Left mouse button | Attack while exploring |
 | H | Use a healing potion during combat |
 | B | Block during combat (one use per encounter) |
 | Mouse | Navigate menus, select connected map nodes, and use combat buttons |
 | Esc | Pause, resume, or go back through pause-menu screens |
 | Q | Complete the current room and return to the map (temporary development shortcut) |
 
+Controller controls (Xbox names, with PlayStation equivalents):
+
+| Input | Action |
+| --- | --- |
+| Left stick | Move while exploring; navigate menus |
+| D-pad | Navigate menus and reachable map rooms |
+| A / Cross | Confirm menus, jump while exploring, or roll dice in combat |
+| X / Square | Attack while exploring; use a healing potion in combat |
+| B / Circle | Back through menus; block during combat |
+| Start / Options or View / Share | Pause or resume |
+| Y / Triangle | Return to the map after clearing the room and collecting rewards |
+
 Saving and loading are disabled during combat. Exiting outside combat saves first; exiting during combat leaves the last save unchanged.
+
+## Settings and audio
+
+Open the top-right gear on the main menu to adjust **Music**, **SFX**, and **Fullscreen**. Music and effects have separate volume controls; both gameplay and interface sounds follow SFX volume. Settings apply immediately and persist when closing the overlay or pausing/quitting the app. Music continues through pause while current gameplay effects pause. Fullscreen uses borderless fullscreen in a built player; it does not change the Unity Editor window.
+
+All sound files are organized under [`Assets/Audio/`](Assets/Audio/README.md): music in `Music/`, shared effects in `SFX/UI/`, `SFX/Combat/`, and `SFX/World/`, and character effects in `SFX/Characters/`. The pack uses original procedural synthesis, with no downloaded recordings or external samples.
+
+To replace sounds in the Inspector:
+
+- Open `Assets/Prefabs/GameAudio.prefab` for music and shared menu, combat, and world effects.
+- Open `Assets/Art/Player/Knight.prefab` or an enemy prefab under `Assets/Prefabs/Enemies/` and edit **Character Audio** for movement, attack, hurt, death, and applicable projectile sounds.
+- Follow the [field-by-field assignment checklist](docs/SOUND_ASSIGNMENTS.md) or [audio index](Assets/Audio/AudioIndex.csv). Unused character-action fields can remain empty.
+
+The [audio generation notes](ArtSource/Audio/README.md) describe the source tools and regeneration workflow. Generation preserves existing WAV files by default; explicit regeneration can overwrite later edits.
 
 ## Running the project
 
