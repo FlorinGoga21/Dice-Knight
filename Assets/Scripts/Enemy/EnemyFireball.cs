@@ -48,6 +48,7 @@ public sealed class EnemyFireball : MonoBehaviour
             spriteRenderer.sprite = frames[(int)(elapsed * framesPerSecond) % frames.Length];
 
         if (elapsed < travelDuration) return;
+        source.PlayProjectileImpactSound();
         if (applyDamage) damageable.TakeDamage(damage);
         Destroy(gameObject);
     }

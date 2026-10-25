@@ -86,6 +86,7 @@ public sealed partial class RunMapController
             room.GetComponent<UnityEngine.UI.Button>().transition = UnityEngine.UI.Selectable.Transition.ColorTint;
             node.button = room.GetComponent<UnityEngine.UI.Button>();
             node.button.onClick.AddListener(() => SelectRoom(node));
+            room.AddComponent<UIAudioFeedback>();
 
         }
         mapChoices = nodes.ConvertAll(node => (UnityEngine.UI.Selectable)node.button).ToArray();

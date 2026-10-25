@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 2549939007012602862}
   - component: {fileID: 5808632438011499672}
   - component: {fileID: 144363826274906188}
+  - component: {fileID: 6614861366981433867}
   m_Layer: 5
   m_Name: DiceDemon
   m_TagString: Untagged
@@ -377,3 +378,26 @@ MonoBehaviour:
   projectilePrefab: {fileID: 3609850592135378245, guid: fee7564f2f2ca1c40a54dccf054f7fca, type: 3}
   mouth: {fileID: 8392499601728627071}
   launchDelay: 0.18
+--- !u!114 &6614861366981433867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8442056127875118412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833ce4cdf151dde4580644ba2b97ed15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAudio
+  footsteps: []
+  jump: {fileID: 0}
+  land: {fileID: 0}
+  attack: {fileID: 0}
+  hurt: {fileID: 0}
+  death: {fileID: 0}
+  projectileLaunch: {fileID: 0}
+  projectileImpact: {fileID: 0}
+  volume: 1
+  footstepVolume: 0.45
+  footstepInterval: 0.28

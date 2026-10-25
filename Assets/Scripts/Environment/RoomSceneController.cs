@@ -57,6 +57,7 @@ public sealed class RoomSceneController : MonoBehaviour
         }
 
         isReturningToMap = true;
+        GameAudio.Play(GameAudio.Cue.RoomCompleted);
         SaveManager.Instance?.CaptureRunPlayer();
         RunMapState.CompleteCurrentRoom();
         Time.timeScale = 1f;

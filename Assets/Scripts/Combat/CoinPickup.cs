@@ -87,6 +87,7 @@ public class CoinPickup : MonoBehaviour
         if (target != null && target.CanReceiveCurrency)
         {
             target.AddCurrency(value);
+            GameAudio.Play(GameAudio.Cue.CoinPickup);
         }
 
         Destroy(gameObject);

@@ -73,6 +73,7 @@ public class DiceRollUI : MonoBehaviour
     {
         if (!isRolling)
         {
+            GameAudio.Play(GameAudio.Cue.DiceRoll);
             RollStarted?.Invoke();
             StartCoroutine(RollAllDiceAnimated());
         }
@@ -262,6 +263,7 @@ public class DiceRollUI : MonoBehaviour
         Debug.Log(rollLog);
 
         isRolling = false;
+        GameAudio.Play(GameAudio.Cue.DiceSettled);
         DiceRolled?.Invoke(results);
     }
 

@@ -78,6 +78,7 @@ public partial class PlayerController
         }
 
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        characterAudio?.Jump();
     }
 
     private void HandleAttack()
@@ -144,6 +145,8 @@ public partial class PlayerController
 
     private void HandleParticles()
     {
+        characterAudio?.UpdateFootsteps(isGrounded && Mathf.Abs(GetHorizontalMovementVelocity()) > 0.01f);
+        if (!wasGrounded && isGrounded) characterAudio?.Land();
         HandleMovementDust();
         HandleLandingDust();
 

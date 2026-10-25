@@ -281,6 +281,7 @@ public class PauseMenuController : MonoBehaviour
             blurImage.gameObject.SetActive(paused && pausedScreenTexture != null);
         }
         Time.timeScale = paused ? 0f : 1f;
+        GameAudio.Instance?.SetPaused(paused);
     }
 
     private IEnumerator PauseAfterEndOfFrame()

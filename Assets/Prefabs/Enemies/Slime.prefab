@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5139965662254111214}
   - component: {fileID: 5788070678420168343}
   - component: {fileID: 8340631083243060151}
+  - component: {fileID: 4606259907247367817}
   m_Layer: 5
   m_Name: Slime
   m_TagString: Untagged
@@ -221,6 +222,29 @@ MonoBehaviour:
   fontSize: 2
   color: {r: 1, g: 0, b: 0, a: 1}
   sortingOrder: 100
+--- !u!114 &4606259907247367817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2318704241088620190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833ce4cdf151dde4580644ba2b97ed15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAudio
+  footsteps: []
+  jump: {fileID: 0}
+  land: {fileID: 0}
+  attack: {fileID: 0}
+  hurt: {fileID: 0}
+  death: {fileID: 0}
+  projectileLaunch: {fileID: 0}
+  projectileImpact: {fileID: 0}
+  volume: 1
+  footstepVolume: 0.45
+  footstepInterval: 0.28
 --- !u!1 &6705179730570205792
 GameObject:
   m_ObjectHideFlags: 0

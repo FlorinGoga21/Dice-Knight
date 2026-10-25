@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private RectTransform logo;
     [SerializeField] private Button startButton;
     [SerializeField] private Button exitButton;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private SettingsMenuController settingsMenu;
     [SerializeField] private SaveSlotPanel saveSlots;
     [SerializeField] private CanvasGroup mainButtons;
     [SerializeField, Min(0f)] private float buttonSwapDuration = 0.25f;
@@ -45,7 +47,7 @@ public class MainMenu : MonoBehaviour
             startButton = FindInChildren<Button>("StartButton");
         if (exitButton == null)
             exitButton = FindInChildren<Button>("ExitButton");
-        menuChoices = new UnityEngine.UI.Selectable[] { startButton, exitButton };
+        menuChoices = new UnityEngine.UI.Selectable[] { startButton, settingsButton, exitButton };
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
@@ -66,6 +68,8 @@ public class MainMenu : MonoBehaviour
         else
             Debug.LogError("MainMenu: Could not find a Button named ExitButton under the UI object.", this);
 
+        if (settingsButton != null) settingsButton.onClick.AddListener(OnSettingsPressed);
+
         uiGroup.alpha = 0f;
         uiGroup.interactable = false;
         uiGroup.blocksRaycasts = false;
@@ -82,7 +86,8 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
-        if (!isLeavingMenu && !isSwitchingButtons && !choosingSlot && uiGroup.interactable)
+        if (!isLeavingMenu && !isSwitchingButtons && !choosingSlot && uiGroup.interactable
+            && (settingsMenu == null || !settingsMenu.IsOpen))
             UISelection.Ensure(mainButtons.transform, menuChoices);
 
         if (logo == null || isLeavingMenu)
@@ -99,6 +104,12 @@ public class MainMenu : MonoBehaviour
             startButton.onClick.RemoveListener(OnStartPressed);
         if (exitButton != null)
             exitButton.onClick.RemoveListener(OnExitPressed);
+        if (settingsButton != null) settingsButton.onClick.RemoveListener(OnSettingsPressed);
+    }
+
+    private void OnSettingsPressed()
+    {
+        if (!isLeavingMenu && !isSwitchingButtons && !choosingSlot) settingsMenu?.Show();
     }
 
     private void OnStartPressed()
@@ -254,6 +265,7 @@ public class MainMenu : MonoBehaviour
             startButton.interactable = interactable;
         if (exitButton != null)
             exitButton.interactable = interactable;
+        if (settingsButton != null) settingsButton.interactable = interactable;
     }
 
     private T FindInChildren<T>(string objectName) where T : Component

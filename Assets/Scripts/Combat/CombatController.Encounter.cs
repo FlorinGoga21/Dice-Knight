@@ -67,6 +67,7 @@ public sealed partial class CombatController
         pendingRoomSave = null;
         UpdateBlockButtonLabel();
         SetCombatUIVisible(true);
+        GameAudio.Instance?.BeginCombat();
         encounterCoroutine = StartCoroutine(RunEncounter());
         combatInputActions.Combat.Enable();
     }
@@ -79,6 +80,7 @@ public sealed partial class CombatController
         while (player != null && player.CanStartTurnCombat && activeEnemy != null && !activeEnemy.IsDead)
         {
             turnNumber++;
+            GameAudio.Play(GameAudio.Cue.TurnStarted);
             ShowTurnText();
             blockChosenThisTurn = false;
             player.SetBlockingPose(false);
@@ -132,6 +134,7 @@ public sealed partial class CombatController
 
             if (!blockChosenThisTurn && playerRoll > enemyRoll)
             {
+                GameAudio.Play(GameAudio.Cue.RollWin);
                 yield return EnlargeDisplays(playerRollDisplays, rollResultDisplays != null ? rollResultDisplays[0] : null);
                 player.PlayAttackAnimationVisualOnly();
                 activeEnemy.TakeDamage(player.AttackDamage * playerMultiplier);
@@ -140,12 +143,15 @@ public sealed partial class CombatController
             {
                 yield return EnlargeDisplays(enemyRollDisplays, rollResultDisplays != null ? rollResultDisplays[1] : null);
                 activeEnemy.PerformTurnAttack(enemyMultiplier, applyDamage: false);
+                GameAudio.Play(GameAudio.Cue.BlockImpact);
             }
             else if (enemyRoll > playerRoll)
             {
+                GameAudio.Play(GameAudio.Cue.RollLose);
                 yield return EnlargeDisplays(enemyRollDisplays, rollResultDisplays != null ? rollResultDisplays[1] : null);
                 activeEnemy.PerformTurnAttack(enemyMultiplier);
             }
+            else GameAudio.Play(GameAudio.Cue.RollTie);
 
             while (activeEnemy != null && activeEnemy.IsAttackInProgress) yield return null;
 
@@ -161,6 +167,7 @@ public sealed partial class CombatController
 
     private void FinishEncounter()
     {
+        GameAudio.Instance?.EndCombat(playerStats != null && !playerStats.IsDead && activeEnemy != null && activeEnemy.IsDead);
         combatInputActions.Combat.Disable();
 
         if (activeEnemy != null)
@@ -212,6 +219,7 @@ public sealed partial class CombatController
         }
 
         blockChosenThisTurn = true;
+        GameAudio.Play(GameAudio.Cue.BlockRaised);
         blockUsesRemaining--;
         UpdateBlockButtonLabel();
         player.SetBlockingPose(true);

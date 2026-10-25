@@ -237,7 +237,7 @@ public sealed class SaveSlotPanel : MonoBehaviour
         if (mode == Mode.Start) { startSelected?.Invoke(slot); return; }
         if (mode == Mode.Load)
         {
-            if (SaveManager.Instance.TryLoad(slot, out string error)) Close();
+            if (SaveManager.Instance.TryLoad(slot, out string error)) { GameAudio.Play(GameAudio.Cue.LoadSuccess); Close(); }
             else message.text = error;
             return;
         }
@@ -273,7 +273,8 @@ public sealed class SaveSlotPanel : MonoBehaviour
         }
         else if (delete)
         {
-            SaveManager.Instance.TryDeleteSlot(pendingSlot, out string result);
+            bool deleted = SaveManager.Instance.TryDeleteSlot(pendingSlot, out string result);
+            if (deleted) GameAudio.Play(GameAudio.Cue.DeleteSave);
             Refresh();
             ShowMessage(result);
             SelectFirstButton();
@@ -314,6 +315,7 @@ public sealed class SaveSlotPanel : MonoBehaviour
     private void Save(int slot)
     {
         bool success = SaveManager.Instance.TrySave(slot, out string result);
+        if (success) GameAudio.Play(GameAudio.Cue.SaveSuccess);
         Refresh();
         message.text = result;
         if (success) { SelectFirstButton(); Saved?.Invoke(slot); }
@@ -324,6 +326,7 @@ public sealed class SaveSlotPanel : MonoBehaviour
     public void Back()
     {
         if (IsTransitioning) return;
+        GameAudio.Play(GameAudio.Cue.UiBack);
         if (confirmationRoot.activeSelf) HideConfirmation();
         else Close();
     }

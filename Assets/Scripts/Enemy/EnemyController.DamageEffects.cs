@@ -56,6 +56,7 @@ public partial class EnemyController
             return;
         }
 
+        characterAudio?.Hurt();
         animator.ResetTrigger("TakeDamage");
         animator.SetTrigger("TakeDamage");
     }

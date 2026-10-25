@@ -30,6 +30,7 @@ public sealed class EnemyProjectileAttack : MonoBehaviour
         {
             Vector3 position = mouth != null ? mouth.position : transform.position;
             projectile = Instantiate(projectilePrefab, position, Quaternion.identity);
+            owner.PlayProjectileLaunchSound();
             projectile.Launch(owner, target, damageable, damage, applyDamage);
         }
         windup = null;

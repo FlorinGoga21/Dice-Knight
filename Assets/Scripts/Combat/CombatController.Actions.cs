@@ -33,6 +33,7 @@ public sealed partial class CombatController
         }
 
         healingPotionsRemaining--;
+        GameAudio.Play(GameAudio.Cue.HealingPotion);
         UpdateHealingUsageLabel();
         UpdateHealingPotionButtonState();
     }

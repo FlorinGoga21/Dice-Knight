@@ -69,6 +69,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
     private CombatController targetCombat;
     private EnemyProjectileAttack projectileAttack;
     private SpriteRenderer[] spriteRenderers;
+    private CharacterAudio characterAudio;
     private Material[] damageFlashMaterials;
     private Coroutine damageFlashCoroutine;
     private Coroutine attackDamageCoroutine;
@@ -88,6 +89,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        characterAudio = GetComponent<CharacterAudio>();
         col = GetComponent<Collider2D>();
         projectileAttack = GetComponent<EnemyProjectileAttack>();
         animator = animator != null ? animator : GetComponent<Animator>();
@@ -200,6 +202,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
             return;
         }
 
+        characterAudio?.Attack();
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
 
@@ -213,6 +216,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
             return;
         }
 
+        characterAudio?.Attack();
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
         attackCooldownRemaining = attackCooldown;
@@ -325,6 +329,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
 
     private void HandleAnimation()
     {
+        characterAudio?.UpdateFootsteps(!hasDied && !turnBasedCombat && isGrounded && Mathf.Abs(rb.linearVelocity.x) > 0.01f);
         animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
         animator.SetBool("Grounded", isGrounded);
     }
@@ -341,6 +346,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
         }
 
         hasDied = true;
+        characterAudio?.Death();
         rb.linearVelocity = Vector2.zero;
         rb.simulated = false;
         col.enabled = false;
@@ -353,6 +359,9 @@ public partial class EnemyController : MonoBehaviour, IDamageable
 
         StartCoroutine(PlayDeathSequence());
     }
+
+    public void PlayProjectileLaunchSound() => characterAudio?.ProjectileLaunch();
+    public void PlayProjectileImpactSound() => characterAudio?.ProjectileImpact();
 
     private IEnumerator PlayDeathSequence()
     {

@@ -3087,6 +3087,7 @@ GameObject:
   - component: {fileID: 2512082783842003279}
   - component: {fileID: 6691418830624245481}
   - component: {fileID: 1623280510819205608}
+  - component: {fileID: 9167729644338005454}
   m_Layer: 5
   m_Name: Skeleton
   m_TagString: Untagged
@@ -3335,6 +3336,29 @@ MonoBehaviour:
   - Sword_5
   - New_Weapon_01
   - New_Weapon_18
+--- !u!114 &9167729644338005454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6562298921280516256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833ce4cdf151dde4580644ba2b97ed15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAudio
+  footsteps: []
+  jump: {fileID: 0}
+  land: {fileID: 0}
+  attack: {fileID: 0}
+  hurt: {fileID: 0}
+  death: {fileID: 0}
+  projectileLaunch: {fileID: 0}
+  projectileImpact: {fileID: 0}
+  volume: 1
+  footstepVolume: 0.45
+  footstepInterval: 0.28
 --- !u!1 &6598492521147134593
 GameObject:
   m_ObjectHideFlags: 0

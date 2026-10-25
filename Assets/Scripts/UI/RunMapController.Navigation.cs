@@ -17,6 +17,7 @@ public sealed partial class RunMapController
         }
 
         isMoving = true;
+        GameAudio.Play(GameAudio.Cue.MapTravel);
         UpdateAvailableRooms();
         if (statusText != null)
             statusText.text = "Moving to " + node.type + " room...";

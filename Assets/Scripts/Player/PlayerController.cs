@@ -46,6 +46,7 @@ public partial class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Collider2D col;
     private PlayerInputActions inputActions;
+    private CharacterAudio characterAudio;
 
     private float moveInput;
     private bool isFacingRight = true;
@@ -85,6 +86,7 @@ public partial class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        characterAudio = GetComponent<CharacterAudio>();
         col = GetComponent<Collider2D>();
         ownDamageable = GetComponentInParent<IDamageable>();
         combatController = GetComponent<CombatController>();
@@ -188,6 +190,7 @@ public partial class PlayerController : MonoBehaviour
         }
 
         hasDied = true;
+        characterAudio?.Death();
         moveInput = 0f;
         rb.linearVelocity = Vector2.zero;
         movementDust?.Stop(
@@ -247,6 +250,7 @@ public partial class PlayerController : MonoBehaviour
             return;
         }
 
+        characterAudio?.Hurt();
         animator.ResetTrigger("TakeDamage");
         animator.SetTrigger("TakeDamage");
     }
@@ -258,6 +262,7 @@ public partial class PlayerController : MonoBehaviour
             return;
         }
 
+        characterAudio?.Attack();
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
         attackCooldownRemaining = attackCooldown;
@@ -271,6 +276,7 @@ public partial class PlayerController : MonoBehaviour
             return;
         }
 
+        characterAudio?.Attack();
         animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
     }
