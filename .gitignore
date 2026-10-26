@@ -119,3 +119,37 @@ InitTestScene*.unity*
 # Local asset collection for evaluating possible additions
 /Assets/External Assets/PossibleAdditions/
 /Assets/External Assets/PossibleAdditions.meta
+
+# Local agent automation and generated previews/reports (not needed by the game)
+/Tools/
+/output/
+/.codex/
+/.agents/
+
+# Personal editor setup and local Unity Pipeline connection/session settings
+/.vscode/
+/.idea/
+/ProjectSettings/Packages/com.unity.pipeline/EditorPipelineConfig.json
+
+# Audio auditions, superseded mix backups and one-off installation/check reports
+/ArtSource/Audio/VolumeTuning/
+/ArtSource/Audio/KnightSkeletonSelection/
+/ArtSource/Audio/ReplacementPreviews.md
+/ArtSource/Audio/approved_audio_*.json
+/ArtSource/Audio/*_report.json
+/ArtSource/Audio/*_verification.json
+
+# Keep source credits and licenses, without downloaded/decoded foley archives
+/ArtSource/Audio/FoleyReferences/**/*
+!/ArtSource/Audio/FoleyReferences/**/
+!/ArtSource/Audio/FoleyReferences/**/SOURCES.md
+!/ArtSource/Audio/FoleyReferences/**/License.txt
+
+# Local Python caches, test result exports and OS metadata
+__pycache__/
+*.py[cod]
+/TestResults/
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini

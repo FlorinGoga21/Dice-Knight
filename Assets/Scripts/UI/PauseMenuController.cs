@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PauseMenuController : MonoBehaviour
 {
+    [Header("---Pause Menu---")]
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Material pauseBlurMaterial;
     [SerializeField, Min(0f)] private float fadeDuration = 0.25f;
@@ -17,6 +18,10 @@ public class PauseMenuController : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text feedback;
     [SerializeField] private float primaryHeight = 78.03f;
     [SerializeField] private float saveLoadHeight = 58.02f;
+
+    [Header("---Settings---")]
+    [SerializeField] private UnityEngine.UI.Button settingsButton;
+    [SerializeField] private SettingsMenuController settingsMenuPrefab;
 
     private PlayerInputActions inputActions;
     private UnityEngine.UI.RawImage blurImage;
@@ -33,6 +38,7 @@ public class PauseMenuController : MonoBehaviour
     private UnityEngine.UI.Selectable[] primaryChoices;
     private UnityEngine.UI.Selectable[] saveLoadChoices;
     private GameObject selectionBeforePause;
+    private SettingsMenuController settingsMenu;
 
     private bool InCombat => FindAnyObjectByType<CombatController>() is CombatController combat && combat.IsInCombat;
 
@@ -52,8 +58,24 @@ public class PauseMenuController : MonoBehaviour
             originalSortingOrder = menuCanvas.sortingOrder;
         }
         CreateBlurImage();
+        if (settingsMenuPrefab != null)
+        {
+            // A separate root Canvas retains the main menu's settings scale and sorting.
+            settingsMenu = Instantiate(settingsMenuPrefab);
+            settingsMenu.SetOwner(primaryActions);
+            settingsMenu.Closed += OnSettingsClosed;
+        }
+        if (settingsButton != null) settingsButton.onClick.AddListener(ShowSettings);
         primaryChoices = primaryActions.GetComponentsInChildren<UnityEngine.UI.Selectable>(true);
         saveLoadChoices = saveLoadActions.GetComponentsInChildren<UnityEngine.UI.Selectable>(true);
+        if (settingsButton != null)
+        {
+            System.Array.Resize(ref primaryChoices, primaryChoices.Length + 1);
+            primaryChoices[primaryChoices.Length - 1] = settingsButton;
+            System.Array.Resize(ref saveLoadChoices, saveLoadChoices.Length + 1);
+            saveLoadChoices[saveLoadChoices.Length - 1] = settingsButton;
+            settingsButton.gameObject.SetActive(false);
+        }
         ResetActions();
         saveSlots.Closed += OnSlotsClosed;
         saveSlots.Saved += OnSlotSaved;
@@ -77,6 +99,12 @@ public class PauseMenuController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (settingsButton != null) settingsButton.onClick.RemoveListener(ShowSettings);
+        if (settingsMenu != null)
+        {
+            settingsMenu.Closed -= OnSettingsClosed;
+            Destroy(settingsMenu.gameObject);
+        }
         if (saveSlots != null) { saveSlots.Closed -= OnSlotsClosed; saveSlots.Saved -= OnSlotSaved; }
         inputActions?.Dispose();
         ReleasePausedScreenTexture();
@@ -108,13 +136,15 @@ public class PauseMenuController : MonoBehaviour
     private void Update()
     {
         saveLoadButton.interactable = !InCombat && !pauseTransitionPending;
+        // Settings owns Cancel, including the frame on which it closes.
+        if (settingsMenu != null && (settingsMenu.IsOpen || settingsMenu.LastClosedFrame == Time.frameCount)) return;
         // Slot panels own Cancel, so one press cannot close two menu levels.
         if ((inputActions.Player.Pause.WasPressedThisFrame() && !inputActions.UI.Cancel.WasPressedThisFrame())
             || (inputActions.UI.Cancel.WasPressedThisFrame() && pauseMenu.activeSelf
                 && (saveSlots == null || !saveSlots.IsOpen)))
             HandlePauseInput();
         if (!pauseTransitionPending && pauseMenu.activeSelf && (saveSlots == null || !saveSlots.IsOpen))
-            UISelection.Ensure(showingSaveLoad ? saveLoadActions.transform : primaryActions.transform,
+            UISelection.Ensure(transform,
                 showingSaveLoad ? saveLoadChoices : primaryChoices);
     }
 
@@ -122,6 +152,23 @@ public class PauseMenuController : MonoBehaviour
     {
         if (InCombat || pauseTransitionPending) return;
         StartCoroutine(SwitchActions(true));
+    }
+
+    public void ShowSettings()
+    {
+        if (pauseTransitionPending || leavingScene || !pauseMenu.activeSelf || settingsMenu == null) return;
+        settingsMenu.SetOwner(showingSaveLoad ? saveLoadActions : primaryActions);
+        settingsMenu.Show();
+        pauseMenu.SetActive(false);
+        settingsButton.gameObject.SetActive(false);
+    }
+
+    private void OnSettingsClosed()
+    {
+        if (leavingScene || Time.timeScale > 0f) return;
+        pauseMenu.SetActive(true);
+        settingsButton.gameObject.SetActive(true);
+        settingsButton.Select();
     }
 
     public void SaveGame()
@@ -167,6 +214,7 @@ public class PauseMenuController : MonoBehaviour
         actions.blocksRaycasts = false;
         yield return FadeGroup(actions, 0f);
         pauseMenu.SetActive(false);
+        if (settingsButton != null) settingsButton.gameObject.SetActive(false);
         if (save) saveSlots.ShowSave(this); else saveSlots.ShowLoad(this);
         while (saveSlots.IsTransitioning) yield return null;
         pauseTransitionPending = false;
@@ -187,6 +235,7 @@ public class PauseMenuController : MonoBehaviour
         yield return FadeGroup(actions, 1f);
         actions.interactable = true;
         actions.blocksRaycasts = true;
+        if (settingsButton != null) settingsButton.gameObject.SetActive(true);
         SelectFirst(actions);
         pauseTransitionPending = false;
     }
@@ -229,6 +278,7 @@ public class PauseMenuController : MonoBehaviour
     {
         StopAllCoroutines();
         leavingScene = true;
+        settingsMenu?.Close();
         saveSlots?.CloseImmediately();
         SetPaused(false);
         pauseTransitionPending = false;
@@ -263,6 +313,7 @@ public class PauseMenuController : MonoBehaviour
         }
 
         pauseMenu.SetActive(paused);
+        if (settingsButton != null) settingsButton.gameObject.SetActive(paused);
         if (menuCanvas != null)
         {
             if (paused)

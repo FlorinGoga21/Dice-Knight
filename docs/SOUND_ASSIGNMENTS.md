@@ -1,6 +1,6 @@
 # Sound assignment checklist
 
-A complete original synthesized pack is now generated under `Assets/Audio/` and assigned to every used clip field. You can replace any assignment with your own AudioClip. Empty fields for unused character actions remain silent and safe. Assign clips to the fields below, rather than directly to the Audio Sources. See `Assets/Audio/AudioIndex.csv` for the generated file assigned to each field.
+A complete pack is assigned under `Assets/Audio/`, including the user-approved replacement effects. You can replace any assignment with your own AudioClip. Empty fields for unused character actions remain silent and safe. Assign clips to the fields below, rather than directly to the Audio Sources. See `Assets/Audio/AudioIndex.csv` for the file assigned to each field.
 
 ## Shared music and effects
 
@@ -74,7 +74,7 @@ Open each prefab below and select its root. Assign its **Character Audio** compo
 
 | Inspector field | Assign for |
 | --- | --- |
-| Footsteps | Player/Skeleton/Zombie steps; optional Slime movement/squish clips. An array allows variations. |
+| Footsteps | Player/Skeleton/Zombie use identical simple step variations. Slime's array is intentionally empty: its movement has no sound. |
 | Jump | Player jump |
 | Land | Player landing |
 | Attack | Player and each enemy's swing/attack/casting sound |
@@ -87,8 +87,29 @@ Unused fields can stay empty. Zombie inherits the component from Skeleton: edit 
 
 ## Settings behavior
 
-The main menu's top-right round gear opens the PixelUIFree settings overlay. Music and SFX sliders accept continuous values from 0 to 100%; controller left/right changes volume in steps. Fullscreen uses borderless fullscreen in a built player and windowed mode when unchecked. Unity's Editor window is not switched into fullscreen.
+The main menu's top-right round gear opens the PixelUIFree settings overlay. Music and SFX sliders accept continuous values from 0 to 100%; controller left/right changes volume in steps. Resolution arrows cycle through available display dimensions, with duplicate refresh rates omitted. Fullscreen uses borderless fullscreen in a built player and windowed mode when unchecked. Display changes leave Unity's Editor window unchanged. Controls opens a scrollable binding reference with TMP glyphs for the most recently used keyboard/mouse or controller; Back or Cancel returns to Settings.
 
 Preferences use `DiceKnight.Settings.*` PlayerPrefs keys, independent of run saves. Changes apply immediately and are saved when closing settings or pausing/quitting the app. Music continues through pause; current gameplay effects pause, and UI sounds remain available. Both gameplay and UI sounds follow SFX volume.
 
-The generated pack contains 8 music loops and 59 sound effects. All 67 WAV files passed format, non-silence, and individual clipping checks, and all 67 Inspector references were assigned through Unity APIs. Play mode and audible balancing are left to the user.
+The pause menus in MainScene and MapScene include a small **Settings gear** at
+the screen's top-right corner, matching the main menu's position, size, artwork, round frame,
+hover tints and focus ring. The original Resume, Save/Load and Quit rows remain.
+They use `Assets/Prefabs/SettingsMenu.prefab`, copied from the
+authored main menu overlay and driven by the same settings and controls scripts.
+Settings stays above the pause blur and keeps time paused. Back/Cancel returns
+from Controls to Settings, then to the pause menu with Settings selected; Resume
+returns to the game. The input that closes Settings cannot also resume the game.
+Play mode verification of this addition is left to the user as requested.
+
+The gear is a child of the pause screen Canvas, independent of the central panel.
+It appears while the pause menu is open and hides during gameplay, Settings and
+save-slot overlays. Both pause action groups include it in keyboard/controller
+focus handling.
+
+The current pack contains 8 music loops and 55 sound effects, with 63 active clip references. The approved revision replaces 20 WAVs while preserving their GUIDs and removes four unused Slime movement clips. Import normalization is disabled on the replacements so their auditioned gain survives import. Installation hashes, imported-level checks, and playback verification are recorded under `ArtSource/Audio/`.
+
+Subsequent selection: Knight Attack uses A (Soft swish); Skeleton Death uses B
+(Soft bone tumble). The old game clip contents were replaced at the same paths
+and GUIDs. Dice Roll and Dice Settled are at 225% of the original approved source
+amplitude; Coin Pickup stays at 15%. `KnightSkeletonSelection/report.json` under
+`ArtSource/Audio/` verifies the four changed imports and prefab bindings.

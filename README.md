@@ -25,9 +25,21 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - Pause menus in both the map and gameplay scenes, with save details and confirmed save deletion.
 - Pixel-style menus with fades, hover effects, and a blurred pause background.
 - Controller navigation for menus, save slots, the run map, pause screens, and combat actions. See [controller support](docs/CONTROLLER_SUPPORT.md).
-- A main-menu settings overlay, opened from the round gear in the top-right corner, with saved Music/SFX volume and fullscreen preferences.
-- An original retro-fantasy audio pack: **8 looping music tracks and 59 sound effects**, assigned to the shared audio and character prefabs.
+- Settings available from a small top-right gear on the main menu and both pause screens, with saved Music/SFX volume, resolution, and fullscreen preferences.
+- A scrollable Controls page with TextMeshPro input glyphs that follow the active keyboard/mouse or controller scheme.
+- A retro-fantasy audio pack: **8 looping music tracks and 55 sound effects**, combining original synthesis with approved CC0 foley replacements.
 - Consistent full-strength white damage flashes for the player and every enemy, matching DiceDemon. See [damage flash](docs/DAMAGE_FLASH.md).
+
+### Development update — 26 October 2026
+
+- Added saved **resolution selection** and refined the Settings layout, including a lower title and a Controls button beside Back.
+- Completed the scrollable **Controls** page with Input Sprites for TextMesh Pro. Glyphs follow the current keyboard/mouse, Xbox/generic gamepad, PlayStation, or Nintendo device. WASD and arrow keys use familiar directional clusters; Back is centered on the Controls page.
+- Added the same Settings and Controls screens to the map and gameplay pause menus. The small gear sits at the **screen's top-right corner** and matches the main menu's displayed size. Closing Settings returns to pause; Back/Cancel closes one level at a time without resuming gameplay.
+- Replaced the selected coin, dice, footsteps, landing, and hurt effects after auditioning alternatives. Knight, Skeleton, and Zombie now share simple footsteps; Slime movement is silent. The approved demon hurt is retained, and Zombie hurt uses a related demonic sound.
+- Installed the soft-swish **Knight attack A** and bone-tumble **Skeleton death B**. Coin pickup is at 15% of its approved source amplitude; softer dice roll/settle recordings are now at 225% of their approved source amplitude. Replaced clips preserve their existing asset references; superseded Slime movement clips were removed.
+- Kept the current audio set at **63 clips: 8 music loops and 55 effects**. Audio sources and credits are documented in the [audio notes](ArtSource/Audio/README.md).
+- Excluded local automation, generated previews, audition archives/backups, verification reports, and personal editor settings from version control. Game assets, Unity metadata, packages, project settings, documentation screenshots, source art, and audio credits remain part of the project.
+- Checked Unity compilation, saved menu wiring, and imported audio levels. Final pause-menu gameplay and visual checks are left to the user; no Play mode checks were run for the pause-settings addition.
 
 ### Development update — 25 October 2026
 
@@ -35,7 +47,7 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - Added the PixelUIFree-style **Settings** overlay with continuous volume sliders, percentage readouts, a fullscreen checkbox, and controller navigation. Preferences persist independently of run saves; fullscreen changes apply in a built player.
 - Added independent music, gameplay SFX, and UI SFX playback. Music transitions between menu, map, room, combat, and boss contexts, while UI sounds remain available during pause.
 - Generated and assigned **67 original synthesized clips** under `Assets/Audio/`, including separate character effects and four movement variations each for Knight, Skeleton, Zombie, and Slime. Zombie overrides Skeleton's inherited audio fields.
-- Added a [sound assignment checklist](docs/SOUND_ASSIGNMENTS.md), an [audio file index](Assets/Audio/AudioIndex.csv), and reproducible generation/import tools under `Tools/Audio/` and `Tools/Unity/`.
+- Added a [sound assignment checklist](docs/SOUND_ASSIGNMENTS.md), an [audio file index](Assets/Audio/AudioIndex.csv), and local generation/import tools, now excluded from version control.
 - Checked Unity compilation during implementation, the settings layout in a disposable preview scene, WAV file integrity, and all 67 saved audio references. Play mode and listening/balance checks remain for manual testing.
 
 ### Development update — 21 October 2026
@@ -45,7 +57,7 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - Added **MainScene room boundaries** with a stable invisible left wall and camera limits. Combat rooms unlock their exit after all enemies are defeated; the camera stops at the right edge while the player walks fully off screen to return to the map.
 - Gave the currently empty shop, random, and treasure rooms boundaries at their initial screen edges and an immediately available walk-off exit. Their individual content and interactions are still to come. MainMenu has no room boundaries.
 - Extended room saves to preserve boundary positions and restore cleared exits. Room completion waits for combat cleanup and coin rewards, and holding movement against the left wall stops the walking animation and dust without jitter. See [room boundaries](docs/COMBAT_ROOM_BOUNDARIES.md).
-- Added [project contribution instructions](AGENTS.md), including Inspector header conventions, plus reusable Unity configuration and verification tools under `Tools/Unity/`.
+- Added [project contribution instructions](AGENTS.md), including Inspector header conventions, plus local Unity configuration and verification tools.
 
 ### Development update — 20 October 2026
 
@@ -125,9 +137,13 @@ Saving and loading are disabled during combat. Exiting outside combat saves firs
 
 ## Settings and audio
 
-Open the top-right gear on the main menu to adjust **Music**, **SFX**, and **Fullscreen**. Music and effects have separate volume controls; both gameplay and interface sounds follow SFX volume. Settings apply immediately and persist when closing the overlay or pausing/quitting the app. Music continues through pause while current gameplay effects pause. Fullscreen uses borderless fullscreen in a built player; it does not change the Unity Editor window.
+The small **Settings gear** at the top right of the screen while paused on the map or in gameplay
+uses the main menu's gear artwork and styling. It opens the same audio/display options and Controls page
+as the main menu. Back returns to the pause menu while the game stays paused.
 
-All sound files are organized under [`Assets/Audio/`](Assets/Audio/README.md): music in `Music/`, shared effects in `SFX/UI/`, `SFX/Combat/`, and `SFX/World/`, and character effects in `SFX/Characters/`. The pack uses original procedural synthesis, with no downloaded recordings or external samples.
+Open the top-right gear on the main menu to adjust **Music**, **SFX**, **Resolution**, and **Fullscreen**. Use the resolution arrows to cycle through available display sizes; refresh-rate duplicates appear once. Music and effects have separate volume controls; both gameplay and interface sounds follow SFX volume. Settings apply immediately and persist when closing the overlay or pausing/quitting the app. Music continues through pause while current gameplay effects pause. Display changes apply in a built player; fullscreen uses borderless fullscreen, and the Unity Editor window is unchanged. **Controls**, beside **Back**, shows exploration, combat, and menu bindings from `Assets/Settings/PlayerInputActions.inputactions`. Input Sprites for TextMesh Pro glyphs switch automatically between keyboard/mouse, Xbox/generic gamepad, PlayStation, and Nintendo layouts when those devices are used. Small stick drift and button releases do not change the displayed device. Scroll with the mouse wheel, scrollbar, keyboard navigation/Page Up/Page Down, or controller sticks/D-pad. The centered Back button or Cancel returns from Controls to Settings before closing the overlay. Reopening Controls resets the list to the top without duplicating entries.
+
+All sound files are organized under [`Assets/Audio/`](Assets/Audio/README.md): music in `Music/`, shared effects in `SFX/UI/`, `SFX/Combat/`, and `SFX/World/`, and character effects in `SFX/Characters/`. The current pack has 8 original music loops and 55 effects, including the approved synthesis/CC0 foley replacements. Knight, Skeleton, and Zombie share the same simple footsteps; Slime movement is silent. Source credits and licenses are retained under `ArtSource/Audio/`.
 
 To replace sounds in the Inspector:
 
@@ -135,7 +151,13 @@ To replace sounds in the Inspector:
 - Open `Assets/Art/Player/Knight.prefab` or an enemy prefab under `Assets/Prefabs/Enemies/` and edit **Character Audio** for movement, attack, hurt, death, and applicable projectile sounds.
 - Follow the [field-by-field assignment checklist](docs/SOUND_ASSIGNMENTS.md) or [audio index](Assets/Audio/AudioIndex.csv). Unused character-action fields can remain empty.
 
-The [audio generation notes](ArtSource/Audio/README.md) describe the source tools and regeneration workflow. Generation preserves existing WAV files by default; explicit regeneration can overwrite later edits.
+The [audio notes](ArtSource/Audio/README.md) describe the installed sounds and source credits. The game uses the committed clips directly; local generation tools and audition history are not required to open or build it.
+
+## Repository contents
+
+Keep `Assets/` and its `.meta` files, `Packages/`, shared `ProjectSettings/`, source artwork under `ArtSource/`, and project documentation in version control. Documentation images live under `docs/screenshots/`.
+
+`.gitignore` excludes Unity caches/builds, personal editor settings, local Pipeline connection settings, `Tools/`, `output/`, and audio auditions/backups/reports. Downloaded foley archives and decoded copies stay local; their source credits and license files remain included. These local files are not needed to open or build the game. Ignore rules do not remove files that Git already tracks.
 
 ## Running the project
 

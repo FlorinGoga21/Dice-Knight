@@ -1,6 +1,6 @@
-# Dice Knight original audio pack
+# Dice Knight audio pack
 
-67 generated clips, assigned to the existing Inspector fields: **8 looping music tracks and 59 sound effects**. All sound assets live under this folder. They are original procedural synthesis, with no downloaded recordings or external samples.
+63 clips assigned to the existing Inspector fields: **8 looping music tracks and 55 sound effects**. Music and unchanged effects use original procedural synthesis. The user-approved replacement effects combine original synthesis with edited CC0 foley; sources and licenses are recorded under `ArtSource/Audio/FoleyReferences/`.
 
 ## Find a sound
 
@@ -10,10 +10,10 @@
 | `SFX/UI/` | Selection, confirmation, Back, settings, pause/resume, save/load/delete |
 | `SFX/Combat/` | Encounter/turn cues, wooden dice, result jingles, shields, potion |
 | `SFX/World/` | Coin pickup, map travel, room entry/completion |
-| `SFX/Characters/Knight/` | Four armored footsteps, jump, landing, sword swing, hurt, death |
-| `SFX/Characters/Skeleton/` | Four bone footsteps, sword/bone attack, rattle hurt/death |
-| `SFX/Characters/Zombie/` | Four heavy shuffles, attack, low synthesized hurt/death growls |
-| `SFX/Characters/Slime/` | Four squishy movement variations, attack, hurt, death |
+| `SFX/Characters/Knight/` | Four simple shared footsteps, jump, soft landing, sword swing, hurt, death |
+| `SFX/Characters/Skeleton/` | Same four footsteps as Knight/Zombie, sword/bone attack, approved short fracture hurt, death |
+| `SFX/Characters/Zombie/` | Same four footsteps as Knight/Skeleton, attack, approved demon-like hurt, death |
+| `SFX/Characters/Slime/` | Attack, hurt, death; movement intentionally silent with empty footstep slots |
 | `SFX/Characters/DiceDemon/` | Attack, hurt, death, fireball launch and impact |
 
 `AudioIndex.csv` maps every file to its Inspector field. `AudioManifest.json` is the machine-readable source of the assignments and file statistics.
@@ -37,6 +37,12 @@ Each theme is a 16-bar original instrumental loop, approximately 26–46 seconds
 
 Shared clips are assigned on `Assets/Prefabs/GameAudio.prefab`. Character clips are assigned on the Knight and four enemy prefabs' **Character Audio** components. Zombie has its own overrides, so it does not use Skeleton's sounds. Slots for actions that a character does not perform remain empty.
 
+The approved set uses coin option A, softer dice roll/settle, shared plain footsteps, Knight landing, Skeleton hurt option B, Slime hurt, the approved demon hurt, and the final Zombie hurt derived from that demon. Twenty WAVs were replaced in place to preserve their GUIDs. The four unused Slime movement WAVs and metadata were removed. Replacement import normalization is disabled to preserve the approved softer levels.
+
+Knight attack now uses audition A (Soft swish), and Skeleton death uses audition B (Soft bone tumble), at their auditioned levels. Both old game WAV payloads were replaced in place, preserving GUIDs and Inspector references.
+
+Current mix adjustments: coin pickup stays at 15% of its original approved amplitude; dice roll and settle are now at 225% of their approved levels (another 50% increase from the previous 150%). The new Knight attack replaces the earlier half-volume original. Import normalization is disabled to preserve these levels. Source credits are retained under `ArtSource/Audio/`.
+
 Replace any clip directly in those Inspector fields. Music imports as stereo Vorbis streaming; short effects import as mono PCM and preload. Music and SFX retain the game's independent volume controls.
 
-The source WAVs are 44.1 kHz, 16-bit PCM. File checks found no empty, silent, invalid, or individually clipped files. Play mode and audible balancing are left to the user.
+The source WAVs are 44.1 kHz, 16-bit PCM. `AudioManifest.json` records the installed clips and replacement hashes. Source credits and licenses are under `ArtSource/Audio/FoleyReferences/`. Local generators, audition recordings, backups, and installation reports are excluded from version control and are not required by the game.

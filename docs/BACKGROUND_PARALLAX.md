@@ -27,16 +27,16 @@ The unused `Layer_0010_1` sky asset would use 1; it has not been added to either
 - Parallax is horizontal only, preserving authored heights and vertical camera behavior. The camera must be orthographic. An unassigned camera falls back to `Camera.main`.
 - To tune a layer, give all of its authored copies the same factor. Matching also includes sprite, material, color, sorting, transform scale/rotation, and vertical position.
 
-## Reusable Editor tools
+## Local Editor tools
 
-Run these from the project root with the Unity Editor connected:
+The optional scripts below live in the local, ignored `Tools/` folder and are not included in a fresh checkout. Existing scenes already contain the configuration. If those local tools are available, run them from the project root with the Unity Editor connected:
 
 ```powershell
 # Edit mode, with no unsaved scene edits. Reapply the table above to prefab and scenes.
-unity command run_script --caller plugin --skill unity-cli --format json -- --file Tools/Unity/ConfigureForestParallax.cs --entry ConfigureForestParallax.Main
+unity command script run --caller plugin --skill unity-cli --format json --file Tools/Unity/ConfigureForestParallax.cs --entry ConfigureForestParallax.Main
 
 # Play mode, after frames have advanced. Temporarily moves the camera and restores it afterward.
-unity command run_script --caller plugin --skill unity-cli --format json -- --file Tools/Unity/VerifyBackgroundScrolling.cs --entry VerifyBackgroundScrolling.Main
+unity command script run --caller plugin --skill unity-cli --format json --file Tools/Unity/VerifyBackgroundScrolling.cs --entry VerifyBackgroundScrolling.Main
 ```
 
 Verification passed in both scenes: 12 independently repeated layers, 360 coverage checks per scene, correct parallax ratios, reverse scrolling, camera jumps up to 5,000 units in either direction, and a wider orthographic view. Tile count stayed stable after viewport expansion. Unity compilation and console checks were clean.

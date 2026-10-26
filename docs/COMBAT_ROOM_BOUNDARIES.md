@@ -16,17 +16,17 @@ Q remains available as a development shortcut and retains its previous behavior.
 
 ## Verification tools
 
-With the Unity Editor connected, from the project root:
+These optional scripts are local working files under the ignored `Tools/` folder, not included in a fresh checkout. The committed scene already contains the configuration. If the tools are available locally, run them with the Unity Editor connected from the project root:
 
 ```powershell
 # Edit mode, with no unsaved scene edits. Configures MainScene only.
-unity command run_script --caller plugin --skill unity-cli --format json -- --file Tools/Unity/ConfigureCombatRoomBounds.cs --entry ConfigureCombatRoomBounds.Main
+unity command script run --caller plugin --skill unity-cli --format json --file Tools/Unity/ConfigureCombatRoomBounds.cs --entry ConfigureCombatRoomBounds.Main
 
 # Start a fresh Play session directly in MainScene, then run the live regression check.
-unity command run_script --caller plugin --skill unity-cli --format json -- --file Tools/Unity/VerifyCombatRoomBounds.cs --entry VerifyCombatRoomBounds.Main
+unity command script run --caller plugin --skill unity-cli --format json --file Tools/Unity/VerifyCombatRoomBounds.cs --entry VerifyCombatRoomBounds.Main
 
 # In Play mode between transitions, also check the three placeholder room types.
-unity command run_script --caller plugin --skill unity-cli --format json -- --file Tools/Unity/VerifyEmptyRoomBounds.cs --entry VerifyEmptyRoomBounds.Main
+unity command script run --caller plugin --skill unity-cli --format json --file Tools/Unity/VerifyEmptyRoomBounds.cs --entry VerifyEmptyRoomBounds.Main
 ```
 
 The combat check drives the real player movement/physics code without holding keyboard keys, checks left-wall stability and jumping, idle animation while blocked, camera limits, locked/cleared exits, partial and cleared save/load, pending rewards, and fully off-screen departure through the map transition. It temporarily disables automatic encounter input and uses a unique directory under `Temp/BoundaryVerification/` for saves. It never writes to the user's save directory. Results are written to `Temp/combat-room-boundary-verification.json`. The placeholder check verifies a fixed initial screen, no enemies, and off-screen completion for shop, random, and treasure rooms, with results in `Temp/empty-room-boundary-verification.json`. Stop Play mode afterward to discard the fixtures.
