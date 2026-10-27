@@ -39,9 +39,13 @@ Shared clips are assigned on `Assets/Prefabs/GameAudio.prefab`. Character clips 
 
 The approved set uses coin option A, softer dice roll/settle, shared plain footsteps, Knight landing, Skeleton hurt option B, Slime hurt, the approved demon hurt, and the final Zombie hurt derived from that demon. Twenty WAVs were replaced in place to preserve their GUIDs. The four unused Slime movement WAVs and metadata were removed. Replacement import normalization is disabled to preserve the approved softer levels.
 
-Knight attack now uses audition A (Soft swish), and Skeleton death uses audition B (Soft bone tumble), at their auditioned levels. Both old game WAV payloads were replaced in place, preserving GUIDs and Inspector references.
+Knight attack previously used audition A (Soft swish), and Skeleton death uses audition B (Soft bone tumble), at their auditioned levels. Both old game WAV payloads were replaced in place, preserving GUIDs and Inspector references. The current attack revision described below supersedes the Knight selection.
 
-Current mix adjustments: coin pickup stays at 15% of its original approved amplitude; dice roll and settle are now at 225% of their approved levels (another 50% increase from the previous 150%). The new Knight attack replaces the earlier half-volume original. Import normalization is disabled to preserve these levels. Source credits are retained under `ArtSource/Audio/`.
+Current mix adjustments: coin pickup is restored to 100% of its original approved amplitude, with one sound per cluster and no additional playback boost; dice roll and settle are now at 225% of their approved levels (another 50% increase from the previous 150%). The new Knight attack replaces the earlier half-volume original. Import normalization is disabled to preserve these levels. Source credits are retained under `ArtSource/Audio/`.
+
+The current Knight, Skeleton, Zombie, Slime, and Dice Demon hurt effects are distinct variations derived from both user-supplied retro references, replacing the earlier hurt selections above. Original reference files and processing notes are under [`ArtSource/Audio/PixelHurt20261027`](../../ArtSource/Audio/PixelHurt20261027/README.md). Their existing asset paths and prefab assignments are preserved.
+
+All five characters have matching action-specific attack cues: light sword swishes for Knight and Skeleton, a heavier swing for Zombie, a liquid flick for Slime, and a brief charge for Dice Demon. The Knight prefab's previously empty Attack field is assigned. Dice Demon's fireball launch/impact fields remain separate. Sources and processing are recorded in the [attack sound notes](../../ArtSource/Audio/CharacterAttacks20261027/README.md).
 
 Replace any clip directly in those Inspector fields. Music imports as stereo Vorbis streaming; short effects import as mono PCM and preload. Music and SFX retain the game's independent volume controls.
 

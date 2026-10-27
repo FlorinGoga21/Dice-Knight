@@ -39,7 +39,6 @@ public partial class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     [SerializeField] private PlayerController playerController;
     [SerializeField] private DamageNumber damageNumber;
     [SerializeField] private HealNumber healNumber;
-    [SerializeField] private UnityEngine.UI.Button RollButton;
     [SerializeField] private int currency = 0;
 
     private HealthHeartsUI healthHeartsUI;

@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 [DefaultExecutionOrder(-1100)]
 public sealed class GameAudio : MonoBehaviour
 {
+    private const float CoinPickupClusterGap = 0.15f;
+
     [Header("---Music Clips---")]
     [SerializeField] private AudioClip mainMenuMusic;
     [SerializeField] private AudioClip mapMusic;
@@ -59,6 +61,7 @@ public sealed class GameAudio : MonoBehaviour
     private float musicGain = 1f;
     private float lastFocusTime = -1f;
     private float lastSettingTime = -1f;
+    private float lastCoinPickupTime = float.NegativeInfinity;
     private bool sceneInitialized;
     public static GameAudio Instance => instance;
 
@@ -121,6 +124,7 @@ public sealed class GameAudio : MonoBehaviour
     {
         sceneInitialized = true;
         gameplaySource.Stop();
+        lastCoinPickupTime = float.NegativeInfinity;
         PlayMusic(SceneMusic(scene.name));
         foreach (var selectable in FindObjectsByType<UnityEngine.UI.Selectable>(FindObjectsInactive.Include))
         {
@@ -179,6 +183,14 @@ public sealed class GameAudio : MonoBehaviour
         }
         AudioClip clip = instance.ClipFor(cue);
         if (clip == null) return;
+        if (cue == Cue.CoinPickup)
+        {
+            // Keep one sound for consecutive arrivals, rearming after a gap between clusters.
+            float now = Time.time;
+            bool sameCluster = now - instance.lastCoinPickupTime < CoinPickupClusterGap;
+            instance.lastCoinPickupTime = now;
+            if (sameCluster) return;
+        }
         AudioSource source = cue <= Cue.DeleteSave ? instance.uiSource : instance.gameplaySource;
         source.PlayOneShot(clip);
     }

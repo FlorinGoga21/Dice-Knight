@@ -55,12 +55,18 @@ Music loops automatically. Music Fade Duration controls the fade when changing t
 
 | Inspector field | Used for |
 | --- | --- |
-| Coin Pickup | Coin arrives at the player's gold counter |
+| Coin Pickup | First coin in a cluster arrives at the player's gold counter; plays again after a gap of at least 0.15 seconds between arrivals |
 | Map Travel | Map marker begins moving to the selected room |
 | Room Entered | MainScene loads |
 | Room Completed | Leaving a completed room for the map |
 
+Coin Pickup uses its original approved source amplitude (100%), scaled by the SFX setting, with no additional playback boost. Cluster timing uses gameplay time so pausing does not split a cluster. Every coin still grants its full currency value.
+
 ## Character sounds
+
+The current five Hurt assignments use distinct variations of the two user-supplied pixel/retro references. See [source and processing notes](../ArtSource/Audio/PixelHurt20261027/README.md). Existing prefab assignments are preserved, and import normalization is disabled on the hurt clips to retain their authored balance.
+
+The five Attack assignments use matching action-specific cues; see the [attack sound notes](../ArtSource/Audio/CharacterAttacks20261027/README.md). Knight's prefab Attack field is assigned to its attack WAV. Dice Demon's Attack is a short charge before its separate Projectile Launch effect; Projectile Launch and Projectile Impact retain their original clips.
 
 Open each prefab below and select its root. Assign its **Character Audio** component. These are per-character fields so Skeleton, Zombie, Slime, Dice Demon, and Knight can sound different.
 
@@ -111,5 +117,5 @@ The current pack contains 8 music loops and 55 sound effects, with 63 active cli
 Subsequent selection: Knight Attack uses A (Soft swish); Skeleton Death uses B
 (Soft bone tumble). The old game clip contents were replaced at the same paths
 and GUIDs. Dice Roll and Dice Settled are at 225% of the original approved source
-amplitude; Coin Pickup stays at 15%. `KnightSkeletonSelection/report.json` under
+amplitude; Coin Pickup has since been restored to its original approved level (100%). `KnightSkeletonSelection/report.json` under
 `ArtSource/Audio/` verifies the four changed imports and prefab bindings.

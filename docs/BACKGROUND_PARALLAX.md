@@ -29,12 +29,9 @@ The unused `Layer_0010_1` sky asset would use 1; it has not been added to either
 
 ## Local Editor tools
 
-The optional scripts below live in the local, ignored `Tools/` folder and are not included in a fresh checkout. Existing scenes already contain the configuration. If those local tools are available, run them from the project root with the Unity Editor connected:
+The optional verification script below lives in the local, ignored `Tools/` folder and is not included in a fresh checkout. Existing scenes already contain the configuration; the completed one-time setup tool was retired during cleanup. If the verifier is available, run it from the project root with the Unity Editor connected:
 
 ```powershell
-# Edit mode, with no unsaved scene edits. Reapply the table above to prefab and scenes.
-unity command script run --caller plugin --skill unity-cli --format json --file Tools/Unity/ConfigureForestParallax.cs --entry ConfigureForestParallax.Main
-
 # Play mode, after frames have advanced. Temporarily moves the camera and restores it afterward.
 unity command script run --caller plugin --skill unity-cli --format json --file Tools/Unity/VerifyBackgroundScrolling.cs --entry VerifyBackgroundScrolling.Main
 ```

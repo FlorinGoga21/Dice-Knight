@@ -16,12 +16,9 @@ Q remains available as a development shortcut and retains its previous behavior.
 
 ## Verification tools
 
-These optional scripts are local working files under the ignored `Tools/` folder, not included in a fresh checkout. The committed scene already contains the configuration. If the tools are available locally, run them with the Unity Editor connected from the project root:
+These optional scripts are local working files under the ignored `Tools/` folder, not included in a fresh checkout. The committed scene already contains the configuration; the completed one-time setup tool was retired during cleanup. If the verifiers are available locally, run them with the Unity Editor connected from the project root:
 
 ```powershell
-# Edit mode, with no unsaved scene edits. Configures MainScene only.
-unity command script run --caller plugin --skill unity-cli --format json --file Tools/Unity/ConfigureCombatRoomBounds.cs --entry ConfigureCombatRoomBounds.Main
-
 # Start a fresh Play session directly in MainScene, then run the live regression check.
 unity command script run --caller plugin --skill unity-cli --format json --file Tools/Unity/VerifyCombatRoomBounds.cs --entry VerifyCombatRoomBounds.Main
 

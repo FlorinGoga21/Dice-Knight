@@ -123,17 +123,6 @@ public class DiceRollUI : MonoBehaviour
         }
     }
 
-    public void BuyNextDie()
-    {
-        if (activeDiceCount >= GetDiceSlotCount())
-        {
-            return;
-        }
-
-        activeDiceCount++;
-        UpdateDiceAvailability();
-    }
-
     private int GetDiceSlotCount()
     {
         if (diceImages == null || selectedIndicators == null)

@@ -205,7 +205,7 @@ MonoBehaviour:
   blockRaised: {fileID: 8300000, guid: 1a0888c0f52c6e5428a3f4cc5f164ac7, type: 3}
   blockImpact: {fileID: 8300000, guid: f7379acaf17b89f43a4ba86485ed3923, type: 3}
   healingPotion: {fileID: 8300000, guid: c2a9e5273559ce84b97195e5d3a14a3b, type: 3}
-  coinPickup: {fileID: 8300000, guid: d2e724aa9abd46e42843e1533d8d54f0, type: 3}
+  coinPickup: {fileID: 8300000, guid: 86c8536f9fc30004a938f97218a525a5, type: 3}
   mapTravel: {fileID: 8300000, guid: c0bcf3c8145eeaf46a15f5ebb933d7a7, type: 3}
   roomEntered: {fileID: 8300000, guid: c970143c30e31a84a8c687eef6e50505, type: 3}
   roomCompleted: {fileID: 8300000, guid: db4303b01fb8e5a4ba550b008ff5a43f, type: 3}

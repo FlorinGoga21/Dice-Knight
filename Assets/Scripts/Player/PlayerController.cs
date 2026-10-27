@@ -53,7 +53,6 @@ public partial class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool wasGrounded;
     private bool hasDied;
-    private bool gameplayEnabled = true;
     private SpriteRenderer[] spriteRenderers;
     private SpriteRenderer blockingShieldRenderer;
     private Vector3 blockingShieldRestPosition;
@@ -69,7 +68,7 @@ public partial class PlayerController : MonoBehaviour
     private CombatController combatController;
     private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
-    public bool CanStartTurnCombat => !hasDied && gameplayEnabled;
+    public bool CanStartTurnCombat => !hasDied;
     public int AttackDamage => attackDamage;
     public float AttackHitDelay => attackHitDelay;
     public float AttackCooldown => attackCooldown;
@@ -136,7 +135,7 @@ public partial class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale <= 0f || hasDied || !gameplayEnabled || (combatController != null && combatController.IsInCombat))
+        if (Time.timeScale <= 0f || hasDied || (combatController != null && combatController.IsInCombat))
         {
             return;
         }
@@ -169,7 +168,7 @@ public partial class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (hasDied || !gameplayEnabled)
+        if (hasDied)
         {
             return;
         }
@@ -199,16 +198,6 @@ public partial class PlayerController : MonoBehaviour
         );
         animator.SetBool("hasDied", true);
         StartCoroutine(QuitGame());
-    }
-
-    public void SetGameplayEnabled(bool enabled)
-    {
-        gameplayEnabled = enabled;
-        if (!enabled)
-        {
-            moveInput = 0f;
-            rb.linearVelocity = Vector2.zero;
-        }
     }
 
     public void PrepareForTurnCombat()

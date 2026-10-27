@@ -3980,13 +3980,13 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4023,7 +4023,7 @@ MonoBehaviour:
   textNormal: {r: 0.118, g: 0.071, b: 0.063, a: 1}
   textHover: {r: 0.118, g: 0.071, b: 0.063, a: 1}
   textPressed: {r: 0.118, g: 0.071, b: 0.063, a: 1}
-  textDisabled: {r: 0.275, g: 0.275, b: 0.314, a: 1}
+  textDisabled: {r: 1, g: 1, b: 1, a: 1}
   iconNormal: {r: 1, g: 1, b: 1, a: 1}
   iconHover: {r: 1, g: 1, b: 1, a: 1}
   iconPressed: {r: 1, g: 1, b: 1, a: 1}
@@ -5147,7 +5147,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4279243294
-  m_fontColor: {r: 0.118, g: 0.071, b: 0.063, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9692,6 +9692,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1443527317212665870, guid: ce22b756e982a594b835bca82e24fa5a, type: 3}
+      propertyPath: autosaveInterval
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 1713555753756891845, guid: ce22b756e982a594b835bca82e24fa5a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10730,6 +10734,30 @@ PrefabInstance:
       propertyPath: minimumEnemies
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7309604404091995848, guid: de27a14c19dd877438d6371736a90549, type: 3}
+      propertyPath: enemyPool.Array.data[0].id
+      value: dice-demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309604404091995848, guid: de27a14c19dd877438d6371736a90549, type: 3}
+      propertyPath: enemyPool.Array.data[1].id
+      value: slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309604404091995848, guid: de27a14c19dd877438d6371736a90549, type: 3}
+      propertyPath: enemyPool.Array.data[2].id
+      value: skeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309604404091995848, guid: de27a14c19dd877438d6371736a90549, type: 3}
+      propertyPath: enemyPool.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 5177458355116526714, guid: 09d2c1772f9095740a4931dcd36a6bb9, type: 3}
+    - target: {fileID: 7309604404091995848, guid: de27a14c19dd877438d6371736a90549, type: 3}
+      propertyPath: enemyPool.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 5788070678420168343, guid: f8b1336b55d1efb4081bc20508848968, type: 3}
+    - target: {fileID: 7309604404091995848, guid: de27a14c19dd877438d6371736a90549, type: 3}
+      propertyPath: enemyPool.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 1649910359410038134, guid: 0942fdd309a02574bba4483f0420a7e8, type: 3}
     - target: {fileID: 8151336011222270951, guid: de27a14c19dd877438d6371736a90549, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner

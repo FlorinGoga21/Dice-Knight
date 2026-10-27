@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -36,24 +35,6 @@ public sealed class HealNumber : MonoBehaviour
         float horizontalDirection = Random.value < 0.5f ? -1f : 1f;
         Vector3 endPosition = startPosition + Vector3.right * horizontalDirection * horizontalDistance;
 
-        StartCoroutine(Animate(text, startPosition, endPosition));
-    }
-
-    private IEnumerator Animate(
-        TextMeshPro text,
-        Vector3 startPosition,
-        Vector3 endPosition)
-    {
-        float elapsed = 0f;
-
-        while (elapsed < lifetime)
-        {
-            elapsed += Time.deltaTime;
-            float progress = Mathf.Clamp01(elapsed / lifetime);
-            FloatingNumberVisuals.AnimateFrame(text, startPosition, endPosition, progress, jumpHeight);
-            yield return null;
-        }
-
-        Destroy(text.gameObject);
+        StartCoroutine(FloatingNumberVisuals.Animate(text, startPosition, endPosition, lifetime, jumpHeight));
     }
 }

@@ -14,6 +14,8 @@ DiceDemon uses the cacodaemon sheet for flight, attack, hurt, and death animatio
 
 `DiceDemon Palette.mat` applies a muted, cooler red palette and a dark pixel outline across every animation. It also supports the existing white damage flash. Edit this material to tune the appearance without redrawing animation frames or changing the external source sheet.
 
+DiceDemon's project-owned sprite sheet uses **32 pixels per unit**. The prefab's Visuals scale is **0.55 on X/Y** (previously 1.1 at 64 PPU), preserving its rendered size. The Mouth local offset is **(0.62, -0.32)** to preserve the fireball origin. Root scale, collider, and sprite identities remain unchanged.
+
 Skeletons choose a random weapon when spawned. The **Enemy Weapon Variation** component on `Assets/Prefabs/Enemies/Skeleton.prefab` contains 19 SPUM swords, axes, daggers, a hammer, and a mace. Spears, bows, and staffs are excluded. Sword_5, New_Weapon_01, and New_Weapon_18 have also been removed from the pool. Older saves containing these retired weapons use the first allowed weapon instead. This changes appearance only; weapon choice does not change damage or attack timing. The sprites use the existing animated weapon hand, with no changes to the SPUM source assets.
 
 Room saves preserve the exact enemy lineup, positions, health, defeated state, and selected weapons. An empty saved room stays empty. Older saves recreate their existing skeletons with the original sword. Weapon sprite names identify saved weapons, so keep those names stable and unique in the weapon pool.

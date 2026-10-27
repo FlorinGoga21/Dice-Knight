@@ -35,9 +35,6 @@ public sealed class EnemySpawner : MonoBehaviour
     private readonly List<EnemyStats> spawnedEnemies = new List<EnemyStats>();
     private bool initialized;
 
-    public IReadOnlyList<EnemyStats> SpawnedEnemies => spawnedEnemies;
-    public string SpawnerId => spawnerId;
-
     private void Start()
     {
         // SaveManager normally initializes us before restoring the room.

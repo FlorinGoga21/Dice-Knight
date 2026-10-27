@@ -36,7 +36,7 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - Completed the scrollable **Controls** page with Input Sprites for TextMesh Pro. Glyphs follow the current keyboard/mouse, Xbox/generic gamepad, PlayStation, or Nintendo device. WASD and arrow keys use familiar directional clusters; Back is centered on the Controls page.
 - Added the same Settings and Controls screens to the map and gameplay pause menus. The small gear sits at the **screen's top-right corner** and matches the main menu's displayed size. Closing Settings returns to pause; Back/Cancel closes one level at a time without resuming gameplay.
 - Replaced the selected coin, dice, footsteps, landing, and hurt effects after auditioning alternatives. Knight, Skeleton, and Zombie now share simple footsteps; Slime movement is silent. The approved demon hurt is retained, and Zombie hurt uses a related demonic sound.
-- Installed the soft-swish **Knight attack A** and bone-tumble **Skeleton death B**. Coin pickup is at 15% of its approved source amplitude; softer dice roll/settle recordings are now at 225% of their approved source amplitude. Replaced clips preserve their existing asset references; superseded Slime movement clips were removed.
+- Installed the soft-swish **Knight attack A** and bone-tumble **Skeleton death B**. Coin pickup is restored to 100% of its approved source amplitude and plays once per cluster; softer dice roll/settle recordings are now at 225% of their approved source amplitude. Replaced clips preserve their existing asset references; superseded Slime movement clips were removed.
 - Kept the current audio set at **63 clips: 8 music loops and 55 effects**. Audio sources and credits are documented in the [audio notes](ArtSource/Audio/README.md).
 - Excluded local automation, generated previews, audition archives/backups, verification reports, and personal editor settings from version control. Game assets, Unity metadata, packages, project settings, documentation screenshots, source art, and audio credits remain part of the project.
 - Checked Unity compilation, saved menu wiring, and imported audio levels. Final pause-menu gameplay and visual checks are left to the user; no Play mode checks were run for the pause-settings addition.
@@ -152,6 +152,10 @@ To replace sounds in the Inspector:
 - Follow the [field-by-field assignment checklist](docs/SOUND_ASSIGNMENTS.md) or [audio index](Assets/Audio/AudioIndex.csv). Unused character-action fields can remain empty.
 
 The [audio notes](ArtSource/Audio/README.md) describe the installed sounds and source credits. The game uses the committed clips directly; local generation tools and audition history are not required to open or build it.
+
+The player and all four enemies now use distinct hurt effects derived from two user-supplied retro sound references. The [hurt sound notes](ArtSource/Audio/PixelHurt20261027/README.md) record the sources and character variations.
+
+Matching [attack effects](ArtSource/Audio/CharacterAttacks20261027/README.md) cover sword swings, Zombie's heavier arm swing, Slime's liquid flick, and Dice Demon's short charge. Its fireball launch and impact cues remain separate.
 
 ## Repository contents
 

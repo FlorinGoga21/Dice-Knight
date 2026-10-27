@@ -4,4 +4,4 @@ Dice Demon, Skeleton, Zombie, Slime, and the Knight player already call their co
 
 Dice Demon's palette material uses opaque white. The others share `Assets/Materials/PlayerFlashMaterial.mat`, now configured with the same opaque white `_FlashColor`. The previous red color's alpha was 0.137, limiting its flash to about 14% strength. Their normal appearance and flash timing are unchanged.
 
-The local `Tools/Unity/MatchDamageFlash.cs` helper is excluded from version control. The shared material and prefab assignments already contain this configuration. Play mode testing is left to the user.
+The completed one-time damage-flash setup helper was retired during cleanup. The shared material and prefab assignments contain this configuration. Play mode testing is left to the user.

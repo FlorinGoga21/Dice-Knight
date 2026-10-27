@@ -13,10 +13,23 @@ effects were replaced. Demon hurt was retained; Zombie hurt derives from that
 approved demon sound. Knight attack uses Soft swish (A), and Skeleton death uses
 Soft bone tumble (B).
 
-Coin pickup is at 15% of its approved source amplitude. Dice roll and settle use
+On 27 October 2026, all five character hurt effects were replaced with distinct
+retro variations derived from the two user-supplied pixel/retro hurt references.
+Knight is crisp, Skeleton is sharper, Zombie is lower, Slime bends in pitch, and
+Dice Demon is deeper. Source files and processing notes are retained in
+[PixelHurt20261027](PixelHurt20261027/README.md). This supersedes the earlier
+character hurt selections described above.
+
+The matching [character attack set](CharacterAttacks20261027/README.md) uses short
+sword swishes for Knight and Skeleton, a heavier arm swing for Zombie, a liquid
+flick for Slime, and a brief charge for Dice Demon. The new Knight attack replaces
+the earlier Soft swish selection. Dice Demon's separate fireball launch and impact
+effects retain their existing assignments.
+
+Coin pickup is restored to 100% of its approved source amplitude, with one sound per cluster and no additional playback boost. Dice roll and settle use
 soft foley at 225% of their approved source amplitudes after later mix increases.
-The new Knight attack uses its auditioned level, replacing the earlier original
-attack and its half-volume adjustment. Import normalization is disabled on these
+The current character attack set uses its authored levels, replacing the earlier
+Knight attack selection and its volume adjustments. Import normalization is disabled on these
 replacements to retain their intended levels.
 
 ## Credits and licenses

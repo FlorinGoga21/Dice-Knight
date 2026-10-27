@@ -481,12 +481,12 @@
       "category": "World",
       "loop": false,
       "duration": 0.235,
-      "peak": 0.04816,
-      "rms": 0.00825,
+      "peak": 0.32108,
+      "rms": 0.055,
       "channels": 1,
       "approvedSource": "output/audio-previews/revision-06/approved/Shared/CoinPickup_A.wav",
-      "sha256": "d4cce0ad2e5920c21086b0d40d531dd5a1c07812d50f001702137ff4e7ab030d",
-      "volumeTuningGain": 0.15,
+      "sha256": "a91d73640f9c78f4e28f146e56854cde9b4c67041edf98f57e905304a3f73d1d",
+      "volumeTuningGain": 1.0,
       "volumeTuningSource": "ArtSource/Audio/VolumeTuning/CoinAndKnightAttackHalf/SFX_CoinPickup.wav"
     },
     {
@@ -584,21 +584,34 @@
       "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Attack.wav",
       "category": "Knight",
       "loop": false,
-      "duration": 0.22,
-      "peak": 0.190002,
-      "rms": 0.032794,
+      "duration": 0.2,
+      "peak": 0.2565,
+      "rms": 0.046999,
       "channels": 1,
-      "sha256": "bcf584685ada3c803fe4e5e71fad4ca72125eea701296b1cd98e344b11aed147",
-      "approvedSource": "output/audio-previews/knight-attack-skeleton-death/clips/KnightAttack_A.wav"
+      "sha256": "117fbf0dc254ba04a7f338007b74a6e5575c85464ea66caaa877b481955a3ae0",
+      "approvedSource": "output/audio-previews/character-attacks-20261027/clips/Knight_Attack.wav",
+      "attackDesign": "CharacterAttacks20261027",
+      "sourceReferences": [
+        "ArtSource/Audio/CharacterAttacks20261027/Sources/cloth4.wav",
+        "ArtSource/Audio/CharacterAttacks20261027/Sources/knifeSlice2.wav",
+        "ArtSource/Audio/CharacterAttacks20261027/Sources/drawKnife2.wav"
+      ]
     },
     {
       "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Hurt.wav",
       "category": "Knight",
       "loop": false,
-      "duration": 0.27,
-      "peak": 0.62294,
-      "rms": 0.15,
-      "channels": 1
+      "duration": 0.24,
+      "peak": 0.58514,
+      "rms": 0.095,
+      "channels": 1,
+      "sha256": "a4e6d29e676a0c54e41f882f4ca67a4a93cfe7d41d9646c287d45e9a31ff0b95",
+      "approvedSource": "output/audio-previews/pixel-hurt-20261027-character/clips/Knight_Hurt.wav",
+      "sourceReferences": [
+        "ArtSource/Audio/PixelHurt20261027/Reference.mp3",
+        "ArtSource/Audio/PixelHurt20261027/DrikenReference.mp3"
+      ],
+      "hurtDesign": "PixelHurt20261027-Character"
     },
     {
       "path": "Assets/Audio/SFX/Characters/Knight/SFX_Knight_Death.wav",
@@ -657,21 +670,33 @@
       "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Attack.wav",
       "category": "Skeleton",
       "loop": false,
-      "duration": 0.29,
-      "peak": 0.82,
-      "rms": 0.13022,
-      "channels": 1
+      "duration": 0.19,
+      "peak": 0.26624,
+      "rms": 0.042999,
+      "channels": 1,
+      "sha256": "9d6921e58e46fa9270124c5b9d6c7eef2a628cf0793442904bf14fcc0fbabd13",
+      "approvedSource": "output/audio-previews/character-attacks-20261027/clips/Skeleton_Attack.wav",
+      "attackDesign": "CharacterAttacks20261027",
+      "sourceReferences": [
+        "ArtSource/Audio/CharacterAttacks20261027/Sources/knifeSlice2.wav",
+        "ArtSource/Audio/CharacterAttacks20261027/Sources/boneTap.wav"
+      ]
     },
     {
       "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Hurt.wav",
       "category": "Skeleton",
       "loop": false,
-      "duration": 0.1667,
-      "peak": 0.34833,
-      "rms": 0.065,
+      "duration": 0.23,
+      "peak": 0.55045,
+      "rms": 0.087,
       "channels": 1,
-      "approvedSource": "output/audio-previews/revision-06/approved/Skeleton/Skeleton_Hurt.wav",
-      "sha256": "955cc63e7a7546052d6441d07dedb842be8f688575e2d27c32f1435c1af1618a"
+      "approvedSource": "output/audio-previews/pixel-hurt-20261027-character/clips/Skeleton_Hurt.wav",
+      "sha256": "8da6183e3eed051760e30800b3de0ff6164a92165d89d3ad7c95c3aa16107d53",
+      "sourceReferences": [
+        "ArtSource/Audio/PixelHurt20261027/Reference.mp3",
+        "ArtSource/Audio/PixelHurt20261027/DrikenReference.mp3"
+      ],
+      "hurtDesign": "PixelHurt20261027-Character"
     },
     {
       "path": "Assets/Audio/SFX/Characters/Skeleton/SFX_Skeleton_Death.wav",
@@ -732,21 +757,33 @@
       "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Attack.wav",
       "category": "Zombie",
       "loop": false,
-      "duration": 0.45,
-      "peak": 0.67526,
-      "rms": 0.15,
-      "channels": 1
+      "duration": 0.24,
+      "peak": 0.43658,
+      "rms": 0.049998,
+      "channels": 1,
+      "sha256": "39e21f6c43efd6c61a1f5bc84d88caca5eba160d5d59ae465e32c43d4749b24a",
+      "approvedSource": "output/audio-previews/character-attacks-20261027/clips/Zombie_Attack.wav",
+      "attackDesign": "CharacterAttacks20261027",
+      "sourceReferences": [
+        "ArtSource/Audio/CharacterAttacks20261027/Sources/cloth3.wav",
+        "ArtSource/Audio/CharacterAttacks20261027/Sources/knifeSlice2.wav"
+      ]
     },
     {
       "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Hurt.wav",
       "category": "Zombie",
       "loop": false,
-      "duration": 0.46,
-      "peak": 0.34229,
-      "rms": 0.07415,
+      "duration": 0.29,
+      "peak": 0.61325,
+      "rms": 0.095,
       "channels": 1,
-      "approvedSource": "output/audio-previews/revision-06/clips/Zombie_Hurt.wav",
-      "sha256": "0a087d021b3f68b5d7861429681ef4ce6c4cdeb2a5a79d39a646f7ad9b43a82c"
+      "approvedSource": "output/audio-previews/pixel-hurt-20261027-character/clips/Zombie_Hurt.wav",
+      "sha256": "e99f7efa26a8de00fcc298661326c82a5272e16d7f2ce3866d734307ced035f1",
+      "sourceReferences": [
+        "ArtSource/Audio/PixelHurt20261027/Reference.mp3",
+        "ArtSource/Audio/PixelHurt20261027/DrikenReference.mp3"
+      ],
+      "hurtDesign": "PixelHurt20261027-Character"
     },
     {
       "path": "Assets/Audio/SFX/Characters/Zombie/SFX_Zombie_Death.wav",
@@ -761,21 +798,30 @@
       "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Attack.wav",
       "category": "Slime",
       "loop": false,
-      "duration": 0.3,
-      "peak": 0.6465,
-      "rms": 0.15,
-      "channels": 1
+      "duration": 0.22,
+      "peak": 0.17026,
+      "rms": 0.046999,
+      "channels": 1,
+      "sha256": "c400c4d6e1fc22b916e0e23c574ae1abb92dcf7ea7be10ae3daa00b39c83f7b5",
+      "approvedSource": "output/audio-previews/character-attacks-20261027/clips/Slime_Attack.wav",
+      "attackDesign": "CharacterAttacks20261027",
+      "sourceReferences": []
     },
     {
       "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Hurt.wav",
       "category": "Slime",
       "loop": false,
-      "duration": 0.25,
-      "peak": 0.27277,
-      "rms": 0.05,
+      "duration": 0.26,
+      "peak": 0.58624,
+      "rms": 0.085,
       "channels": 1,
-      "approvedSource": "output/audio-previews/revision-06/approved/Slime/Slime_Hurt.wav",
-      "sha256": "fe1c815025372ba0c66b6fca2e177e2c1f8c949f4e9042e7fb12189f558c5736"
+      "approvedSource": "output/audio-previews/pixel-hurt-20261027-character/clips/Slime_Hurt.wav",
+      "sha256": "03ba15f47b2e49a0272aa53f7a639b4e4d8136e499296cd81cf775294e6f0f93",
+      "sourceReferences": [
+        "ArtSource/Audio/PixelHurt20261027/Reference.mp3",
+        "ArtSource/Audio/PixelHurt20261027/DrikenReference.mp3"
+      ],
+      "hurtDesign": "PixelHurt20261027-Character"
     },
     {
       "path": "Assets/Audio/SFX/Characters/Slime/SFX_Slime_Death.wav",
@@ -790,21 +836,30 @@
       "path": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Attack.wav",
       "category": "DiceDemon",
       "loop": false,
-      "duration": 0.42,
-      "peak": 0.69277,
-      "rms": 0.15,
-      "channels": 1
+      "duration": 0.16,
+      "peak": 0.22803,
+      "rms": 0.049998,
+      "channels": 1,
+      "sha256": "2977b5a9507c55c9bfe1d6f5d3c56c19ef187d68b2dc566fa3f09dcce8a3c07b",
+      "approvedSource": "output/audio-previews/character-attacks-20261027/clips/DiceDemon_Attack.wav",
+      "attackDesign": "CharacterAttacks20261027",
+      "sourceReferences": []
     },
     {
       "path": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Hurt.wav",
       "category": "DiceDemon",
       "loop": false,
-      "duration": 0.57,
-      "peak": 0.48904,
-      "rms": 0.1,
+      "duration": 0.42,
+      "peak": 0.71542,
+      "rms": 0.105,
       "channels": 1,
-      "approvedSource": "output/audio-previews/revision-06/approved/DiceDemon/DiceDemon_Hurt.wav",
-      "sha256": "82387b25447206f467111f1b85a0c54e76d647dafd5fa669e417afb10e795fa0"
+      "approvedSource": "output/audio-previews/pixel-hurt-20261027-bright/clips/DiceDemon_Hurt.wav",
+      "sha256": "f8e80757de149be01ae757fdeb5dfff79d5902590e0c62e59b30b7ef9d9d8566",
+      "sourceReferences": [
+        "ArtSource/Audio/PixelHurt20261027/Reference.mp3",
+        "ArtSource/Audio/PixelHurt20261027/DrikenReference.mp3"
+      ],
+      "hurtDesign": "PixelHurt20261027-Bright"
     },
     {
       "path": "Assets/Audio/SFX/Characters/DiceDemon/SFX_DiceDemon_Death.wav",

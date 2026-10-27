@@ -65,8 +65,6 @@ public sealed partial class CombatController : MonoBehaviour
     public bool IsInCombat => encounterCoroutine != null;
     public int PlayerDiceCount => diceRollUI != null ? Mathf.Max(1, diceRollUI.ActiveDiceCount) : 1;
     public int HealingPotionsRemaining => healingPotionsRemaining;
-    public bool CanSave => !IsInCombat
-        || (waitingForPlayerRoll && !blockChosenThisTurn && (diceRollUI == null || !diceRollUI.IsRolling));
 
     public void CaptureRoomSave(RoomSaveData data)
     {

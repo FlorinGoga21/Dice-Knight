@@ -7669,7 +7669,6 @@ MonoBehaviour:
   playerController: {fileID: 5339762120934824912}
   damageNumber: {fileID: 4296657186505820701}
   healNumber: {fileID: 5053322919817734972}
-  RollButton: {fileID: 0}
   currency: 0
 --- !u!114 &644210985334408834
 MonoBehaviour:
@@ -7859,7 +7858,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3b7b11a8a9f50b74fbd930de057f7a2f, type: 3}
   jump: {fileID: 8300000, guid: 0f8662f915c158a42afd1796cd962819, type: 3}
   land: {fileID: 8300000, guid: 6ab16e6db716df24e872dfeada99a8de, type: 3}
-  attack: {fileID: 8300000, guid: 8de0d51b38bca5d45a89053cd5e5e9e3, type: 3}
+  attack: {fileID: 8300000, guid: 77c1d1ca4f34b0145a7e0ad5f1bb94c0, type: 3}
   hurt: {fileID: 8300000, guid: b6a4c46cf3aa7924ca0f0ff7850134f5, type: 3}
   death: {fileID: 8300000, guid: f6639cdc88adf9b4ba48c41405a1232b, type: 3}
   projectileLaunch: {fileID: 0}

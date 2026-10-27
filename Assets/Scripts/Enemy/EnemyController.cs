@@ -251,13 +251,6 @@ public partial class EnemyController : MonoBehaviour, IDamageable
             targetDamageable.TakeDamage(damage);
     }
 
-    public bool IsWithinDetectionRange(Transform targetTransform)
-    {
-        return targetTransform != null
-            && !hasDied
-            && Mathf.Abs(targetTransform.position.x - transform.position.x) <= detectionRange;
-    }
-
     private void HandleTarget()
     {
         if (target == null || (targetDamageable != null && targetDamageable.IsDead))

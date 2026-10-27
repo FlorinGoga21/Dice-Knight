@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -30,7 +31,27 @@ internal static class FloatingNumberVisuals
         return text;
     }
 
-    internal static void AnimateFrame(
+    internal static IEnumerator Animate(
+        TextMeshPro text,
+        Vector3 startPosition,
+        Vector3 endPosition,
+        float lifetime,
+        float jumpHeight)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < lifetime)
+        {
+            elapsed += Time.deltaTime;
+            float progress = Mathf.Clamp01(elapsed / lifetime);
+            AnimateFrame(text, startPosition, endPosition, progress, jumpHeight);
+            yield return null;
+        }
+
+        Object.Destroy(text.gameObject);
+    }
+
+    private static void AnimateFrame(
         TextMeshPro text,
         Vector3 startPosition,
         Vector3 endPosition,

@@ -690,6 +690,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1443527317212665870, guid: ce22b756e982a594b835bca82e24fa5a, type: 3}
+      propertyPath: autosaveInterval
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 1713555753756891845, guid: ce22b756e982a594b835bca82e24fa5a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
