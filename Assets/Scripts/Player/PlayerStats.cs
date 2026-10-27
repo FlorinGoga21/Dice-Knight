@@ -51,12 +51,14 @@ public partial class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
     public int CurrentHealth => currentHealth;
     public int MaxHealthValue => MaxHealth;
     public int Currency => currency;
+    public Vector3 OverheadOffset => overheadOffset;
 
     public void RestoreSave(PlayerSaveData data)
     {
         MaxHealth = data.maxHealth;
         currentHealth = data.health;
         currency = data.gold;
+        GetComponent<PlayerProgression>()?.RestoreSave(data.hasProgression ? data.progression : null);
         healthHeartsUI?.SetMaxHealth(MaxHealth, currentHealth);
         if (currencyAnimationCoroutine != null) StopCoroutine(currencyAnimationCoroutine);
         currencyAnimationCoroutine = null;
@@ -178,6 +180,15 @@ public partial class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
         healthHeartsUI.ConfigureHealingAnimation(healingHeartStepDuration, healingHeartPulseScale);
 
         healthHeartsUI.SetMaxHealth(MaxHealth, currentHealth);
+    }
+
+    public void IncreaseMaxHealth(int amount)
+    {
+        if (amount <= 0 || IsDead) return;
+        MaxHealth += amount;
+        currentHealth += amount;
+        healthHeartsUI?.SetMaxHealth(MaxHealth, currentHealth);
+        healNumber?.ShowHeal(amount);
     }
 
     public void Heal(int amount)

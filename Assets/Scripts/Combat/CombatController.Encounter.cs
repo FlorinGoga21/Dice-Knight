@@ -126,6 +126,13 @@ public sealed partial class CombatController
                 enemyRollDisplays,
                 blockChosenThisTurn);
             yield return AnimateDisplaysIn(playerRollDisplays, enemyRollDisplays, rollResultDisplays);
+            if (!blockChosenThisTurn && playerProgression != null
+                && playerProgression.TryGetLuckReroll(playerRolls, out int luckyDie, out int reroll))
+            {
+                yield return ShowLuckyReroll(playerRolls, luckyDie, reroll, enemyRoll);
+                playerRoll = SumArray(playerRolls);
+                playerMultiplier = ComputeDiceMultiplier(playerRolls);
+            }
             yield return new WaitForSeconds(rollDisplayDuration);
             if (rollResultDisplays != null && rollResultDisplays.Length > RollComparisonDisplayIndex)
             {
@@ -179,6 +186,7 @@ public sealed partial class CombatController
         DestroyRollDisplays(ref playerRollDisplays);
         DestroyRollDisplays(ref enemyRollDisplays);
         DestroyRollResultDisplays(ref rollResultDisplays);
+        DestroyLuckyFeedback();
         waitingForPlayerRoll = false;
         blockChosenThisTurn = false;
         player?.SetBlockingPose(false);
@@ -187,6 +195,17 @@ public sealed partial class CombatController
         SetCombatUIVisible(false);
         activeEnemy = null;
         encounterCoroutine = null;
+        if (playerStats != null && !playerStats.IsDead)
+            playerStats.GetComponent<PlayerProgression>()?.ShowPostFightProgress();
+    }
+
+    public void EndForPlayerDeath()
+    {
+        StopAllCoroutines();
+        FinishEncounter();
+        SetCombatUIVisible(false, instant: true);
+        foreach (var enemy in FindObjectsByType<EnemyController>(FindObjectsInactive.Exclude))
+            if (!enemy.IsDead) enemy.SetTurnBasedCombat(true);
     }
 
     private void HandlePlayerDiceRolled(int[] results)
@@ -232,15 +251,7 @@ public sealed partial class CombatController
 
     private static int ComputeDiceMultiplier(int[] rolls)
     {
-        if (rolls == null || rolls.Length < 2) return 1;
-        Dictionary<int, int> counts = new Dictionary<int, int>();
-        foreach (int roll in rolls)
-        {
-            counts.TryGetValue(roll, out int count);
-            counts[roll] = count + 1;
-        }
-        if (rolls.Length >= 3 && counts.ContainsValue(3)) return 3;
-        return counts.ContainsValue(2) || counts.ContainsValue(3) ? 2 : 1;
+        return PlayerLevelState.GetDiceMultiplier(rolls);
     }
 
     private static int SumArray(int[] values)

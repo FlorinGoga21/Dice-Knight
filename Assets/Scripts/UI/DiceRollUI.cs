@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Manages the dice rolling UI, die selection, rolling animation frames, and roll results.
 /// </summary>
-public class DiceRollUI : MonoBehaviour
+public partial class DiceRollUI : MonoBehaviour
 {
     [Serializable]
     private class DiceVisualSet

@@ -2,6 +2,14 @@
 
 `Background.cs` handles horizontal camera parallax and infinite repetition in both `MainMenu` and `MainScene`. The settings are saved on `Assets/Prefabs/Background.prefab` and the existing scene instances.
 
+The gameplay player uses Rigidbody2D Interpolate on the Knight prefab. Physics
+movement stays in `FixedUpdate`, while camera follow runs in `LateUpdate` against
+the interpolated player pose. Background parallax runs afterward through its
+existing execution order. This avoids stepping the camera at the 50 Hz physics
+rate. The fixed timestep and menu dummy are unchanged. Compilation and prefab
+settings were checked; live movement smoothness is left to the user's Play mode
+testing.
+
 ## Layer settings
 
 `Parallax Factor` is the fraction of horizontal camera movement that a layer follows: **0** stays in world space; **1** follows the camera completely. Larger values make scenery appear farther away.

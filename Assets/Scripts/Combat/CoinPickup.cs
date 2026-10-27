@@ -52,7 +52,7 @@ public class CoinPickup : MonoBehaviour
 
         // 1. Initial jump arc
         Vector3 startPosition = transform.position;
-        Vector3 jumpEndPosition = startPosition + (Vector3)jumpOffset;
+        Vector3 jumpEndPosition = GetJumpEndPosition(startPosition);
         float jumpElapsed = 0f;
 
         while (jumpElapsed < jumpDuration)
@@ -63,6 +63,7 @@ public class CoinPickup : MonoBehaviour
             transform.position = Vector3.Lerp(startPosition, jumpEndPosition, progress) + Vector3.up * arcHeight;
             yield return null;
         }
+        transform.position = jumpEndPosition;
 
         // 2. Flight to currency counter
         startPosition = transform.position;
@@ -91,6 +92,22 @@ public class CoinPickup : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private Vector3 GetJumpEndPosition(Vector3 startPosition)
+    {
+        Vector3 endPosition = startPosition + (Vector3)jumpOffset;
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        // Measure the visible bottom so off-center sprite pivots also rest on the ground.
+        float bottomOffset = spriteRenderer != null
+            ? transform.position.y - spriteRenderer.bounds.min.y
+            : 0f;
+        Vector2 origin = new Vector2(endPosition.x,
+            Mathf.Max(startPosition.y, endPosition.y) + Mathf.Max(0f, bottomOffset));
+        RaycastHit2D ground = Physics2D.Raycast(origin, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
+        if (ground.collider != null)
+            endPosition.y = ground.point.y + bottomOffset;
+        return endPosition;
     }
 
     private bool IsTargetInvalid()

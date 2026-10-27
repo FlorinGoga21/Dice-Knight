@@ -1,6 +1,6 @@
 # Dice Knight audio sources
 
-The installed pack has 63 assigned WAVs: 8 original music loops and 55 effects.
+The installed pack has 64 assigned clips: 8 original music loops, 1 death cue, and 55 effects.
 Game-consumed clips live under `Assets/Audio/`; their assignments and current
 file statistics are in `Assets/Audio/AudioIndex.csv` and `AudioManifest.json`.
 The project opens and builds using these committed clips without generation tools.
@@ -31,6 +31,8 @@ soft foley at 225% of their approved source amplitudes after later mix increases
 The current character attack set uses its authored levels, replacing the earlier
 Knight attack selection and its volume adjustments. Import normalization is disabled on these
 replacements to retain their intended levels.
+
+The revised [Ashen Oath death cue](Death20261027/README.md) uses the main menu's flute, plucked accompaniment, and melody in a gentler, slower farewell arrangement. It plays once during the YOU DIED reveal. Its standalone synthesis recipe is retained with its generation notes.
 
 ## Credits and licenses
 

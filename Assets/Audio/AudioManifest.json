@@ -48,6 +48,13 @@
       "path": "Assets/Audio/Music/MUS_Event_StrangeCrossroads.wav",
       "bpm": 108,
       "bars": 16
+    },
+    {
+      "field": "deathMusic",
+      "path": "Assets/Audio/Music/MUS_Death_AshenOath.wav",
+      "loop": false,
+      "duration": 16.0,
+      "bpm": 88
     }
   ],
   "shared": [
@@ -284,6 +291,15 @@
       "duration": 35.5556,
       "peak": 0.54096,
       "rms": 0.105,
+      "channels": 2
+    },
+    {
+      "path": "Assets/Audio/Music/MUS_Death_AshenOath.wav",
+      "category": "Music",
+      "loop": false,
+      "duration": 16.0,
+      "peak": 0.52785,
+      "rms": 0.085,
       "channels": 2
     },
     {

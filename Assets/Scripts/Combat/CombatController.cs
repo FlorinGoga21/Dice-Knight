@@ -50,6 +50,7 @@ public sealed partial class CombatController : MonoBehaviour
 
     private PlayerController player;
     private PlayerStats playerStats;
+    private PlayerProgression playerProgression;
     private EnemyController activeEnemy;
     private Coroutine encounterCoroutine;
 
@@ -85,6 +86,7 @@ public sealed partial class CombatController : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         playerStats = GetComponent<PlayerStats>();
+        playerProgression = GetComponent<PlayerProgression>();
         InitializeCombatUI();
     }
 
@@ -134,6 +136,7 @@ public sealed partial class CombatController : MonoBehaviour
         DestroyRollDisplays(ref playerRollDisplays);
         DestroyRollDisplays(ref enemyRollDisplays);
         DestroyRollResultDisplays(ref rollResultDisplays);
+        DestroyLuckyFeedback();
         player?.SetBlockingPose(false);
         SetCombatUIVisible(false, instant: true);
         activeEnemy = null;

@@ -19,3 +19,10 @@ DiceDemon's project-owned sprite sheet uses **32 pixels per unit**. The prefab's
 Skeletons choose a random weapon when spawned. The **Enemy Weapon Variation** component on `Assets/Prefabs/Enemies/Skeleton.prefab` contains 19 SPUM swords, axes, daggers, a hammer, and a mace. Spears, bows, and staffs are excluded. Sword_5, New_Weapon_01, and New_Weapon_18 have also been removed from the pool. Older saves containing these retired weapons use the first allowed weapon instead. This changes appearance only; weapon choice does not change damage or attack timing. The sprites use the existing animated weapon hand, with no changes to the SPUM source assets.
 
 Room saves preserve the exact enemy lineup, positions, health, defeated state, and selected weapons. An empty saved room stays empty. Older saves recreate their existing skeletons with the original sword. Weapon sprite names identify saved weapons, so keep those names stable and unique in the weapon pool.
+
+Dropped coins use a scripted jump arc before flying to the gold counter. The arc's landing point is found with a downward raycast against the Ground layer at each coin's horizontal destination. The visible bottom of the coin rests on the surface, including drops from flying enemies. If no ground is found, the original arc endpoint is retained. Coin counts, values, delays, and collection behavior are unchanged.
+
+Each new enemy defeat also awards 100 player XP. Restored defeated enemies grant
+neither XP nor loot again. Post-fight XP and upgrade choices finish before the
+next encounter or room exit. See [player levels](docs/PLAYER_LEVELS.md) for the
+thresholds, run upgrades, visible Luck rerolls, and controller navigation.

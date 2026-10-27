@@ -286,6 +286,7 @@ public class PauseMenuController : MonoBehaviour
 
     private void HandlePauseInput()
     {
+        if (SaveManager.Instance != null && SaveManager.Instance.RunEnded) return;
         if (pauseTransitionPending || leavingScene) return;
         if (saveSlots != null && saveSlots.IsOpen) { saveSlots.Back(); return; }
         if (HeyHeyThere.SceneTransitionsFree.SceneTransition.IsPlaying || (SaveManager.Instance != null && SaveManager.Instance.IsLoading)) return;

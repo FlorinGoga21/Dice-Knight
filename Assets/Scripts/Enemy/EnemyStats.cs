@@ -249,6 +249,11 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         isDead = true;
 
+        // RestoreSave handles defeated enemies without calling Die, so restored kills never grant XP again.
+        ResolveCurrencyTarget();
+        if (currencyTarget is PlayerStats player && !player.IsDead)
+            player.GetComponent<PlayerProgression>()?.GrantExperience(PlayerLevelState.ExperiencePerEnemy);
+
         if (healthHeartsUI != null)
         {
             healthHeartsUI.SetVisible(false);

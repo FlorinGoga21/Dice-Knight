@@ -184,6 +184,7 @@ MonoBehaviour:
   shopMusic: {fileID: 8300000, guid: 699c8e3980f431f44a3a5ecfbb767da3, type: 3}
   treasureMusic: {fileID: 8300000, guid: a0e2a0349b110804580b1b7fd0e3eefd, type: 3}
   eventMusic: {fileID: 8300000, guid: af7b3efcf62551a4e9581a458f6943b8, type: 3}
+  deathMusic: {fileID: 8300000, guid: b3c1725652f6a6e48a945289bbc59430, type: 3}
   musicFadeDuration: 0.4
   uiFocus: {fileID: 8300000, guid: cad32853ecd0cde47bbb55ea18f42f35, type: 3}
   uiConfirm: {fileID: 8300000, guid: 2e686b980b9360345ae99c1b715993bd, type: 3}

@@ -16,7 +16,49 @@ public static class SaveFileStore
     }
 
     public static bool Exists(string directory, int slot) =>
-        File.Exists(SlotPath(directory, slot)) || File.Exists(SlotPath(directory, slot) + ".bak");
+        !File.Exists(SlotPath(directory, slot) + ".ended") &&
+        (File.Exists(SlotPath(directory, slot)) || File.Exists(SlotPath(directory, slot) + ".bak"));
+
+    /// <summary>Persist death before removing checkpoints, so backup recovery cannot revive a run.</summary>
+    public static bool TryEndRun(string directory, int slot, out string message)
+    {
+        try
+        {
+            string path = SlotPath(directory, slot);
+            Directory.CreateDirectory(directory);
+            using (var stream = new FileStream(path + ".ended", FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                stream.WriteByte(1);
+                stream.Flush(true);
+            }
+            // The marker remains even if cleanup is interrupted or a checkpoint is locked.
+            if (!TryDeleteCheckpoints(path, out message)) return true;
+            message = "";
+            return true;
+        }
+        catch (Exception error) when (error is IOException || error is UnauthorizedAccessException || error is ArgumentException)
+        {
+            message = "Could not end the saved run: " + error.Message;
+            return false;
+        }
+    }
+
+    private static bool TryDeleteCheckpoints(string path, out string message)
+    {
+        try
+        {
+            File.Delete(path + ".tmp");
+            File.Delete(path + ".bak");
+            File.Delete(path);
+            message = "";
+            return true;
+        }
+        catch (Exception error) when (error is IOException || error is UnauthorizedAccessException)
+        {
+            message = "The run has ended, but old checkpoint files could not be removed: " + error.Message;
+            return false;
+        }
+    }
 
     public static bool TryDelete(string directory, int slot, out string message)
     {
@@ -26,6 +68,7 @@ public static class SaveFileStore
             File.Delete(path + ".tmp");
             File.Delete(path + ".bak");
             File.Delete(path);
+            File.Delete(path + ".ended");
             message = "Slot " + slot + " deleted.";
             return true;
         }
@@ -39,6 +82,12 @@ public static class SaveFileStore
     public static bool TryRead(string directory, int slot, out SaveGameData data, out string message)
     {
         string path = SlotPath(directory, slot);
+        if (File.Exists(path + ".ended"))
+        {
+            data = null;
+            message = "This run has ended. Start a new run.";
+            return false;
+        }
         if (ReadFile(path, slot, out data, out message)) return true;
         if (ReadFile(path + ".bak", slot, out data, out _))
         {
@@ -82,6 +131,9 @@ public static class SaveFileStore
             Validate(data, data != null ? data.slot : 0);
             Directory.CreateDirectory(directory);
             string path = SlotPath(directory, data.slot);
+            // Reusing an ended slot must never retain a living backup from its previous run.
+            bool replacingEndedRun = File.Exists(path + ".ended");
+            if (replacingEndedRun && !TryDeleteCheckpoints(path, out message)) return false;
             temporary = path + ".tmp";
             byte[] bytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(data, true));
             using (var stream = new FileStream(temporary, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -92,6 +144,7 @@ public static class SaveFileStore
             if (File.Exists(path)) File.Replace(temporary, path,
                 ReadFile(path, data.slot, out _, out _) ? path + ".bak" : null);
             else File.Move(temporary, path);
+            if (replacingEndedRun) File.Delete(path + ".ended");
             message = "Saved in Slot " + data.slot + ".";
             return true;
         }
@@ -136,6 +189,8 @@ public static class SaveFileStore
             if (map.roomInProgress && map.currentRoom < 0) throw new InvalidDataException("Missing current room.");
         }
         var player = data.player;
+        if (player != null && player.hasProgression && (player.progression == null || !player.progression.IsValid()))
+            throw new InvalidDataException("Invalid player progression.");
         if (player != null && (player.maxHealth <= 0 || player.health <= 0 || player.health > player.maxHealth || player.gold < 0 || player.potions < 0 || !Finite(player.position) || !Finite(player.cameraPosition) || !Finite(player.velocity) || !Finite(player.rotation)))
             throw new InvalidDataException("Invalid player state.");
         if (data.sceneName == "MainScene" && (player == null || data.room == null)) throw new InvalidDataException("Missing room state.");

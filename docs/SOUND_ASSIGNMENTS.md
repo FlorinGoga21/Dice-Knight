@@ -18,8 +18,9 @@ Open `Assets/Prefabs/GameAudio.prefab` and select its root **Game Audio** object
 | Shop Music | Optional shop room music; empty uses Room Music |
 | Treasure Music | Optional treasure room music; empty uses Room Music |
 | Event Music | Optional random/event room music; empty uses Room Music |
+| Death Music | One-shot cue when YOU DIED appears; empty leaves the death screen silent |
 
-Music loops automatically. Music Fade Duration controls the fade when changing tracks. Assigning the same clip to multiple contexts keeps it playing without restarting.
+Scene music loops automatically. Death Music plays once and follows the Music volume setting, including while gameplay is frozen. Music Fade Duration controls the fade when changing tracks. Assigning the same clip to multiple contexts keeps it playing without restarting.
 
 ### Menu Sound Effects
 
@@ -112,7 +113,7 @@ It appears while the pause menu is open and hides during gameplay, Settings and
 save-slot overlays. Both pause action groups include it in keyboard/controller
 focus handling.
 
-The current pack contains 8 music loops and 55 sound effects, with 63 active clip references. The approved revision replaces 20 WAVs while preserving their GUIDs and removes four unused Slime movement clips. Import normalization is disabled on the replacements so their auditioned gain survives import. Installation hashes, imported-level checks, and playback verification are recorded under `ArtSource/Audio/`.
+The current pack contains 8 music loops, 1 death-music cue, and 55 sound effects, with 64 active clip references. The approved revision replaces 20 WAVs while preserving their GUIDs and removes four unused Slime movement clips. Import normalization is disabled on the replacements so their auditioned gain survives import. Installation hashes, imported-level checks, and playback verification are recorded under `ArtSource/Audio/`.
 
 Subsequent selection: Knight Attack uses A (Soft swish); Skeleton Death uses B
 (Soft bone tumble). The old game clip contents were replaced at the same paths

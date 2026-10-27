@@ -290,7 +290,7 @@ MonoBehaviour:
   coinSpawnDelay: 0
   coinJumpDuration: 2
   coinJumpHorizontalRange: {x: -1, y: 1}
-  coinJumpHeightRange: {x: 1, y: 2}
+  coinJumpHeightRange: {x: 0, y: 1}
   coinFlightDuration: 1.5
 --- !u!114 &5177458355116526714
 MonoBehaviour:

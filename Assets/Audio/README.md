@@ -1,12 +1,12 @@
 # Dice Knight audio pack
 
-63 clips assigned to the existing Inspector fields: **8 looping music tracks and 55 sound effects**. Music and unchanged effects use original procedural synthesis. The user-approved replacement effects combine original synthesis with edited CC0 foley; sources and licenses are recorded under `ArtSource/Audio/FoleyReferences/`.
+64 clips assigned to the Inspector fields: **8 looping music tracks, 1 death-music cue, and 55 sound effects**. Music and unchanged effects use original procedural synthesis. The user-approved replacement effects combine original synthesis with edited CC0 foley; sources and licenses are recorded under `ArtSource/Audio/FoleyReferences/`.
 
 ## Find a sound
 
 | Folder | Contents |
 | --- | --- |
-| `Music/` | Main menu, map, forest room, combat, boss, shop, treasure, and event themes |
+| `Music/` | Main menu, map, forest room, combat, boss, shop, treasure, event themes, and death cue |
 | `SFX/UI/` | Selection, confirmation, Back, settings, pause/resume, save/load/delete |
 | `SFX/Combat/` | Encounter/turn cues, wooden dice, result jingles, shields, potion |
 | `SFX/World/` | Coin pickup, map travel, room entry/completion |
@@ -20,7 +20,7 @@
 
 ## Music
 
-Each theme is a 16-bar original instrumental loop, approximately 26–46 seconds long, using plucked and bell tones, flute-like leads, soft harmony, bass, and restrained percussion. Combat and boss tracks use stronger pulse tones and drums. Note tails and echoes wrap around the loop boundary.
+Each theme is a 16-bar original instrumental loop, approximately 26â€“46 seconds long, using plucked and bell tones, flute-like leads, soft harmony, bass, and restrained percussion. Combat and boss tracks use stronger pulse tones and drums. Note tails and echoes wrap around the loop boundary.
 
 | Theme | Filename | BPM |
 | --- | --- | ---: |
@@ -32,6 +32,8 @@ Each theme is a 16-bar original instrumental loop, approximately 26–46 seconds
 | Shop | `MUS_Shop_CopperAndCloth.wav` | 112 |
 | Treasure | `MUS_Treasure_GlimmeringChest.wav` | 88 |
 | Event | `MUS_Event_StrangeCrossroads.wav` | 108 |
+
+The original 16-second `MUS_Death_AshenOath.wav` cue plays once with the YOU DIED title reveal. It follows Music volume, fades naturally to silence, and hands back to looping scene music after either exit. Its synthesis recipe and mix notes are in [`ArtSource/Audio/Death20261027`](../../ArtSource/Audio/Death20261027/README.md).
 
 ## Inspector assignments
 

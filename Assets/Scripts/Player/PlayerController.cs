@@ -21,6 +21,9 @@ public partial class PlayerController : MonoBehaviour
     [Header("---Animation---")]
     [SerializeField] private Animator animator;
 
+    [Header("---Death Screen---")]
+    [SerializeField] private DeathScreenController deathScreenPrefab;
+
     [Header("---Attack---")]
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private int attackDamage = 10;
@@ -66,10 +69,11 @@ public partial class PlayerController : MonoBehaviour
     private IDamageable ownDamageable;
     private Vector3 damageShakeOffset;
     private CombatController combatController;
+    private PlayerProgression progression;
     private static readonly int FlashAmount = Shader.PropertyToID("_FlashAmount");
 
-    public bool CanStartTurnCombat => !hasDied;
-    public int AttackDamage => attackDamage;
+    public bool CanStartTurnCombat => !hasDied && (progression == null || !progression.BlocksGameplay);
+    public int AttackDamage => attackDamage + (progression != null ? progression.BonusDamage : 0);
     public float AttackHitDelay => attackHitDelay;
     public float AttackCooldown => attackCooldown;
     public bool IsFacingRight => isFacingRight;
@@ -89,6 +93,7 @@ public partial class PlayerController : MonoBehaviour
         col = GetComponent<Collider2D>();
         ownDamageable = GetComponentInParent<IDamageable>();
         combatController = GetComponent<CombatController>();
+        progression = GetComponent<PlayerProgression>();
         animator = animator != null ? animator : GetComponent<Animator>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         CacheBlockingShield();
@@ -135,7 +140,7 @@ public partial class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale <= 0f || hasDied || (combatController != null && combatController.IsInCombat))
+        if (Time.timeScale <= 0f || !CanStartTurnCombat || (combatController != null && combatController.IsInCombat))
         {
             return;
         }
@@ -152,6 +157,12 @@ public partial class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
+        // Follow the interpolated player pose once per rendered frame, before background parallax.
+        if (!hasDied && Time.timeScale > 0f)
+        {
+            HandleCameraFollow();
+        }
+
         if (blockingShieldRenderer != null)
         {
             Vector3 targetPosition = blockingShieldRestPosition
@@ -177,8 +188,6 @@ public partial class PlayerController : MonoBehaviour
         {
             HandleMovement();
         }
-
-        HandleCameraFollow();
     }
 
     public void Die()
@@ -189,6 +198,12 @@ public partial class PlayerController : MonoBehaviour
         }
 
         hasDied = true;
+        if (SaveManager.Instance != null && !SaveManager.Instance.TryEndRun(out string error))
+            Debug.LogError(error, this);
+        inputActions?.Player.Disable();
+        if (attackDamageCoroutine != null) StopCoroutine(attackDamageCoroutine);
+        SetBlockingPose(false);
+        combatController?.EndForPlayerDeath();
         characterAudio?.Death();
         moveInput = 0f;
         rb.linearVelocity = Vector2.zero;
@@ -197,7 +212,8 @@ public partial class PlayerController : MonoBehaviour
             stopBehavior: ParticleSystemStopBehavior.StopEmitting
         );
         animator.SetBool("hasDied", true);
-        StartCoroutine(QuitGame());
+        if (deathScreenPrefab != null) Instantiate(deathScreenPrefab).Show();
+        else Debug.LogError("PlayerController: Death screen prefab is not assigned.", this);
     }
 
     public void PrepareForTurnCombat()
@@ -270,14 +286,4 @@ public partial class PlayerController : MonoBehaviour
         animator.SetTrigger("Attack");
     }
 
-    private IEnumerator QuitGame()
-    {
-        Debug.Log("Quitting game...");
-        yield return new WaitForSeconds(3f);
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-    }
 }

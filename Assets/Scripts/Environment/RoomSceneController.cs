@@ -48,6 +48,9 @@ public sealed class RoomSceneController : MonoBehaviour
 
     public void CompleteRoom()
     {
+        if (combat != null && combat.GetComponent<PlayerProgression>() is PlayerProgression progression
+            && progression.BlocksGameplay) return;
+        if (SaveManager.Instance != null && SaveManager.Instance.RunEnded) return;
         if (isReturningToMap || SceneTransition.IsPlaying || Time.timeScale <= 0f)
             return;
         if (!Application.CanStreamedLevelBeLoaded(mapSceneName))

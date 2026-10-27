@@ -7566,12 +7566,13 @@ GameObject:
   - component: {fileID: 5339762120934824912}
   - component: {fileID: 7061868257307744292}
   - component: {fileID: 644210985334408834}
+  - component: {fileID: 7284963700565690321}
+  - component: {fileID: 3629816738015816761}
   - component: {fileID: 4296657186505820701}
   - component: {fileID: 5053322919817734972}
   - component: {fileID: 2359889434350267324}
   - component: {fileID: 1666253628533664871}
   - component: {fileID: 8251680543454918299}
-  - component: {fileID: 7284963700565690321}
   m_Layer: 6
   m_Name: Knight
   m_TagString: Player
@@ -7622,6 +7623,7 @@ MonoBehaviour:
   movementDust: {fileID: 6302216853956381640}
   landingDust: {fileID: 2717519289115889830}
   animator: {fileID: 7354166001910025638}
+  deathScreenPrefab: {fileID: 4271916493503735664, guid: 8d8ed5c6f63693e479f8eb2c67798d6d, type: 3}
   attackRange: 1.5
   attackDamage: 10
   attackHitDelay: 0.25
@@ -7704,6 +7706,46 @@ MonoBehaviour:
   rollResultFontSize: 5
   rollResultTextScale: 1
   rollResultPadding: 1
+--- !u!114 &7284963700565690321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510382206488389914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833ce4cdf151dde4580644ba2b97ed15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAudio
+  footsteps:
+  - {fileID: 8300000, guid: f039814815da69a4b8982a4900eb1043, type: 3}
+  - {fileID: 8300000, guid: 990ca02450c13994cbe8a8e719fe2af3, type: 3}
+  - {fileID: 8300000, guid: b749e1f869cf7784fa0697b28971a152, type: 3}
+  - {fileID: 8300000, guid: 3b7b11a8a9f50b74fbd930de057f7a2f, type: 3}
+  jump: {fileID: 8300000, guid: 0f8662f915c158a42afd1796cd962819, type: 3}
+  land: {fileID: 8300000, guid: 6ab16e6db716df24e872dfeada99a8de, type: 3}
+  attack: {fileID: 8300000, guid: 77c1d1ca4f34b0145a7e0ad5f1bb94c0, type: 3}
+  hurt: {fileID: 8300000, guid: b6a4c46cf3aa7924ca0f0ff7850134f5, type: 3}
+  death: {fileID: 8300000, guid: f6639cdc88adf9b4ba48c41405a1232b, type: 3}
+  projectileLaunch: {fileID: 0}
+  projectileImpact: {fileID: 0}
+  volume: 1
+  footstepVolume: 0.45
+  footstepInterval: 0.28
+--- !u!114 &3629816738015816761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510382206488389914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf5fdaadcbb7c14dad2935c3caa5381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerProgression
+  levelUIPrefab: {fileID: 201671852113723016, guid: e055e2eb22eb93448b5485422f416a6b, type: 3}
 --- !u!114 &4296657186505820701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7767,7 +7809,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -7839,33 +7881,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7284963700565690321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5510382206488389914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 833ce4cdf151dde4580644ba2b97ed15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterAudio
-  footsteps:
-  - {fileID: 8300000, guid: f039814815da69a4b8982a4900eb1043, type: 3}
-  - {fileID: 8300000, guid: 990ca02450c13994cbe8a8e719fe2af3, type: 3}
-  - {fileID: 8300000, guid: b749e1f869cf7784fa0697b28971a152, type: 3}
-  - {fileID: 8300000, guid: 3b7b11a8a9f50b74fbd930de057f7a2f, type: 3}
-  jump: {fileID: 8300000, guid: 0f8662f915c158a42afd1796cd962819, type: 3}
-  land: {fileID: 8300000, guid: 6ab16e6db716df24e872dfeada99a8de, type: 3}
-  attack: {fileID: 8300000, guid: 77c1d1ca4f34b0145a7e0ad5f1bb94c0, type: 3}
-  hurt: {fileID: 8300000, guid: b6a4c46cf3aa7924ca0f0ff7850134f5, type: 3}
-  death: {fileID: 8300000, guid: f6639cdc88adf9b4ba48c41405a1232b, type: 3}
-  projectileLaunch: {fileID: 0}
-  projectileImpact: {fileID: 0}
-  volume: 1
-  footstepVolume: 0.45
-  footstepInterval: 0.28
 --- !u!1 &5697273362229997445
 GameObject:
   m_ObjectHideFlags: 0

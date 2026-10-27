@@ -15,6 +15,7 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - A branching map with room icons, connected routes, and persistent run progress.
 - Cloud transitions between the main menu, map, and gameplay rooms.
 - Player movement, jumping, and animated characters.
+- Run-based player levels with 100 XP per enemy, post-fight XP bars, icon-only health/Luck/damage upgrades, visible Luck rerolls, and saved progression. See [player levels](docs/PLAYER_LEVELS.md).
 - Layered forest parallax with seamless infinite scrolling in the menu and gameplay. See [background tuning](docs/BACKGROUND_PARALLAX.md).
 - Room camera limits and walk-off exits; combat exits unlock after defeating all enemies, and empty rooms stay within their initial screen. See [room boundaries](docs/COMBAT_ROOM_BOUNDARIES.md).
 - Turn-based dice combat, enemy encounters, blocking, and healing potions.

@@ -1,0 +1,13 @@
+{
+  "path": "Assets/Audio/Music/MUS_Death_AshenOath.wav",
+  "category": "Music",
+  "loop": false,
+  "duration": 16.0,
+  "bpm": 88,
+  "style": "main-menu flute and plucks; gentle farewell",
+  "channels": 2,
+  "sampleRate": 44100,
+  "peak": 0.52785,
+  "rms": 0.085,
+  "sha256": "60c1f89ae1a0284c2c731cdf6bf538c6e18e6326ba4952f0fe025312c96a938d"
+}

@@ -18,6 +18,8 @@ public sealed class GameAudio : MonoBehaviour
     [SerializeField] private AudioClip shopMusic;
     [SerializeField] private AudioClip treasureMusic;
     [SerializeField] private AudioClip eventMusic;
+    [Tooltip("One-shot music when YOU DIED appears. Follows Music volume and does not loop.")]
+    [SerializeField] private AudioClip deathMusic;
     [SerializeField, Min(0f)] private float musicFadeDuration = 0.4f;
 
     [Header("---Menu Sound Effects---")]
@@ -58,6 +60,7 @@ public sealed class GameAudio : MonoBehaviour
     private static GameAudio instance;
     private Coroutine musicFade;
     private AudioClip requestedMusic;
+    private bool requestedMusicLoop = true;
     private float musicGain = 1f;
     private float lastFocusTime = -1f;
     private float lastSettingTime = -1f;
@@ -168,6 +171,16 @@ public sealed class GameAudio : MonoBehaviour
         Play(paused ? Cue.Pause : Cue.Resume);
     }
 
+    public void EndRun()
+    {
+        PlayMusic(null);
+    }
+
+    public void PlayDeathMusic()
+    {
+        PlayMusic(deathMusic, loop: false);
+    }
+
     public static void Play(Cue cue)
     {
         if (instance == null) return;
@@ -238,19 +251,22 @@ public sealed class GameAudio : MonoBehaviour
         gameplaySource.volume = uiSource.volume = GamePreferences.SfxVolume;
     }
 
-    private void PlayMusic(AudioClip clip)
+    private void PlayMusic(AudioClip clip, bool loop = true)
     {
-        if (requestedMusic == clip && (musicFade != null || musicSource.clip == clip)) return;
+        if (requestedMusic == clip && requestedMusicLoop == loop
+            && (musicFade != null || musicSource.clip == clip)) return;
         requestedMusic = clip;
+        requestedMusicLoop = loop;
         if (musicFade != null) StopCoroutine(musicFade);
-        musicFade = StartCoroutine(ChangeMusic(clip));
+        musicFade = StartCoroutine(ChangeMusic(clip, loop));
     }
 
-    private IEnumerator ChangeMusic(AudioClip clip)
+    private IEnumerator ChangeMusic(AudioClip clip, bool loop)
     {
         if (musicSource.isPlaying) yield return FadeMusic(0f);
         musicSource.Stop();
         musicSource.clip = clip;
+        musicSource.loop = loop;
         musicGain = 0f;
         ApplyVolumes();
         if (clip != null)

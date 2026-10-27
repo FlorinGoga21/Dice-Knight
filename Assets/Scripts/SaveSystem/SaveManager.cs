@@ -19,6 +19,9 @@ public sealed class SaveManager : MonoBehaviour
     public int ActiveSlot { get; private set; }
     public string SaveDirectory { get; private set; }
     public bool IsLoading { get; private set; }
+    public bool RunEnded { get; private set; }
+
+    private int endedSlot;
 
     private PlayerSaveData runPlayer;
     private SaveGameData pendingLoad;
@@ -78,7 +81,8 @@ public sealed class SaveManager : MonoBehaviour
     {
         message = "";
         string scene = SceneManager.GetActiveScene().name;
-        if (!worldReady || IsLoading || SceneTransition.IsPlaying || (scene != "MapScene" && scene != "MainScene"))
+        if (RunEnded) message = "This run has ended. Start a new run.";
+        else if (!worldReady || IsLoading || SceneTransition.IsPlaying || (scene != "MapScene" && scene != "MainScene"))
             message = "Wait for the scene to finish loading.";
         else if (scene == "MapScene")
         {
@@ -117,6 +121,7 @@ public sealed class SaveManager : MonoBehaviour
 
     public bool TryLoad(int slot, out string message)
     {
+        if (RunEnded) { message = "This run has ended. Return to the main menu to choose another run."; return false; }
         if (FindAnyObjectByType<CombatController>() is CombatController combat && combat.IsInCombat)
         { message = "Saving and loading are unavailable during combat."; return false; }
         if (IsLoading || SceneTransition.IsPlaying) { message = "A scene transition is already running."; return false; }
@@ -131,6 +136,8 @@ public sealed class SaveManager : MonoBehaviour
 
     private void PrepareLoad(SaveGameData data)
     {
+        RunEnded = false;
+        endedSlot = 0;
         ActiveSlot = data.slot;
         pendingLoad = data;
         runPlayer = data.player;
@@ -187,6 +194,7 @@ public sealed class SaveManager : MonoBehaviour
 
     public void CaptureRunPlayer()
     {
+        if (RunEnded) return;
         var player = FindAnyObjectByType<PlayerStats>();
         if (player == null) return;
         var controller = player.GetComponent<PlayerController>();
@@ -194,12 +202,46 @@ public sealed class SaveManager : MonoBehaviour
         runPlayer = new PlayerSaveData
         {
             health = player.CurrentHealth, maxHealth = player.MaxHealthValue, gold = player.Currency,
+            hasProgression = player.GetComponent<PlayerProgression>() != null,
+            progression = player.GetComponent<PlayerProgression>()?.CaptureSave(),
             potions = player.GetComponent<CombatController>()?.HealingPotionsRemaining ?? 0,
             position = player.transform.position, rotation = player.transform.rotation,
             velocity = body != null ? body.linearVelocity : Vector2.zero,
             facingRight = controller == null || controller.IsFacingRight,
             cameraPosition = Camera.main != null ? Camera.main.transform.position : Vector3.zero
         };
+    }
+
+    public bool TryEndRun(out string message)
+    {
+        if (!RunEnded)
+        {
+            endedSlot = ActiveSlot;
+            RunEnded = true;
+            StopAllCoroutines();
+            ActiveSlot = 0;
+            pendingLoad = null;
+            runPlayer = null;
+            playSeconds = autosaveElapsed = 0f;
+            worldReady = saveOnReady = IsLoading = false;
+            enemies.Clear();
+            RunMapState.ResetRun();
+        }
+        message = "";
+        return endedSlot == 0 || SaveFileStore.TryEndRun(SaveDirectory, endedSlot, out message);
+    }
+
+    public bool TryStartNewRun(out string message)
+    {
+        if (!RunEnded) { message = "The current run has not ended."; return false; }
+        if (!Application.CanStreamedLevelBeLoaded("MapScene")) { message = "The map scene is unavailable."; return false; }
+        if (!TryEndRun(out message)) return false;
+        // A direct Editor run has no selected slot. The new run can be saved from Pause later.
+        int slot = endedSlot;
+        var data = new SaveGameData { slot = slot, savedUtc = DateTime.UtcNow.ToString("O") };
+        if (slot != 0 && !SaveFileStore.TryWrite(SaveDirectory, data, out message)) return false;
+        PrepareLoad(data);
+        return true;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -253,7 +295,7 @@ public sealed class SaveManager : MonoBehaviour
         if (saveOnReady)
         {
             saveOnReady = false;
-            if (!TrySave(ActiveSlot, out string message)) Debug.LogWarning(message);
+            if (ActiveSlot != 0 && !TrySave(ActiveSlot, out string message)) Debug.LogWarning(message);
         }
     }
 

@@ -25,6 +25,7 @@ public partial class PlayerController
 
     private float GetHorizontalMovementVelocity()
     {
+        if (progression != null && progression.BlocksGameplay) return 0f;
         float velocity = moveInput * moveSpeed;
         return roomCameraBounds != null
             ? roomCameraBounds.ClampMovementVelocity(velocity, col, Time.fixedDeltaTime)
@@ -121,7 +122,7 @@ public partial class PlayerController
                 && !ReferenceEquals(damageable, ownDamageable)
                 && !damageable.IsDead)
             {
-                damageable.TakeDamage(attackDamage);
+                damageable.TakeDamage(AttackDamage);
                 break;
             }
         }

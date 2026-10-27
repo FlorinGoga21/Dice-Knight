@@ -7,6 +7,7 @@ Music,bossMusic,Assets/Audio/Music/MUS_Boss_DemonsWager.wav
 Music,shopMusic,Assets/Audio/Music/MUS_Shop_CopperAndCloth.wav
 Music,treasureMusic,Assets/Audio/Music/MUS_Treasure_GlimmeringChest.wav
 Music,eventMusic,Assets/Audio/Music/MUS_Event_StrangeCrossroads.wav
+Music,deathMusic,Assets/Audio/Music/MUS_Death_AshenOath.wav
 UI,uiFocus,Assets/Audio/SFX/UI/SFX_Focus.wav
 UI,uiConfirm,Assets/Audio/SFX/UI/SFX_Confirm.wav
 UI,uiBack,Assets/Audio/SFX/UI/SFX_Back.wav

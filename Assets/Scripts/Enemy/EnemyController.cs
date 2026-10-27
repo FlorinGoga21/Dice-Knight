@@ -67,6 +67,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
     private Collider2D col;
     private IDamageable targetDamageable;
     private CombatController targetCombat;
+    private PlayerProgression targetProgression;
     private EnemyProjectileAttack projectileAttack;
     private SpriteRenderer[] spriteRenderers;
     private CharacterAudio characterAudio;
@@ -124,6 +125,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
 
         targetDamageable = target != null ? target.GetComponentInParent<IDamageable>() : null;
         targetCombat = target != null ? target.GetComponentInParent<CombatController>() : null;
+        targetProgression = target != null ? target.GetComponentInParent<PlayerProgression>() : null;
 
         // Prevent target damageable from matching this enemy's own damageable
         if (ReferenceEquals(targetDamageable, this) || (stats != null && ReferenceEquals(targetDamageable, stats)))
@@ -131,6 +133,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
             target = null;
             targetDamageable = null;
             targetCombat = null;
+            targetProgression = null;
         }
     }
 
@@ -144,7 +147,8 @@ public partial class EnemyController : MonoBehaviour, IDamageable
         if (target == null || targetCombat == null) ResolveTarget();
         if (target != null) FaceTarget(target.position.x - transform.position.x);
 
-        if (turnBasedCombat || (targetCombat != null && targetCombat.IsInCombat))
+        if (turnBasedCombat || (targetCombat != null && targetCombat.IsInCombat)
+            || (targetProgression != null && targetProgression.BlocksGameplay))
         {
             rb.linearVelocity = Vector2.zero;
             HandleAnimation();
@@ -159,7 +163,8 @@ public partial class EnemyController : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
-        if (hasDied || turnBasedCombat || (targetCombat != null && targetCombat.IsInCombat))
+        if (hasDied || turnBasedCombat || (targetCombat != null && targetCombat.IsInCombat)
+            || (targetProgression != null && targetProgression.BlocksGameplay))
         {
             return;
         }
@@ -228,6 +233,7 @@ public partial class EnemyController : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(attackHitDelay);
 
         if (hasDied || turnBasedCombat || (targetCombat != null && targetCombat.IsInCombat)
+            || (targetProgression != null && targetProgression.BlocksGameplay)
             || target == null || targetDamageable == null || targetDamageable.IsDead)
         {
             attackDamageCoroutine = null;
