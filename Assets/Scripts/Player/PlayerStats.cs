@@ -59,6 +59,7 @@ public partial class PlayerStats : MonoBehaviour, IDamageable, ICurrencyReceiver
         currentHealth = data.health;
         currency = data.gold;
         GetComponent<PlayerProgression>()?.RestoreSave(data.hasProgression ? data.progression : null);
+        if (data.hasDiceLoadout) GetComponent<CombatController>()?.RestoreDiceIds(data.equippedDiceIds);
         healthHeartsUI?.SetMaxHealth(MaxHealth, currentHealth);
         if (currencyAnimationCoroutine != null) StopCoroutine(currencyAnimationCoroutine);
         currencyAnimationCoroutine = null;

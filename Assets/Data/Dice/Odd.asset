@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770dbef76c2192146a02a9ff7cf83804, type: 3}
+  m_Name: Odd
+  m_EditorClassIdentifier: Assembly-CSharp::DiceDefinition
+  saveId: odd
+  ability: 3
+  pipFaces:
+  - {fileID: 4346167770194010122, guid: 40fe10b65801a7249a8d3a794260d467, type: 3}
+  - {fileID: -8467972546217603333, guid: 40fe10b65801a7249a8d3a794260d467, type: 3}
+  - {fileID: -5966741345490469052, guid: 40fe10b65801a7249a8d3a794260d467, type: 3}
+  - {fileID: -4071706802321070072, guid: 40fe10b65801a7249a8d3a794260d467, type: 3}
+  - {fileID: -9082412633875426595, guid: 40fe10b65801a7249a8d3a794260d467, type: 3}
+  - {fileID: 973115383382489474, guid: 40fe10b65801a7249a8d3a794260d467, type: 3}
+  rollFrames:
+  - {fileID: 7763031303753583304, guid: 347caaff1b2838e42addc8d74de2fbf9, type: 3}
+  - {fileID: 6926563751119436326, guid: 347caaff1b2838e42addc8d74de2fbf9, type: 3}
+  - {fileID: 7523957615467054003, guid: 347caaff1b2838e42addc8d74de2fbf9, type: 3}
+  - {fileID: -2579851289252944613, guid: 347caaff1b2838e42addc8d74de2fbf9, type: 3}
+  - {fileID: 3814883586764308870, guid: 347caaff1b2838e42addc8d74de2fbf9, type: 3}
+  - {fileID: 7808956874398615330, guid: 347caaff1b2838e42addc8d74de2fbf9, type: 3}

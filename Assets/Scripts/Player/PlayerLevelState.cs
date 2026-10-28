@@ -61,28 +61,6 @@ public sealed class PlayerLevelState
         }
     }
 
-    public bool TryApplyLuck(int[] results, float chanceRoll, int reroll)
-    {
-        if (LuckChance <= 0f || chanceRoll < 0f || chanceRoll >= LuckChance
-            || results == null || results.Length == 0 || reroll < 1 || reroll > 6) return false;
-        int lowest = GetLuckDieIndex(results);
-        if (lowest < 0 || reroll <= results[lowest]) return false;
-        results[lowest] = reroll;
-        return true;
-    }
-
-    public static int GetLuckDieIndex(int[] results)
-    {
-        if (results == null || results.Length == 0) return -1;
-        int lowest = 0;
-        for (int i = 0; i < results.Length; i++)
-        {
-            if (results[i] < 1 || results[i] > 6) return -1;
-            if (results[i] < results[lowest]) lowest = i;
-        }
-        return results[lowest] < 6 ? lowest : -1;
-    }
-
     public static int GetDiceMultiplier(int[] results)
     {
         if (results == null || results.Length < 2) return 1;

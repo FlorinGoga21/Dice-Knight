@@ -9,6 +9,14 @@ public sealed class PlayerProgression : MonoBehaviour
     [Header("---Level UI---")]
     [SerializeField] private PlayerLevelUI levelUIPrefab;
 
+#if UNITY_EDITOR
+    [Header("---Luck Testing---")]
+    [Tooltip("Editor-only override for testing Lucky Dice. Does not change earned Luck, upgrades, or saves.")]
+    [SerializeField] private bool overrideLuckForTesting;
+    [Tooltip("Effective Luck percentage while the testing override is enabled. 100 guarantees eligible Lucky Dice reroll.")]
+    [SerializeField, Range(0f, 100f)] private float testLuckPercent = 25f;
+#endif
+
     private PlayerLevelState state = new PlayerLevelState();
     private PlayerStats stats;
     private PlayerController player;
@@ -77,17 +85,16 @@ public sealed class PlayerProgression : MonoBehaviour
         return true;
     }
 
-    public bool TryGetLuckReroll(int[] results, out int dieIndex, out int reroll)
+    public float LuckChance
     {
-        dieIndex = PlayerLevelState.GetLuckDieIndex(results);
-        reroll = 1;
-        if (state.LuckChance <= 0f || dieIndex < 0 || Random.value >= state.LuckChance)
-            return false;
-        reroll = Random.Range(results[dieIndex] + 1, 7);
-        return true;
+        get
+        {
+#if UNITY_EDITOR
+            if (overrideLuckForTesting) return Mathf.Clamp01(testLuckPercent / 100f);
+#endif
+            return state.LuckChance;
+        }
     }
-
-    public bool CompleteLuckReroll(int[] results, int reroll) => state.TryApplyLuck(results, 0f, reroll);
 
     public PlayerLevelState CaptureSave() => state.Copy();
 

@@ -55,6 +55,7 @@ public sealed partial class CombatController : MonoBehaviour
     private Coroutine encounterCoroutine;
 
     private bool waitingForPlayerRoll;
+    private bool acceptingResultBlock;
     private bool blockChosenThisTurn;
     private int blockUsesRemaining;
     private int healingPotionsRemaining;
@@ -66,6 +67,14 @@ public sealed partial class CombatController : MonoBehaviour
     public bool IsInCombat => encounterCoroutine != null;
     public int PlayerDiceCount => diceRollUI != null ? Mathf.Max(1, diceRollUI.ActiveDiceCount) : 1;
     public int HealingPotionsRemaining => healingPotionsRemaining;
+
+    public string[] CaptureDiceIds() => diceRollUI != null ? diceRollUI.CaptureDiceIds() : null;
+
+    public void RestoreDiceIds(string[] ids)
+    {
+        if (diceRollUI != null && !diceRollUI.RestoreDiceIds(ids))
+            Debug.LogWarning("Saved dice loadout contains an unavailable definition; keeping the authored loadout.", this);
+    }
 
     public void CaptureRoomSave(RoomSaveData data)
     {
@@ -141,6 +150,7 @@ public sealed partial class CombatController : MonoBehaviour
         SetCombatUIVisible(false, instant: true);
         activeEnemy = null;
         waitingForPlayerRoll = false;
+        acceptingResultBlock = false;
     }
 
     private void OnDestroy()

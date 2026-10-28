@@ -8,22 +8,23 @@ public partial class DiceRollUI
     {
         if (diceImages == null || index < 0 || index >= diceImages.Length || diceImages[index] == null)
             yield break;
-        var visuals = GetDiceVisuals(index);
-        if (visuals == null || visuals.pipFaces == null || result < 1 || result > visuals.pipFaces.Length)
+        Sprite face = GetPipSprite(index, result);
+        if (face == null)
             yield break;
         var die = diceImages[index];
         isRolling = true;
         float interval = Mathf.Max(0.01f, frameInterval);
         for (float elapsed = 0f; elapsed < 0.45f; elapsed += interval)
         {
-            if (visuals.rollFrames != null && visuals.rollFrames.Length > 0)
+            int frameCount = GetRollFrameCount(index);
+            if (frameCount > 0)
             {
-                int frame = Mathf.FloorToInt(elapsed / interval) % visuals.rollFrames.Length;
-                die.sprite = visuals.rollFrames[frame];
+                int frame = Mathf.FloorToInt(elapsed / interval) % frameCount;
+                die.sprite = GetRollFrame(index, frame);
             }
             yield return new WaitForSeconds(interval);
         }
-        die.sprite = visuals.pipFaces[result - 1];
+        die.sprite = face;
         isRolling = false;
         GameAudio.Play(GameAudio.Cue.DiceSettled);
     }

@@ -26,11 +26,25 @@ public sealed class PlayerLevelUI : MonoBehaviour
     [SerializeField, Min(0.01f)] private float fadeDuration = 0.2f;
     [SerializeField, Min(0f)] private float holdDuration = 1.4f;
 
+    [Header("---Upgrade Feedback---")]
+    [Tooltip("Duration of the chosen button's confirmation hop, in game-time seconds.")]
+    [SerializeField, Min(0.01f)] private float choicePopDuration = 0.32f;
+    [Tooltip("Peak scale relative to the chosen button's normal size.")]
+    [SerializeField, Min(1f)] private float choicePopScale = 1.25f;
+    [Tooltip("Maximum upward hop in the world-space Canvas's local UI units.")]
+    [SerializeField, Min(0f)] private float choicePopHeight = 8f;
+
     private PlayerProgression owner;
     private PlayerStats stats;
     private CombatController combat;
     private UnityEngine.UI.Selectable[] choices;
     private bool choicesReady;
+    private bool choiceAnimating;
+    private RectTransform animatedChoice;
+    private Vector2 choiceRestPosition;
+    private Vector3 choiceRestScale;
+    private UnityEngine.UI.HorizontalLayoutGroup choiceLayout;
+    private bool choiceLayoutWasEnabled;
     public bool IsPresenting { get; private set; }
     public Sprite LuckIcon => luckIcon;
     public TMP_FontAsset LabelFont => levelLabel.font;
@@ -44,6 +58,7 @@ public sealed class PlayerLevelUI : MonoBehaviour
         luckButton.onClick.AddListener(ChooseLuck);
         damageButton.onClick.AddListener(ChooseDamage);
         choices = new UnityEngine.UI.Selectable[] { healthButton, luckButton, damageButton };
+        choiceLayout = upgradeRoot.GetComponent<UnityEngine.UI.HorizontalLayoutGroup>();
     }
 
     public void Bind(PlayerProgression progression, PlayerStats playerStats)
@@ -61,11 +76,7 @@ public sealed class PlayerLevelUI : MonoBehaviour
         transform.rotation = Quaternion.identity;
         if (stats.IsDead && IsPresenting)
         {
-            StopAllCoroutines();
-            group.alpha = 0f;
-            group.interactable = group.blocksRaycasts = false;
-            IsPresenting = choicesReady = false;
-            upgradeRoot.SetActive(false);
+            CancelPresentation();
         }
     }
 
@@ -109,7 +120,7 @@ public sealed class PlayerLevelUI : MonoBehaviour
             choicesReady = true;
             group.interactable = group.blocksRaycasts = true;
             healthButton.Select();
-            while (owner.State.PendingUpgrades > 0) yield return null;
+            while (owner.State.PendingUpgrades > 0 || choiceAnimating) yield return null;
             choicesReady = false;
             group.interactable = group.blocksRaycasts = false;
             if (UnityEngine.EventSystems.EventSystem.current != null)
@@ -164,20 +175,70 @@ public sealed class PlayerLevelUI : MonoBehaviour
         };
     }
 
-    private void ChooseHealth() => Choose(PlayerUpgrade.Health);
-    private void ChooseLuck() => Choose(PlayerUpgrade.Luck);
-    private void ChooseDamage() => Choose(PlayerUpgrade.Damage);
+    private void ChooseHealth() => Choose(PlayerUpgrade.Health, healthButton);
+    private void ChooseLuck() => Choose(PlayerUpgrade.Luck, luckButton);
+    private void ChooseDamage() => Choose(PlayerUpgrade.Damage, damageButton);
 
-    private void Choose(PlayerUpgrade upgrade)
+    private void Choose(PlayerUpgrade upgrade, UnityEngine.UI.Button button)
     {
         if (!choicesReady || !owner.TryChooseUpgrade(upgrade)) return;
-        if (owner.State.PendingUpgrades > 0) RefreshChoices();
-        else
+        choicesReady = false;
+        group.interactable = group.blocksRaycasts = false;
+        choiceAnimating = true;
+        StartCoroutine(PopChosenButton(button));
+    }
+
+    private IEnumerator PopChosenButton(UnityEngine.UI.Button button)
+    {
+        animatedChoice = (RectTransform)button.transform;
+        choiceRestPosition = animatedChoice.anchoredPosition;
+        choiceRestScale = animatedChoice.localScale;
+        // Keep the other choices still while this layout-controlled button hops.
+        choiceLayoutWasEnabled = choiceLayout != null && choiceLayout.enabled;
+        if (choiceLayout != null) choiceLayout.enabled = false;
+        for (float elapsed = 0f; elapsed < choicePopDuration; elapsed += Time.deltaTime)
         {
-            choicesReady = false;
+            float t = Mathf.Clamp01(elapsed / choicePopDuration);
+            float scale = t < 0.35f
+                ? Mathf.SmoothStep(1f, choicePopScale, t / 0.35f)
+                : Mathf.SmoothStep(choicePopScale, 1f, (t - 0.35f) / 0.65f);
+            animatedChoice.localScale = choiceRestScale * scale;
+            animatedChoice.anchoredPosition = choiceRestPosition + Vector2.up * (Mathf.Sin(t * Mathf.PI) * choicePopHeight);
+            yield return null;
+        }
+        ResetChoiceFeedback();
+        if (owner.State.PendingUpgrades <= 0) yield break;
+        RefreshChoices();
+        choicesReady = true;
+        group.interactable = group.blocksRaycasts = true;
+    }
+
+    private void ResetChoiceFeedback()
+    {
+        if (animatedChoice != null)
+        {
+            animatedChoice.localScale = choiceRestScale;
+            animatedChoice.anchoredPosition = choiceRestPosition;
+            if (choiceLayout != null) choiceLayout.enabled = choiceLayoutWasEnabled;
+            animatedChoice = null;
+        }
+        choiceAnimating = false;
+    }
+
+    private void CancelPresentation()
+    {
+        StopAllCoroutines();
+        ResetChoiceFeedback();
+        IsPresenting = choicesReady = false;
+        if (group != null)
+        {
+            group.alpha = 0f;
             group.interactable = group.blocksRaycasts = false;
         }
+        if (upgradeRoot != null) upgradeRoot.SetActive(false);
     }
+
+    private void OnDisable() => CancelPresentation();
 
     private IEnumerator Fade(float target) => FadeGroup(group, target);
 

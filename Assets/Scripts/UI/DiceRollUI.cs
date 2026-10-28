@@ -18,7 +18,7 @@ public partial class DiceRollUI : MonoBehaviour
         [SerializeField] public Sprite[] rollFrames;
     }
 
-    [Header("Dice UI")]
+    [Header("---Dice UI---")]
     [SerializeField] private Image[] diceImages;
     [SerializeField] private Button rollButton;
     [SerializeField] private GameObject[] selectedIndicators;
@@ -29,7 +29,7 @@ public partial class DiceRollUI : MonoBehaviour
     public int ActiveDiceCount => activeDiceCount;
     [SerializeField] private DiceVisualSet[] diceVisuals;
 
-    [Header("Animation")]
+    [Header("---Animation---")]
     [SerializeField] private float rollDuration = 0.8f;
     [SerializeField] private float frameInterval = 0.07f;
     [SerializeField] private float randomRotationMin = 0f;
@@ -50,6 +50,12 @@ public partial class DiceRollUI : MonoBehaviour
 
     public Sprite GetPipSprite(int dieIndex, int result)
     {
+        var definition = GetDefinition(dieIndex);
+        return definition != null ? definition.GetFace(result) : GetLegacyPipSprite(dieIndex, result);
+    }
+
+    private Sprite GetLegacyPipSprite(int dieIndex, int result)
+    {
         DiceVisualSet visuals = GetDiceVisuals(dieIndex);
         if (visuals == null || visuals.pipFaces == null || result < 1 || result > visuals.pipFaces.Length)
         {
@@ -64,6 +70,8 @@ public partial class DiceRollUI : MonoBehaviour
         activeDiceCount = Mathf.Clamp(activeDiceCount, 1, GetDiceSlotCount());
         UpdateDiceAvailability();
         HighlightAllActiveDice();
+        for (int i = 0; i < activeDiceCount; i++)
+            if (GetDefinition(i) != null) diceImages[i].sprite = GetPipSprite(i, GetDefinition(i).InitialFace);
     }
 
     /// <summary>
@@ -162,7 +170,7 @@ public partial class DiceRollUI : MonoBehaviour
         // Pre-generate results and start roll animation for each die.
         for (int i = 0; i < count; i++)
         {
-            results[i] = UnityEngine.Random.Range(1, 7);
+            results[i] = RollFace(i);
         }
 
         // Apply random rotation to all dice at the start.
@@ -188,12 +196,12 @@ public partial class DiceRollUI : MonoBehaviour
                     continue;
                 }
 
-                DiceVisualSet visuals = GetDiceVisuals(i);
-                if (visuals != null && visuals.rollFrames != null && visuals.rollFrames.Length > 0)
+                int frames = GetRollFrameCount(i);
+                if (frames > 0)
                 {
                     // Offset each die's frame index slightly for visual variety.
-                    int offset = (frameIndex + i * 2) % visuals.rollFrames.Length;
-                    diceImages[i].sprite = visuals.rollFrames[offset];
+                    int offset = (frameIndex + i * 2) % frames;
+                    diceImages[i].sprite = GetRollFrame(i, offset);
                 }
             }
 
@@ -212,8 +220,8 @@ public partial class DiceRollUI : MonoBehaviour
 
             diceImages[i].rectTransform.localRotation = Quaternion.identity;
 
-            DiceVisualSet visuals = GetDiceVisuals(i);
-            if (visuals == null || visuals.pipFaces == null || visuals.pipFaces.Length < results[i])
+            Sprite face = GetPipSprite(i, results[i]);
+            if (face == null)
             {
                 Debug.LogWarning(
                     $"{nameof(DiceRollUI)} has no six pip faces configured for die {i + 1}.",
@@ -221,7 +229,7 @@ public partial class DiceRollUI : MonoBehaviour
             }
             else
             {
-                diceImages[i].sprite = visuals.pipFaces[results[i] - 1];
+                diceImages[i].sprite = face;
             }
         }
 

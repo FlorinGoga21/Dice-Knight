@@ -199,11 +199,13 @@ public sealed class SaveManager : MonoBehaviour
         if (player == null) return;
         var controller = player.GetComponent<PlayerController>();
         var body = player.GetComponent<Rigidbody2D>();
+        var diceIds = player.GetComponent<CombatController>()?.CaptureDiceIds();
         runPlayer = new PlayerSaveData
         {
             health = player.CurrentHealth, maxHealth = player.MaxHealthValue, gold = player.Currency,
             hasProgression = player.GetComponent<PlayerProgression>() != null,
             progression = player.GetComponent<PlayerProgression>()?.CaptureSave(),
+            equippedDiceIds = diceIds, hasDiceLoadout = diceIds != null,
             potions = player.GetComponent<CombatController>()?.HealingPotionsRemaining ?? 0,
             position = player.transform.position, rotation = player.transform.rotation,
             velocity = body != null ? body.linearVelocity : Vector2.zero,

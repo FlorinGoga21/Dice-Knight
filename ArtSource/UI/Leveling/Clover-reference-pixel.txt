@@ -1,0 +1,7 @@
+Generated with the built-in image generation tool on 28 October 2026.
+Reference: user-supplied bright green four-leaf clover.
+Output: Clover-reference-pixel.png, transparent PNG, source artwork.
+No existing icons or prefab references were replaced.
+
+Prompt:
+Use case: stylized-concept. Asset type: a single transparent pixel-art clover sprite for the Dice Knight 2D pixel-art game's luck upgrade icon. Input image is inspiration only: keep its recognizable four plump heart-shaped leaves, slightly asymmetric organic arrangement, bright yellow-lime upper-left highlights, saturated fresh green leaf bodies, darker olive-green outlines, and thin gently curving downward stem. Reinterpret it as authentic low-resolution pixel art: chunky deliberate square pixel clusters on an approximately 32x32 logical pixel grid, hard stair-stepped edges, limited 6-color green palette, simple flat stepped shading. Show the pixel sprite enlarged with nearest-neighbor appearance. Exactly four distinct leaves meeting at a small central junction, narrow dark separations preserve each leaf's silhouette. Center the entire clover with comfortable transparent padding, stem fully visible. Actual transparent alpha background. No gray reference background, no frame, no button, no plus sign, no text, no shadow, no glow, no antialiasing, no blur, no additional objects. One sprite only.

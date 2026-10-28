@@ -189,6 +189,14 @@ public static class SaveFileStore
             if (map.roomInProgress && map.currentRoom < 0) throw new InvalidDataException("Missing current room.");
         }
         var player = data.player;
+        if (player != null && player.hasDiceLoadout)
+        {
+            if (player.equippedDiceIds == null || player.equippedDiceIds.Length < 1 || player.equippedDiceIds.Length > 3)
+                throw new InvalidDataException("Invalid dice loadout size.");
+            foreach (string id in player.equippedDiceIds)
+                if (string.IsNullOrWhiteSpace(id) || id.Length > 128)
+                    throw new InvalidDataException("Invalid dice save identifier.");
+        }
         if (player != null && player.hasProgression && (player.progression == null || !player.progression.IsValid()))
             throw new InvalidDataException("Invalid player progression.");
         if (player != null && (player.maxHealth <= 0 || player.health <= 0 || player.health > player.maxHealth || player.gold < 0 || player.potions < 0 || !Finite(player.position) || !Finite(player.cameraPosition) || !Finite(player.velocity) || !Finite(player.rotation)))

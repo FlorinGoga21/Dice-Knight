@@ -15,10 +15,11 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - A branching map with room icons, connected routes, and persistent run progress.
 - Cloud transitions between the main menu, map, and gameplay rooms.
 - Player movement, jumping, and animated characters.
-- Run-based player levels with 100 XP per enemy, post-fight XP bars, icon-only health/Luck/damage upgrades, visible Luck rerolls, and saved progression. See [player levels](docs/PLAYER_LEVELS.md).
+- Run-based player levels with 100 XP per enemy, a framed teal XP bar, icon-only health/Luck/damage upgrades, selection feedback, and saved progression. See [player levels](docs/PLAYER_LEVELS.md).
+- Inspector-assignable Basic, Lucky, Even, and Odd Dice, with matching rolling/result sprites and saved equipped types. Lucky Dice independently use the player's Luck stat for a guaranteed-higher reroll; Even and Odd Dice favor their lower faces.
 - Layered forest parallax with seamless infinite scrolling in the menu and gameplay. See [background tuning](docs/BACKGROUND_PARALLAX.md).
 - Room camera limits and walk-off exits; combat exits unlock after defeating all enemies, and empty rooms stay within their initial screen. See [room boundaries](docs/COMBAT_ROOM_BOUNDARIES.md).
-- Turn-based dice combat, enemy encounters, blocking, and healing potions.
+- Turn-based dice combat, enemy encounters, healing potions, and one Block per encounter, usable before rolling or after seeing the final results.
 - Animated slimes, skeletons, zombies, and a hovering DiceDemon with fireball attacks. Combat rooms spawn enemies from an editable pool, with enemy dice matching the player's available dice.
 - Random SPUM melee weapons for skeletons and zombies, preserved with the room's saved enemy lineup. See [enemy spawning](ENEMY_SPAWNING.md) for Inspector setup.
 - Player health, gold, enemy health, and coin pickups.
@@ -30,6 +31,18 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - A scrollable Controls page with TextMeshPro input glyphs that follow the active keyboard/mouse or controller scheme.
 - A retro-fantasy audio pack: **8 looping music tracks and 55 sound effects**, combining original synthesis with approved CC0 foley replacements.
 - Consistent full-strength white damage flashes for the player and every enemy, matching DiceDemon. See [damage flash](docs/DAMAGE_FLASH.md).
+
+### Development update — 28 October 2026
+
+- Restyled the **XP bar and upgrade choices** with dark wood, brass trim, a shaded teal fill, readable label backings, and compact plus badges. Added clover artwork and a short hop/125% size pulse on the chosen upgrade; queued choices refresh after the confirmation finishes.
+- Added reusable **dice definitions** for Basic, Lucky, Even, and Odd, separating their saved identities, abilities, and visuals from the player's mutable run state. Equipped types can be assigned per slot in the Inspector and survive save/load and room changes.
+- Moved the **Lucky reroll** onto green Lucky Dice. Each active Lucky Die independently checks the player's Luck once per roll and, on success, rerolls its own face to a strictly higher value. Basic, Even, Odd, and enemy dice do not receive this ability. Earned Luck still increases by 5 percentage points per upgrade, capped at 25%.
+- Added turquoise/ivory **Even Dice** and copper/charcoal **Odd Dice**, preserving the normal sprite-sheet layouts, pips, alpha, sprite cuts, and rolling frames. Their low/middle/high results use matching weights of **40% / 33⅓% / 26⅔%**: 2/4/6 for Even and 1/3/5 for Odd. Basic and Lucky initial rolls remain uniform d6 rolls.
+- Added an **Editor-only Luck testing slider** on PlayerProgression, from 0–100%, without changing earned upgrades or saved Luck. Large combat results now use each player's die type rather than always showing the first slot's art.
+- Allowed **reactive Block** during the final result-viewing interval, after Lucky rerolls and before attack resolution. It still consumes only one use per encounter. Player dice and their total shrink/fade before the shield rises, grows to 110%, and settles; the enemy results stay visible, and the shield recoils on blocked impact.
+- Fixed **pause-menu controller navigation** with explicit loops for the main pause actions and Save/Load submenu, skipping disabled Save/Load during combat and keeping focus away from gameplay controls behind the overlay.
+- Reviewed alternative layered backgrounds already present in the external assets, including caverns, mountains, castles, and a night town. The game's forest background remains in place; no environment swap was implemented.
+- Unity compilation passed with no errors or warnings during implementation. Checks outside Play mode covered dice behavior, 60,000 weighted rolls per Even/Odd type, original sprite-sheet parity, isolated save compatibility, Luck override isolation, Block eligibility, and pause-menu navigation links. Static UI previews were inspected. **Live controller operation, animation timing, and full gameplay testing remain with the user.**
 
 ### Development update — 26 October 2026
 
@@ -109,6 +122,21 @@ The current weapon pool includes swords, axes, daggers, a hammer, and a mace. We
 
 Screenshots show the current development build; visuals and gameplay may change.
 
+## Dice types and Inspector setup
+
+| Type | Appearance | Roll behavior |
+| --- | --- | --- |
+| Basic | White faces, dark pips | Uniform results from 1 through 6 |
+| Lucky | Green faces, dark pips | Uniform d6 roll; each Lucky Die independently checks player Luck for one guaranteed-higher reroll. A six cannot reroll. |
+| Even | Deep turquoise faces, ivory pips | 2: 40%; 4: 33⅓%; 6: 26⅔% |
+| Odd | Copper-orange faces, charcoal pips | 1: 40%; 3: 33⅓%; 5: 26⅔% |
+
+In **MainScene**, search the Hierarchy for `t:DiceRollUI`, then assign definitions from [`Assets/Data/Dice/`](Assets/Data/Dice/) under **Dice Types → Equipped Dice**. Keep all used definitions in **Available Dice** so saved type IDs can be resolved. Adding a new type preserves the current equipped slots. There is no dice inventory or acquisition screen yet.
+
+To test Luck, select the gameplay player's **PlayerProgression** component, enable **Luck Testing → Override Luck For Testing**, and adjust **Test Luck Percent**. At 100%, every eligible Lucky Die rerolls; other die types stay unaffected. Disable the override to return to earned Luck. It is Editor-only and is not written into run saves.
+
+Block works before rolling or during the existing **Roll Display Duration** after final results appear. It becomes unavailable once attack resolution starts or its encounter use is spent. See [player levels and dice](docs/PLAYER_LEVELS.md) and [controller support](docs/CONTROLLER_SUPPORT.md) for details and verification limits.
+
 ## Controls
 
 | Input | Action |
@@ -117,7 +145,7 @@ Screenshots show the current development build; visuals and gameplay may change.
 | Space | Jump while exploring; roll dice during combat |
 | Left mouse button | Attack while exploring |
 | H | Use a healing potion during combat |
-| B | Block during combat (one use per encounter) |
+| B | Block before rolling or while final results are displayed (one use per encounter) |
 | Mouse | Navigate menus, select connected map nodes, and use combat buttons |
 | Esc | Pause, resume, or go back through pause-menu screens |
 | Q | Complete the current room and return to the map (temporary development shortcut) |

@@ -18,7 +18,7 @@ public sealed partial class CombatController
             GameObject item = new GameObject($"{displayName} {i + 1}");
             SpriteRenderer renderer = item.AddComponent<SpriteRenderer>();
             renderer.sortingOrder = 100;
-            renderer.sprite = diceRollUI.GetPipSprite(0, results[i]);
+            renderer.sprite = owner == transform ? diceRollUI.GetPipSprite(i, results[i]) : diceRollUI.GetBasicPipSprite(results[i]);
             Vector3 displayPosition = owner.position + rollDisplayOffset
                 + new Vector3(startX + i * DiceDisplaySpacing, 0f, 0f);
             if (owner.TryGetComponent<EnemyFlight>(out _))

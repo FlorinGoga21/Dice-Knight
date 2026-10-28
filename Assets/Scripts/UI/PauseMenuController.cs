@@ -144,8 +144,46 @@ public class PauseMenuController : MonoBehaviour
                 && (saveSlots == null || !saveSlots.IsOpen)))
             HandlePauseInput();
         if (!pauseTransitionPending && pauseMenu.activeSelf && (saveSlots == null || !saveSlots.IsOpen))
-            UISelection.Ensure(transform,
-                showingSaveLoad ? saveLoadChoices : primaryChoices);
+        {
+            var choices = showingSaveLoad ? saveLoadChoices : primaryChoices;
+            ConfigureNavigation(choices);
+            UISelection.Ensure(transform, choices);
+        }
+    }
+
+    private static void ConfigureNavigation(UnityEngine.UI.Selectable[] choices)
+    {
+        // Automatic navigation can reach gameplay controls behind the pause overlay.
+        // Keep each menu in its own loop, skipping unavailable actions such as combat saves.
+        for (int i = 0; i < choices.Length; i++)
+        {
+            var current = choices[i];
+            if (current == null || !current.isActiveAndEnabled || !current.IsInteractable()) continue;
+            var previous = current;
+            var next = current;
+            for (int offset = 1; offset < choices.Length; offset++)
+            {
+                var candidate = choices[(i + offset) % choices.Length];
+                if (candidate == null || !candidate.isActiveAndEnabled || !candidate.IsInteractable()) continue;
+                next = candidate;
+                break;
+            }
+            for (int offset = 1; offset < choices.Length; offset++)
+            {
+                var candidate = choices[(i - offset + choices.Length) % choices.Length];
+                if (candidate == null || !candidate.isActiveAndEnabled || !candidate.IsInteractable()) continue;
+                previous = candidate;
+                break;
+            }
+            current.navigation = new UnityEngine.UI.Navigation
+            {
+                mode = UnityEngine.UI.Navigation.Mode.Explicit,
+                selectOnUp = previous,
+                selectOnDown = next,
+                selectOnLeft = previous,
+                selectOnRight = next
+            };
+        }
     }
 
     public void ShowSaveLoad()

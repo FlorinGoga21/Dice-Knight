@@ -505,6 +505,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d2f6a4b1c3e4970a5b6d7e8f9c10234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DiceRollUI
+  equippedDice:
+  - {fileID: 11400000, guid: f070d337f33f9514db10a334f200db2d, type: 2}
+  - {fileID: 11400000, guid: ff49dab8f66d3e841801737340729abb, type: 2}
+  - {fileID: 11400000, guid: 7e87061c3b9921146ada1c8e68e359ed, type: 2}
+  availableDice:
+  - {fileID: 11400000, guid: 7e87061c3b9921146ada1c8e68e359ed, type: 2}
+  - {fileID: 11400000, guid: 83ccb4f849c812b4481f2b91cdc55393, type: 2}
+  - {fileID: 11400000, guid: ff49dab8f66d3e841801737340729abb, type: 2}
+  - {fileID: 11400000, guid: f070d337f33f9514db10a334f200db2d, type: 2}
   diceImages:
   - {fileID: 61008313}
   - {fileID: 1134644100}
@@ -7681,6 +7690,14 @@ PrefabInstance:
       propertyPath: startingHealingPotionCount
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3629816738015816761, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: testLuckPercent
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629816738015816761, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
+      propertyPath: overrideLuckForTesting
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5339762120934824912, guid: a77f2796fd776459c9b84d0b63c90e3a, type: 3}
       propertyPath: playerCamera
       value: 
@@ -10728,7 +10745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7309604404091995848, guid: de27a14c19dd877438d6371736a90549, type: 3}
       propertyPath: maximumEnemies
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7309604404091995848, guid: de27a14c19dd877438d6371736a90549, type: 3}
       propertyPath: minimumEnemies

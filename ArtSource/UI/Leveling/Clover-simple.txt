@@ -1,0 +1,9 @@
+Created with the built-in image generation tool on 28 October 2026.
+Generated source: Clover-simple-source.png.
+Game-ready file: Assets/Art/UI/Leveling/CloverSimple.png.
+Normalized with nearest-neighbor sampling to 24x24, four opaque palette colors,
+binary alpha and one-pixel minimum padding. Point filtering, 32 PPU,
+uncompressed, no mipmaps. No prefab or UI references changed.
+
+Prompt:
+Edit target: image 1 is the current clover icon. Images 2 and 3 are the actual in-game half-heart and sword, supplied ONLY as style/detail-density references. Redesign ONLY the clover to match their extremely simple 16x16 pixel-art icon style. Output one single four-leaf clover sprite on genuine transparent alpha, enlarged by exact nearest-neighbor scaling from a strict 16x16 logical grid. Keep exactly four recognizable chunky heart-shaped leaves, a short two-pixel-wide gently bent stem, and an upright centered silhouette. Four green leaves joined at a compact center, dark single-logical-pixel outline, flat medium grass green fill, at most one tiny muted light-green highlight cluster per leaf. Exactly four opaque colors total: near-black charcoal outline #28252F, medium green #69AF47, light green #A4CD66, shadow green #3E783E. The visual simplicity must match a classic 16x16 RPG heart icon. Large solid color regions, clear silhouette at tiny size. Remove all gradients, neon yellow, gloss, speckling, veins, thin tendrils, translucent borders and intricate shading from the original. Don't depict the heart or sword. No panel, no plus sign, no frame, no lettering, no shadow or glow. Comfortable small transparent margin. One clover only.

@@ -83,6 +83,7 @@ public sealed partial class CombatController
             GameAudio.Play(GameAudio.Cue.TurnStarted);
             ShowTurnText();
             blockChosenThisTurn = false;
+            acceptingResultBlock = false;
             player.SetBlockingPose(false);
             if (playerDice != null) playerDice.SetActive(true);
             SetCanvasGroupVisibility(playerDiceCanvasGroup, true);
@@ -126,14 +127,31 @@ public sealed partial class CombatController
                 enemyRollDisplays,
                 blockChosenThisTurn);
             yield return AnimateDisplaysIn(playerRollDisplays, enemyRollDisplays, rollResultDisplays);
-            if (!blockChosenThisTurn && playerProgression != null
-                && playerProgression.TryGetLuckReroll(playerRolls, out int luckyDie, out int reroll))
+            if (!blockChosenThisTurn && playerProgression != null)
             {
-                yield return ShowLuckyReroll(playerRolls, luckyDie, reroll, enemyRoll);
+                for (int i = 0; i < playerRolls.Length; i++)
+                {
+                    if (diceRollUI.TryGetLuckyReroll(i, playerRolls[i], playerProgression.LuckChance, out int reroll))
+                        yield return ShowLuckyReroll(playerRolls, i, reroll, enemyRoll);
+                    if (playerStats.IsDead || activeEnemy == null) yield break;
+                }
                 playerRoll = SumArray(playerRolls);
                 playerMultiplier = ComputeDiceMultiplier(playerRolls);
             }
-            yield return new WaitForSeconds(rollDisplayDuration);
+            acceptingResultBlock = !blockChosenThisTurn && blockUsesRemaining > 0;
+            if (blockButton != null) blockButton.interactable = acceptingResultBlock;
+            bool rolledBeforeBlocking = !blockChosenThisTurn;
+            for (float elapsed = 0f; elapsed < rollDisplayDuration; elapsed += Time.deltaTime)
+            {
+                if (rolledBeforeBlocking && blockChosenThisTurn) break;
+                yield return null;
+            }
+            acceptingResultBlock = false;
+            if (blockButton != null) blockButton.interactable = false;
+            if (rolledBeforeBlocking && blockChosenThisTurn)
+            {
+                yield return AnimateBlockAfterRoll();
+            }
             if (rollResultDisplays != null && rollResultDisplays.Length > RollComparisonDisplayIndex)
             {
                 yield return PopComparisonDisplay(rollResultDisplays[RollComparisonDisplayIndex]);
@@ -150,7 +168,9 @@ public sealed partial class CombatController
             {
                 yield return EnlargeDisplays(enemyRollDisplays, rollResultDisplays != null ? rollResultDisplays[1] : null);
                 activeEnemy.PerformTurnAttack(enemyMultiplier, applyDamage: false);
+                while (activeEnemy != null && activeEnemy.IsAttackInProgress) yield return null;
                 GameAudio.Play(GameAudio.Cue.BlockImpact);
+                yield return AnimateBlockImpact();
             }
             else if (enemyRoll > playerRoll)
             {
@@ -188,6 +208,7 @@ public sealed partial class CombatController
         DestroyRollResultDisplays(ref rollResultDisplays);
         DestroyLuckyFeedback();
         waitingForPlayerRoll = false;
+        acceptingResultBlock = false;
         blockChosenThisTurn = false;
         player?.SetBlockingPose(false);
         diceRollUI?.SetRollButtonInteractable(false);
@@ -231,8 +252,12 @@ public sealed partial class CombatController
 
     public void ChooseToBlock()
     {
-        if (!waitingForPlayerRoll || blockChosenThisTurn || blockUsesRemaining <= 0
-            || diceRollUI == null || diceRollUI.IsRolling)
+        if ((!waitingForPlayerRoll && !acceptingResultBlock) || blockChosenThisTurn || blockUsesRemaining <= 0
+            || diceRollUI == null || diceRollUI.IsRolling || Time.timeScale <= 0f
+            || player == null || !player.CanStartTurnCombat || playerStats == null || playerStats.IsDead
+            || activeEnemy == null || activeEnemy.IsDead
+            || HeyHeyThere.SceneTransitionsFree.SceneTransition.IsPlaying
+            || (SaveManager.Instance != null && SaveManager.Instance.IsLoading))
         {
             return;
         }

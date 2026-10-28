@@ -41,6 +41,8 @@ public sealed class PlayerSaveData
     public int health, maxHealth, gold, potions;
     public bool hasProgression;
     public PlayerLevelState progression;
+    public string[] equippedDiceIds;
+    public bool hasDiceLoadout;
     public Vector3 position;
     public Quaternion rotation = Quaternion.identity;
     public Vector2 velocity;

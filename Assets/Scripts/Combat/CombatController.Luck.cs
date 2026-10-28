@@ -16,10 +16,10 @@ public sealed partial class CombatController
         yield return new WaitForSeconds(0.35f);
         yield return diceRollUI.AnimateLuckyDie(index, reroll);
         if (selected == null || playerStats == null || playerStats.IsDead) yield break;
-        if (playerProgression.CompleteLuckReroll(results, reroll))
+        if (DiceRules.TryApplyLucky(results, index, reroll))
         {
             // Replace and pop this result only. The other dice retain their objects, faces and poses.
-            selected.sprite = diceRollUI.GetPipSprite(0, results[index]);
+            selected.sprite = diceRollUI.GetPipSprite(index, results[index]);
             RefreshLuckyTotal(SumArray(results), enemyTotal);
             yield return PopLuckyResult(selected);
         }

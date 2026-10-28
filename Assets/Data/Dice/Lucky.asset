@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770dbef76c2192146a02a9ff7cf83804, type: 3}
+  m_Name: Lucky
+  m_EditorClassIdentifier: Assembly-CSharp::DiceDefinition
+  saveId: lucky
+  ability: 1
+  pipFaces:
+  - {fileID: -629920512224400260, guid: 2aa80c10a70e135478bd5e4325d06a61, type: 3}
+  - {fileID: 6231405523130554193, guid: 2aa80c10a70e135478bd5e4325d06a61, type: 3}
+  - {fileID: -8276752404168463918, guid: 2aa80c10a70e135478bd5e4325d06a61, type: 3}
+  - {fileID: 664284486248080091, guid: 2aa80c10a70e135478bd5e4325d06a61, type: 3}
+  - {fileID: 4072419647530026736, guid: 2aa80c10a70e135478bd5e4325d06a61, type: 3}
+  - {fileID: -8641166837946820992, guid: 2aa80c10a70e135478bd5e4325d06a61, type: 3}
+  rollFrames:
+  - {fileID: -6994779492133727694, guid: 2ffbafcf4d60bab45826b644f2c9efc8, type: 3}
+  - {fileID: 5616180663939034267, guid: 2ffbafcf4d60bab45826b644f2c9efc8, type: 3}
+  - {fileID: 9132744674589876986, guid: 2ffbafcf4d60bab45826b644f2c9efc8, type: 3}
+  - {fileID: -587462965721720990, guid: 2ffbafcf4d60bab45826b644f2c9efc8, type: 3}
+  - {fileID: 2508876514364401140, guid: 2ffbafcf4d60bab45826b644f2c9efc8, type: 3}
+  - {fileID: -6081691577632093670, guid: 2ffbafcf4d60bab45826b644f2c9efc8, type: 3}
