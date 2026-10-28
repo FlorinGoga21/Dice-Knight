@@ -7,6 +7,7 @@ public sealed partial class CombatController
     private SpriteRenderer[] enemyRollDisplays;
     private TMP_Text[] rollResultDisplays;
     private SpriteRenderer rollResultsBackground;
+    private static DiceMatchFire diceMatchFirePrefab;
 
     private SpriteRenderer[] CreateRollDisplays(int[] results, Transform owner, string displayName)
     {
@@ -30,6 +31,42 @@ public sealed partial class CombatController
             displays[i] = renderer;
         }
         return displays;
+    }
+
+    private void RefreshMatchingDiceFire(int[] results, SpriteRenderer[] displays)
+    {
+        if (results == null || displays == null) return;
+        for (int i = 0; i < displays.Length && i < results.Length; i++)
+        {
+            SpriteRenderer die = displays[i];
+            if (die == null || die.sprite == null) continue;
+            int matches = 0;
+            for (int j = 0; j < results.Length; j++)
+            {
+                if (results[j] == results[i]) matches++;
+            }
+
+            DiceMatchFire fire = die.GetComponentInChildren<DiceMatchFire>(true);
+            if (matches < 2)
+            {
+                if (fire != null)
+                {
+                    fire.gameObject.SetActive(false);
+                    Destroy(fire.gameObject);
+                }
+                continue;
+            }
+
+            if (fire != null) continue;
+            if (diceMatchFirePrefab == null)
+            {
+                GameObject prefab = Resources.Load<GameObject>("Combat/DiceMatchFire");
+                if (prefab != null) diceMatchFirePrefab = prefab.GetComponent<DiceMatchFire>();
+            }
+            if (diceMatchFirePrefab == null) continue;
+            fire = Instantiate(diceMatchFirePrefab, die.transform, false);
+            fire.Initialize(die, i * 7);
+        }
     }
 
     private SpriteRenderer[] CreateBlockDisplay(Transform owner, string displayName)

@@ -19,7 +19,9 @@ Choose a route, enter rooms, fight enemies, and continue your adventure across s
 - Inspector-assignable Basic, Lucky, Even, and Odd Dice, with matching rolling/result sprites and saved equipped types. Lucky Dice independently use the player's Luck stat for a guaranteed-higher reroll; Even and Odd Dice favor their lower faces.
 - Layered forest parallax with seamless infinite scrolling in the menu and gameplay. See [background tuning](docs/BACKGROUND_PARALLAX.md).
 - Room camera limits and walk-off exits; combat exits unlock after defeating all enemies, and empty rooms stay within their initial screen. See [room boundaries](docs/COMBAT_ROOM_BOUNDARIES.md).
+- A room-entry announcement shows the current map depth as `Room 1`, `Room 2`, etc., including restored rooms. It rises and fades after the scene transition, before the first combat turn; playing MainScene directly shows `Room 1`. Room Flow's RoomSceneController finds the existing inactive `PlayerUI/RoomNumber` label on startup, or uses its Inspector reference when assigned. Duration and rise are configurable on that controller.
 - Turn-based dice combat, enemy encounters, healing potions, and one Block per encounter, usable before rolling or after seeing the final results.
+- Animated fire behind doubles and triples in the winning combat roll, determined after Lucky rerolls; losing rolls and ties show no fire. See [effect setup](ArtSource/Effects/DiceMatchFire/README.md).
 - Animated slimes, skeletons, zombies, and a hovering DiceDemon with fireball attacks. Combat rooms spawn enemies from an editable pool, with enemy dice matching the player's available dice.
 - Random SPUM melee weapons for skeletons and zombies, preserved with the room's saved enemy lineup. See [enemy spawning](ENEMY_SPAWNING.md) for Inspector setup.
 - Player health, gold, enemy health, and coin pickups.

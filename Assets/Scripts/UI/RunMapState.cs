@@ -26,6 +26,10 @@ public static class RunMapState
     public static RoomType? CurrentRoomType => CurrentRoomIndex >= 0 && CurrentRoomIndex < Rooms.Count
         ? Rooms[CurrentRoomIndex].type : (RoomType?)null;
 
+    // Branches in the same map column share a room number; direct scene play starts at 1.
+    public static int CurrentRoomNumber => CurrentRoomIndex >= 0 && CurrentRoomIndex < Rooms.Count
+        ? Rooms[CurrentRoomIndex].column + 1 : 1;
+
     public static void CompleteCurrentRoom()
     {
         if (!RoomInProgress || CurrentRoomIndex < 0 || CurrentRoomIndex >= Rooms.Count)

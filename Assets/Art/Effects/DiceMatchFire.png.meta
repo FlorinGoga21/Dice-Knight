@@ -1,0 +1,1872 @@
+fileFormatVersion: 2
+guid: 46c3ac5c4b246d843a62ee0ae3d59f54
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7453318457333446365
+    second: DiceMatchFire_0
+  - first:
+      213: -2936506044985001136
+    second: DiceMatchFire_1
+  - first:
+      213: -2947878518241582833
+    second: DiceMatchFire_2
+  - first:
+      213: 2195872841548247673
+    second: DiceMatchFire_3
+  - first:
+      213: 1308106371250550135
+    second: DiceMatchFire_4
+  - first:
+      213: 3657259073748232373
+    second: DiceMatchFire_5
+  - first:
+      213: 1218954284235956337
+    second: DiceMatchFire_6
+  - first:
+      213: -8813572557164521821
+    second: DiceMatchFire_7
+  - first:
+      213: 922233753916785191
+    second: DiceMatchFire_8
+  - first:
+      213: -1640857754840464912
+    second: DiceMatchFire_9
+  - first:
+      213: 6957318414124512438
+    second: DiceMatchFire_10
+  - first:
+      213: 7799077763928737987
+    second: DiceMatchFire_11
+  - first:
+      213: 378155629771511052
+    second: DiceMatchFire_12
+  - first:
+      213: 7084479545734731312
+    second: DiceMatchFire_13
+  - first:
+      213: -745357164503534311
+    second: DiceMatchFire_14
+  - first:
+      213: 1386170114911575150
+    second: DiceMatchFire_15
+  - first:
+      213: 8151556632982597139
+    second: DiceMatchFire_16
+  - first:
+      213: 800669672614084573
+    second: DiceMatchFire_17
+  - first:
+      213: -1486614596522728409
+    second: DiceMatchFire_18
+  - first:
+      213: -4510577968044869200
+    second: DiceMatchFire_19
+  - first:
+      213: -4070484148497939147
+    second: DiceMatchFire_20
+  - first:
+      213: -6359676798212594810
+    second: DiceMatchFire_21
+  - first:
+      213: -5270943936980544945
+    second: DiceMatchFire_22
+  - first:
+      213: 7534104691736339212
+    second: DiceMatchFire_23
+  - first:
+      213: 887704899707534914
+    second: DiceMatchFire_24
+  - first:
+      213: 3837413574111607055
+    second: DiceMatchFire_25
+  - first:
+      213: -1931176153048290579
+    second: DiceMatchFire_26
+  - first:
+      213: 3695060188907371326
+    second: DiceMatchFire_27
+  - first:
+      213: -7933603323374851037
+    second: DiceMatchFire_28
+  - first:
+      213: -2637522431163690920
+    second: DiceMatchFire_29
+  - first:
+      213: 1552963579923959726
+    second: DiceMatchFire_30
+  - first:
+      213: 6964640983221780977
+    second: DiceMatchFire_31
+  - first:
+      213: 2972008544459719
+    second: DiceMatchFire_32
+  - first:
+      213: -8204002664972487608
+    second: DiceMatchFire_33
+  - first:
+      213: -8808492617066685370
+    second: DiceMatchFire_34
+  - first:
+      213: -5692287119642948972
+    second: DiceMatchFire_35
+  - first:
+      213: 6820129268047880243
+    second: DiceMatchFire_36
+  - first:
+      213: -4059714069917242578
+    second: DiceMatchFire_37
+  - first:
+      213: 4825916970648227986
+    second: DiceMatchFire_38
+  - first:
+      213: 7048106262271021748
+    second: DiceMatchFire_39
+  - first:
+      213: -8814161036371697675
+    second: DiceMatchFire_40
+  - first:
+      213: -6846909664482625430
+    second: DiceMatchFire_41
+  - first:
+      213: 7354232094221340261
+    second: DiceMatchFire_42
+  - first:
+      213: -8981770594593099288
+    second: DiceMatchFire_43
+  - first:
+      213: 1215461340880672547
+    second: DiceMatchFire_44
+  - first:
+      213: 756342760530010223
+    second: DiceMatchFire_45
+  - first:
+      213: -5077658271299415032
+    second: DiceMatchFire_46
+  - first:
+      213: 5270908600722196194
+    second: DiceMatchFire_47
+  - first:
+      213: 5770565660237792148
+    second: DiceMatchFire_48
+  - first:
+      213: -7897186249599554386
+    second: DiceMatchFire_49
+  - first:
+      213: -1222487358949880574
+    second: DiceMatchFire_50
+  - first:
+      213: -2077688630554082787
+    second: DiceMatchFire_51
+  - first:
+      213: -6366425111663139030
+    second: DiceMatchFire_52
+  - first:
+      213: 7797678881811502682
+    second: DiceMatchFire_53
+  - first:
+      213: 8265345167867235363
+    second: DiceMatchFire_54
+  - first:
+      213: 314659875289827657
+    second: DiceMatchFire_55
+  - first:
+      213: 786258052661257644
+    second: DiceMatchFire_56
+  - first:
+      213: 3462889356962560402
+    second: DiceMatchFire_57
+  - first:
+      213: 4849063140798517396
+    second: DiceMatchFire_58
+  - first:
+      213: -544727363240340785
+    second: DiceMatchFire_59
+  - first:
+      213: -5559943020121147742
+    second: DiceMatchFire_60
+  - first:
+      213: 6572888903120858928
+    second: DiceMatchFire_61
+  - first:
+      213: 3757263279282869937
+    second: DiceMatchFire_62
+  - first:
+      213: 4465604901089394412
+    second: DiceMatchFire_63
+  - first:
+      213: -2751572137029592624
+    second: DiceMatchFire_64
+  - first:
+      213: -249106590489920650
+    second: DiceMatchFire_65
+  - first:
+      213: -2264325989990308284
+    second: DiceMatchFire_66
+  - first:
+      213: -6138756451230380774
+    second: DiceMatchFire_67
+  - first:
+      213: 23664797842359236
+    second: DiceMatchFire_68
+  - first:
+      213: 4502808113733811263
+    second: DiceMatchFire_69
+  - first:
+      213: -8101708757361259588
+    second: DiceMatchFire_70
+  - first:
+      213: -938227775234521633
+    second: DiceMatchFire_71
+  - first:
+      213: 6555545744409666222
+    second: DiceMatchFire_72
+  - first:
+      213: -7876748610182275345
+    second: DiceMatchFire_73
+  - first:
+      213: -4718430912534464558
+    second: DiceMatchFire_74
+  - first:
+      213: -8116507903964214113
+    second: DiceMatchFire_75
+  - first:
+      213: 598901777501690377
+    second: DiceMatchFire_76
+  - first:
+      213: 2738361869259293191
+    second: DiceMatchFire_77
+  - first:
+      213: -982121198703589889
+    second: DiceMatchFire_78
+  - first:
+      213: -3557168619843551470
+    second: DiceMatchFire_79
+  - first:
+      213: -4671187479528572214
+    second: DiceMatchFire_80
+  - first:
+      213: -3341278479428901403
+    second: DiceMatchFire_81
+  - first:
+      213: 7674247161828788407
+    second: DiceMatchFire_82
+  - first:
+      213: 5311940945688413568
+    second: DiceMatchFire_83
+  - first:
+      213: 5886162441752386616
+    second: DiceMatchFire_84
+  - first:
+      213: 2592768361913968246
+    second: DiceMatchFire_85
+  - first:
+      213: -78075099828810235
+    second: DiceMatchFire_86
+  - first:
+      213: -3843683553715739451
+    second: DiceMatchFire_87
+  - first:
+      213: -39963929877692628
+    second: DiceMatchFire_88
+  - first:
+      213: -969774859097401581
+    second: DiceMatchFire_89
+  - first:
+      213: -6203118825929556973
+    second: DiceMatchFire_90
+  - first:
+      213: -6813501906182294249
+    second: DiceMatchFire_91
+  - first:
+      213: -5192798615490692832
+    second: DiceMatchFire_92
+  - first:
+      213: 88065136978625574
+    second: DiceMatchFire_93
+  - first:
+      213: 786292724272477145
+    second: DiceMatchFire_94
+  - first:
+      213: 839385652849072531
+    second: DiceMatchFire_95
+  - first:
+      213: 6092129852921283710
+    second: DiceMatchFire_96
+  - first:
+      213: -2781045879797973252
+    second: DiceMatchFire_97
+  - first:
+      213: -7195871691256515435
+    second: DiceMatchFire_98
+  - first:
+      213: -4285549190326368562
+    second: DiceMatchFire_99
+  - first:
+      213: 6950413824321425480
+    second: DiceMatchFire_100
+  - first:
+      213: 8496001493495794751
+    second: DiceMatchFire_101
+  - first:
+      213: -350630985030802491
+    second: DiceMatchFire_102
+  - first:
+      213: -6950313057453288519
+    second: DiceMatchFire_103
+  - first:
+      213: 5964180024153876207
+    second: DiceMatchFire_104
+  - first:
+      213: -6098766125377368014
+    second: DiceMatchFire_105
+  - first:
+      213: 3999122860370246774
+    second: DiceMatchFire_106
+  - first:
+      213: -6363391594998381338
+    second: DiceMatchFire_107
+  - first:
+      213: -6413564922838135758
+    second: DiceMatchFire_108
+  - first:
+      213: 5360453362366579048
+    second: DiceMatchFire_109
+  - first:
+      213: -2783478059339195917
+    second: DiceMatchFire_110
+  - first:
+      213: 4572693033967875421
+    second: DiceMatchFire_111
+  - first:
+      213: 7068721649312592146
+    second: DiceMatchFire_112
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 40
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DiceMatchFire_10
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 100
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b4fc277c3c5d8060800000000000000
+      internalID: 6957318414124512438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_11
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 100
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c8ce9ea7e3eb3c60800000000000000
+      internalID: 7799077763928737987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_12
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 100
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c05585eaa8a7f3500800000000000000
+      internalID: 378155629771511052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_13
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 100
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0361a069c90215260800000000000000
+      internalID: 7084479545734731312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_14
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 100
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91579f2ab95f7a5f0800000000000000
+      internalID: -745357164503534311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_15
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 100
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6c1191106aac3310800000000000000
+      internalID: 1386170114911575150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 200
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31e2863a195202170800000000000000
+      internalID: 8151556632982597139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_17
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 200
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddf379a33dc8c1b00800000000000000
+      internalID: 800669672614084573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_18
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 200
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7242a50a6eb7e5be0800000000000000
+      internalID: -1486614596522728409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_19
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 200
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b97bf27c353761c0800000000000000
+      internalID: -4510577968044869200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_20
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 200
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5350ce8bb3cb287c0800000000000000
+      internalID: -4070484148497939147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_21
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 200
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 683ae34a5a3edb7a0800000000000000
+      internalID: -6359676798212594810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_22
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 200
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f42964d7a68d9d6b0800000000000000
+      internalID: -5270943936980544945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_23
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 200
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c036c8bbc448e8860800000000000000
+      internalID: 7534104691736339212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 300
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24ef07c27e2c15c00800000000000000
+      internalID: 887704899707534914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_25
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 300
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f093f2d605b314530800000000000000
+      internalID: 3837413574111607055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_26
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 300
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deae9d645851335e0800000000000000
+      internalID: -1931176153048290579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_27
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 300
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3bf28f1aad774330800000000000000
+      internalID: 3695060188907371326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_28
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 300
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32c2269bfcd26e190800000000000000
+      internalID: -7933603323374851037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_29
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 300
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8501d53b253a56bd0800000000000000
+      internalID: -2637522431163690920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_30
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 300
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaf8c72e52c3d8510800000000000000
+      internalID: 1552963579923959726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_31
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 300
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f1cf01f21067a060800000000000000
+      internalID: 6964640983221780977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 400
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cbdf89a60f8a0000800000000000000
+      internalID: 2972008544459719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_33
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 400
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 844f4f9fa07852e80800000000000000
+      internalID: -8204002664972487608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_34
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 400
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64cd61952a2f1c580800000000000000
+      internalID: -8808492617066685370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_35
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 400
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49a8622160fe001b0800000000000000
+      internalID: -5692287119642948972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_36
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 400
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3302d384f67f5ae50800000000000000
+      internalID: 6820129268047880243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_37
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 400
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2b6dec009ff8a7c0800000000000000
+      internalID: -4059714069917242578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_38
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 400
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 290540f7ae919f240800000000000000
+      internalID: 4825916970648227986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_39
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 400
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b2ded59d47efc160800000000000000
+      internalID: 7048106262271021748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 500
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ffd9f1ac3fcda580800000000000000
+      internalID: -8814161036371697675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_41
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 500
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a68f257cfe3eaf0a0800000000000000
+      internalID: -6846909664482625430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_42
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 500
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56e07d3102b7f0660800000000000000
+      internalID: 7354232094221340261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_43
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 500
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e1ba3f4b375a5380800000000000000
+      internalID: -8981770594593099288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_44
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 500
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 327996556af2ed010800000000000000
+      internalID: 1215461340880672547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_45
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 500
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6064d1cbb11f7a00800000000000000
+      internalID: 756342760530010223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_46
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 500
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 804df5074b88889b0800000000000000
+      internalID: -5077658271299415032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_47
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 500
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e609952277062940800000000000000
+      internalID: 5270908600722196194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 600
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4938a8be4ea251050800000000000000
+      internalID: 5770565660237792148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_49
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 600
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eace48372fe876290800000000000000
+      internalID: -7897186249599554386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_50
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 600
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20d036b593ad80fe0800000000000000
+      internalID: -1222487358949880574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_51
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 600
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d12c4f5d2319a23e0800000000000000
+      internalID: -2077688630554082787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_52
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 600
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a27213a771ae5a7a0800000000000000
+      internalID: -6366425111663139030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_53
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 600
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5690fe01abe63c60800000000000000
+      internalID: 7797678881811502682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_54
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 600
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32cc7b473a764b270800000000000000
+      internalID: 8265345167867235363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_55
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 600
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94908bb4d75ed5400800000000000000
+      internalID: 314659875289827657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_56
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 700
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca52aaa788959ea00800000000000000
+      internalID: 786258052661257644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_57
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 700
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 299fb32e587ae0030800000000000000
+      internalID: 3462889356962560402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_58
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 700
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4905cb03c355b4340800000000000000
+      internalID: 4849063140798517396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_59
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 700
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc2df96695db078f0800000000000000
+      internalID: -544727363240340785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_60
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 700
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a63442f74d17d2b0800000000000000
+      internalID: -5559943020121147742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c52e02490f707e341909027fc71f8bbf
+      internalID: 1647368933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_01
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9e500b1e16e0754db45b636bf5587ac
+      internalID: 1404496624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_02
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b66446843313534abbcdbc10232912f
+      internalID: 364234723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_03
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a213f73b1fac05249a06cc7f9d467532
+      internalID: 1462935775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_04
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c6b3e801103add4aac3a4e64248cda4
+      internalID: -140919402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_05
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 0
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e754090b2af7cd449aafce4cc7ee2c82
+      internalID: -1794000315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_06
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f1f4b5802e710d4084eb74264e56570
+      internalID: -744558785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_07
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 0
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e02695944c023f34e8b980d5155366bd
+      internalID: 655483941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_08
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eac643acbad557440a1bf6073132f602
+      internalID: 1878097078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceMatchFire_09
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 100
+        width: 100
+        height: 100
+      alignment: 9
+      pivot: {x: 0.6, y: 0.46}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71a346ea6c91f62438a53fe1abead1a3
+      internalID: -184924232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 64af58043414ad94ea6a8ca27df4cf61
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DiceMatchFire_00: 1647368933
+      DiceMatchFire_01: 1404496624
+      DiceMatchFire_02: 364234723
+      DiceMatchFire_03: 1462935775
+      DiceMatchFire_04: -140919402
+      DiceMatchFire_05: -1794000315
+      DiceMatchFire_06: -744558785
+      DiceMatchFire_07: 655483941
+      DiceMatchFire_08: 1878097078
+      DiceMatchFire_09: -184924232
+      DiceMatchFire_10: 6957318414124512438
+      DiceMatchFire_11: 7799077763928737987
+      DiceMatchFire_12: 378155629771511052
+      DiceMatchFire_13: 7084479545734731312
+      DiceMatchFire_14: -745357164503534311
+      DiceMatchFire_15: 1386170114911575150
+      DiceMatchFire_16: 8151556632982597139
+      DiceMatchFire_17: 800669672614084573
+      DiceMatchFire_18: -1486614596522728409
+      DiceMatchFire_19: -4510577968044869200
+      DiceMatchFire_20: -4070484148497939147
+      DiceMatchFire_21: -6359676798212594810
+      DiceMatchFire_22: -5270943936980544945
+      DiceMatchFire_23: 7534104691736339212
+      DiceMatchFire_24: 887704899707534914
+      DiceMatchFire_25: 3837413574111607055
+      DiceMatchFire_26: -1931176153048290579
+      DiceMatchFire_27: 3695060188907371326
+      DiceMatchFire_28: -7933603323374851037
+      DiceMatchFire_29: -2637522431163690920
+      DiceMatchFire_30: 1552963579923959726
+      DiceMatchFire_31: 6964640983221780977
+      DiceMatchFire_32: 2972008544459719
+      DiceMatchFire_33: -8204002664972487608
+      DiceMatchFire_34: -8808492617066685370
+      DiceMatchFire_35: -5692287119642948972
+      DiceMatchFire_36: 6820129268047880243
+      DiceMatchFire_37: -4059714069917242578
+      DiceMatchFire_38: 4825916970648227986
+      DiceMatchFire_39: 7048106262271021748
+      DiceMatchFire_40: -8814161036371697675
+      DiceMatchFire_41: -6846909664482625430
+      DiceMatchFire_42: 7354232094221340261
+      DiceMatchFire_43: -8981770594593099288
+      DiceMatchFire_44: 1215461340880672547
+      DiceMatchFire_45: 756342760530010223
+      DiceMatchFire_46: -5077658271299415032
+      DiceMatchFire_47: 5270908600722196194
+      DiceMatchFire_48: 5770565660237792148
+      DiceMatchFire_49: -7897186249599554386
+      DiceMatchFire_50: -1222487358949880574
+      DiceMatchFire_51: -2077688630554082787
+      DiceMatchFire_52: -6366425111663139030
+      DiceMatchFire_53: 7797678881811502682
+      DiceMatchFire_54: 8265345167867235363
+      DiceMatchFire_55: 314659875289827657
+      DiceMatchFire_56: 786258052661257644
+      DiceMatchFire_57: 3462889356962560402
+      DiceMatchFire_58: 4849063140798517396
+      DiceMatchFire_59: -544727363240340785
+      DiceMatchFire_60: -5559943020121147742
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

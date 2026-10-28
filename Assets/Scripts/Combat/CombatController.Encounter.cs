@@ -9,7 +9,8 @@ public sealed partial class CombatController
         if (Time.timeScale <= 0f) return;
         HandleCombatInput();
         UpdateHealingPotionButtonState();
-        if (IsInCombat || player == null || !player.CanStartTurnCombat)
+        if (IsInCombat || player == null || !player.CanStartTurnCombat
+            || (roomSceneController != null && roomSceneController.IsShowingRoomNumber))
         {
             return;
         }
@@ -137,6 +138,14 @@ public sealed partial class CombatController
                 }
                 playerRoll = SumArray(playerRolls);
                 playerMultiplier = ComputeDiceMultiplier(playerRolls);
+            }
+            // Ignite only the final winning roll, after every Lucky reroll settles.
+            if (!blockChosenThisTurn)
+            {
+                if (playerRoll > enemyRoll)
+                    RefreshMatchingDiceFire(playerRolls, playerRollDisplays);
+                else if (enemyRoll > playerRoll)
+                    RefreshMatchingDiceFire(enemyRolls, enemyRollDisplays);
             }
             acceptingResultBlock = !blockChosenThisTurn && blockUsesRemaining > 0;
             if (blockButton != null) blockButton.interactable = acceptingResultBlock;

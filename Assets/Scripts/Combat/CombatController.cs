@@ -52,6 +52,7 @@ public sealed partial class CombatController : MonoBehaviour
     private PlayerStats playerStats;
     private PlayerProgression playerProgression;
     private EnemyController activeEnemy;
+    private RoomSceneController roomSceneController;
     private Coroutine encounterCoroutine;
 
     private bool waitingForPlayerRoll;
@@ -96,6 +97,7 @@ public sealed partial class CombatController : MonoBehaviour
         player = GetComponent<PlayerController>();
         playerStats = GetComponent<PlayerStats>();
         playerProgression = GetComponent<PlayerProgression>();
+        roomSceneController = FindAnyObjectByType<RoomSceneController>();
         InitializeCombatUI();
     }
 
